@@ -351,36 +351,47 @@
       <button id="exportAllXlsxBtn">Export to .xlsx</button>
       <button id="exportAllPdfBtn">Export to PDF</button>
     </div>
+    <input 
+  type="text" 
+  id="adminSearchInput" 
+  placeholder="Search devotees..." 
+  style="padding:8px; width:260px; border-radius:6px; border:1px solid #ccc; margin-bottom:10px;">
 
     <table id="devoteeTable">
       <thead>
         <tr>
-          <th></th>
-          <th>Edit</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Full Name as per passport</th>
-          <th>Email</th>
-          <th>Gender</th>
-          <th>DOB</th>
-          <th>Passport</th>
-          <th>Mobile</th>
-          <th>Family Head</th>
-          <th>Addr1</th>
-          <th>Addr2</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Postcode</th>
-          <th>Country</th>
-          <th>Are Initiated</th>
-          <th>Initiated Name</th>
-          <th>Initiation Status</th>
-          <th>Place of Initiation</th>
-          <th>Initiation Date</th>
-          <th>Siksha Guru / Mentor</th>
-          <th>Diksha Guru</th>
-          <th>Submission Date</th>
-          <th>Last Updated</th>
+<th></th>
+<th>Edit</th>
+
+<th data-field="firstName" class="sortable">First Name</th>
+<th data-field="lastName" class="sortable">Last Name</th>
+<th data-field="fullName" class="sortable">Full Name as per passport</th>
+<th data-field="email" class="sortable">Email</th>
+<th data-field="gender" class="sortable">Gender</th>
+<th data-field="dob" class="sortable">DOB</th>
+
+<th data-field="passport" class="sortable">Passport</th>
+<th data-field="mobile" class="sortable">Mobile</th>
+<th data-field="familyHead" class="sortable">Family Head</th>
+<th data-field="addrLine1" class="sortable">Addr1</th>
+<th data-field="addrLine2" class="sortable">Addr2</th>
+<th data-field="city" class="sortable">City</th>
+<th data-field="state" class="sortable">State</th>
+<th data-field="postcode" class="sortable">Postcode</th>
+<th data-field="country" class="sortable">Country</th>
+
+<th data-field="areInitiated" class="sortable">Are Initiated</th>
+<th data-field="initiatedName" class="sortable">Initiated Name</th>
+<th data-field="initiationStatus" class="sortable">Initiation Status</th>
+<th data-field="placeOfInitiation" class="sortable">Place of Initiation</th>
+<th data-field="initiationDate" class="sortable">Initiation Date</th>
+
+<th data-field="shikshaGuru" class="sortable">Siksha Guru / Mentor</th>
+<th data-field="dikshaGuru" class="sortable">Diksha Guru</th>
+
+<th data-field="submissionDate" class="sortable">Submission Date</th>
+<th data-field="lastUpdatedDate" class="sortable">Last Updated</th>
+
         </tr>
       </thead>
       <tbody></tbody>
@@ -1028,70 +1039,127 @@ function formatTimestamp(ts) {
   return `${dd}-${mmm}-${yyyy}`;
 }
 
+/* ------------------------------------------------------------
+     RENDER ADMIN TABLE (supports sorting + search)
+------------------------------------------------------------ */
+function renderTable(list = devotees) {
+  const tbody = document.querySelector("#devoteeTable tbody");
+  tbody.innerHTML = "";
 
-  /* ------------------------------------------------------------
-     RENDER ADMIN TABLE
-  ------------------------------------------------------------ */
-  function renderTable() {
-    const tbody = document.querySelector("#devoteeTable tbody");
-    tbody.innerHTML = "";
+  list.forEach((d, index) => {
+    const row = document.createElement("tr");
 
-    devotees.forEach((d, index) => {
-      const row = document.createElement("tr");
+    // Checkbox
+    const checkboxTd = document.createElement("td");
+    checkboxTd.innerHTML = `<input type="checkbox" class="row-select" data-index="${index}">`;
+    row.appendChild(checkboxTd);
 
-      const checkboxTd = document.createElement("td");
-      checkboxTd.innerHTML = `<input type="checkbox" class="row-select" data-index="${index}">`;
-      row.appendChild(checkboxTd);
+    // Edit button
+    const editTd = document.createElement("td");
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.style.padding = "4px 8px";
+    editBtn.style.borderRadius = "12px";
+    editBtn.style.border = "none";
+    editBtn.style.background = "#74b9ff";
+    editBtn.style.color = "#fff";
+    editBtn.style.cursor = "pointer";
+    editBtn.onclick = () => openEditModal(index);
+    editTd.appendChild(editBtn);
+    row.appendChild(editTd);
 
-      const editTd = document.createElement("td");
-      const editBtn = document.createElement("button");
-      editBtn.textContent = "Edit";
-      editBtn.style.padding = "4px 8px";
-      editBtn.style.borderRadius = "12px";
-      editBtn.style.border = "none";
-      editBtn.style.background = "#74b9ff";
-      editBtn.style.color = "#fff";
-      editBtn.style.cursor = "pointer";
-      editBtn.onclick = () => openEditModal(index);
-      editTd.appendChild(editBtn);
-      row.appendChild(editTd);
+    // Data cells
+    const cells = [
+      d.firstName || "",
+      d.lastName || "",
+      d.fullName || "",
+      d.email || "",
+      d.gender || "",
+      formatDOB(d.dob || ""),
+      d.passport || "",
+      d.mobile || "",
+      d.familyHead || "",
+      d.addrLine1 || "",
+      d.addrLine2 || "",
+      d.city || "",
+      d.state || "",
+      d.postcode || "",
+      d.country || "",
+      d.areInitiated || "",
+      d.initiatedName || "",
+      d.initiationStatus || "",
+      d.placeOfInitiation || "",
+      formatDOB(d.initiationDate || ""),
+      d.shikshaGuru || "",
+      d.dikshaGuru || "",
+      formatTimestamp(d.submissionDate),
+      formatTimestamp(d.lastUpdatedDate)
+    ];
 
-      const cells = [
-        d.firstName || "",
-        d.lastName || "",
-        d.fullName || "",
-        d.email || "",
-        d.gender || "",
-        formatDOB(d.dob || ""),
-        d.passport || "",
-        d.mobile || "",
-        d.familyHead || "",
-        d.addrLine1 || "",
-        d.addrLine2 || "",
-        d.city || "",
-        d.state || "",
-        d.postcode || "",
-        d.country || "",
-        d.areInitiated || "",
-        d.initiatedName || "",
-        d.initiationStatus || "",
-        d.placeOfInitiation || "",
-        formatDOB(d.initiationDate || ""),
-        d.shikshaGuru || "",
-        d.dikshaGuru || "",
-        formatTimestamp(d.submissionDate),
-        formatTimestamp(d.lastUpdatedDate)
-      ];
-
-      cells.forEach(val => {
-        const td = document.createElement("td");
-        td.textContent = val;
-        row.appendChild(td);
-      });
-
-      tbody.appendChild(row);
+    cells.forEach(val => {
+      const td = document.createElement("td");
+      td.textContent = val;
+      row.appendChild(td);
     });
-  }
+
+    tbody.appendChild(row);
+  });
+}
+
+/* ------------------------------------------------------------
+     SEARCH + SORT LOGIC (Patch C)
+------------------------------------------------------------ */
+
+let currentSortField = null;
+let currentSortDirection = 1; // 1 = asc, -1 = desc
+
+// SEARCH BAR LISTENER
+document.getElementById("adminSearchInput").addEventListener("input", function () {
+  const q = this.value.toLowerCase();
+
+  const filtered = devotees.filter(d => {
+    return Object.values(d).some(v =>
+      String(v || "").toLowerCase().includes(q)
+    );
+  });
+
+  renderTable(filtered);
+});
+
+// SORTING HANDLER
+document.querySelectorAll(".sortable").forEach(th => {
+  th.addEventListener("click", () => {
+    const field = th.dataset.field;
+
+    if (currentSortField === field) {
+      currentSortDirection *= -1; // reverse direction
+    } else {
+      currentSortField = field;
+      currentSortDirection = 1;
+    }
+
+    devotees.sort((a, b) => {
+      let A = a[field] || "";
+      let B = b[field] || "";
+
+      // Date sorting
+      if (["dob", "initiationDate", "submissionDate", "lastUpdatedDate"].includes(field)) {
+        return (new Date(A) - new Date(B)) * currentSortDirection;
+      }
+
+      // Number sorting
+      if (field === "postcode") {
+        return (parseInt(A) - parseInt(B)) * currentSortDirection;
+      }
+
+      // Text sorting
+      return A.toString().localeCompare(B.toString()) * currentSortDirection;
+    });
+
+    renderTable();
+  });
+});
+
   /* ------------------------------------------------------------
      DELETE SELECTED
   ------------------------------------------------------------ */
