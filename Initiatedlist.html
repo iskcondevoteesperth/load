@@ -13,6 +13,21 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <style>
+
+	/* Narrower Country column */
+#devoteeTable th:nth-child(16),
+#devoteeTable td:nth-child(16) {
+  max-width: 80px;
+  width: 80px;
+}
+/* Diksha Guru column half width */
+#devoteeTable th:nth-child(24),
+#devoteeTable td:nth-child(24) {
+  max-width: 90px;
+  width: 90px;
+}
+
+
     body {
       margin: 0;
       font-family: "Segoe UI", sans-serif;
@@ -169,7 +184,7 @@
       border-radius: 6px;
       border: 1px solid #b2bec3;
       background: #fffdf8;
-      cursor: pointer;
+      cursor: default;
     }
 
     .country-options {
@@ -238,6 +253,73 @@
       border-radius: 6px;
       border: 1px solid #b2bec3;
     }
+
+    .disabled-field {
+      background: #eee;
+    }
+
+    /* Edit modal */
+    .edit-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2100;
+    }
+    .edit-modal {
+      background: #fff;
+      padding: 16px 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .edit-modal h3 {
+      margin-top: 0;
+    }
+    .edit-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .edit-row > div {
+      flex: 1;
+    }
+    .edit-modal label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+    .edit-modal input, .edit-modal select {
+      width: 100%;
+      padding: 5px 7px;
+      border-radius: 6px;
+      border: 1px solid #b2bec3;
+    }
+    .edit-modal-buttons {
+      margin-top: 10px;
+      text-align: right;
+    }
+    .edit-modal-buttons button {
+      margin-left: 8px;
+      padding: 6px 14px;
+      border-radius: 18px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .edit-save-btn {
+      background: #27ae60;
+      color: #fff;
+    }
+    .edit-cancel-btn {
+      background: #777;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -259,48 +341,51 @@
   <h2 style="margin-bottom:0;">Welcome to ISKCON Perth</h2>
 </div>
 
-
-
-
   <!-- ===================== ADMIN VIEW ===================== -->
   <div id="adminView" class="card hidden">
     <h2>Admin Dashboard</h2>
 
-<div class="admin-controls">
-  <button id="deleteSelectedBtn">Delete Selected</button>
-  <button id="exportAllCsvBtn">Export to .csv</button>
-  <button id="exportAllXlsxBtn">Export to .xlsx</button>
-  <button id="exportAllPdfBtn">Export to PDF</button>
-</div>
-<table id="devoteeTable">
-  <thead>
-    <tr>
-      <th></th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Full Name</th>
-      <th>Gender</th>
-      <th>DOB</th>
-      <th>Passport</th>
-      <th>Mobile</th>
-      <th>Family Head</th>
-      <th>Addr1</th>
-      <th>Addr2</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Country</th>
-      <th>Are Initiated</th>
-      <th>Initiation Status</th>
-      <th>Place of Initiation</th>
-      <th>Initiation Date</th>
-      <th>Shiksha Guru</th>
-      <th>Diksha Guru</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
-  </div>
+    <div class="admin-controls">
+      <button id="deleteSelectedBtn">Delete Selected</button>
+      <button id="exportAllCsvBtn">Export to .csv</button>
+      <button id="exportAllXlsxBtn">Export to .xlsx</button>
+      <button id="exportAllPdfBtn">Export to PDF</button>
+    </div>
 
+    <table id="devoteeTable">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Edit</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Full Name as per passport</th>
+          <th>Email</th>
+          <th>Gender</th>
+          <th>DOB</th>
+          <th>Passport</th>
+          <th>Mobile</th>
+          <th>Family Head</th>
+          <th>Addr1</th>
+          <th>Addr2</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Postcode</th>
+          <th>Country</th>
+          <th>Are Initiated</th>
+          <th>Initiated Name</th>
+          <th>Initiation Status</th>
+          <th>Place of Initiation</th>
+          <th>Initiation Date</th>
+          <th>Siksha Guru / Mentor</th>
+          <th>Diksha Guru</th>
+          <th>Submission Date</th>
+          <th>Last Updated</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
   <!-- ===================== USER VIEW ===================== -->
   <div id="userView" class="card">
     <h2>Dear Devotee, please fill the below details</h2>
@@ -312,24 +397,30 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label>First Name *</label>
+          <label>First Name (as per passport) *</label>
           <input type="text" id="firstName">
           <div class="error" id="firstNameError"></div>
         </div>
 
         <div class="form-group">
-          <label>Last Name *</label>
+          <label>Last Name (as per passport) *</label>
           <input type="text" id="lastName">
           <div class="error" id="lastNameError"></div>
         </div>
 
         <div class="form-group">
-          <label>Full Name</label>
+          <label>Full Name as per passport</label>
           <input type="text" id="fullName">
         </div>
       </div>
 
       <div class="form-row">
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" id="email">
+          <div class="error" id="emailError"></div>
+        </div>
+
         <div class="form-group">
           <label>Gender</label>
           <select id="gender">
@@ -345,32 +436,30 @@
           <input type="date" id="dob">
           <div class="error" id="dobError"></div>
         </div>
+      </div>
 
+      <div class="form-row">
         <div class="form-group">
           <label>Passport Number *</label>
           <input type="text" id="passportNumber">
           <div class="error" id="passportNumberError"></div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>Mobile Number *</label>
-        <div style="display:flex; gap:8px; align-items:center;">
-          <div class="country-select">
-            <input type="text" id="countryCodeInput" placeholder="Code" readonly>
-            <div class="country-options" id="countryOptions">
-              <div class="country-option" data-code="+61">
-                <span class="flag">🇦🇺</span> +61 Australia
-              </div>
-              <div class="country-option" data-code="+91">
-                <span class="flag">🇮🇳</span> +91 India
+        <div class="form-group">
+          <label>Mobile Number (Australia only) *</label>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <div class="country-select">
+              <input type="text" id="countryCodeInput" value="+61" readonly>
+              <div class="country-options" id="countryOptions">
+                <div class="country-option" data-code="+61">
+                  <span class="flag">🇦🇺</span> +61 Australia
+                </div>
               </div>
             </div>
+            <input type="text" id="mobileNumber" placeholder="04xx xxx xxx" style="width:140px;">
           </div>
-
-          <input type="text" id="mobileNumber" placeholder="Mobile" style="width:140px;">
+          <div class="error" id="mobileError"></div>
         </div>
-        <div class="error" id="mobileError"></div>
       </div>
 
       <div class="checkbox-group">
@@ -405,11 +494,16 @@
         </div>
 
         <div class="form-group">
+          <label>Postcode</label>
+          <input type="text" id="postcode">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
           <label>Country</label>
           <select id="country">
-            <option value="">Select</option>
             <option value="Australia">🇦🇺 Australia</option>
-            <option value="India">🇮🇳 India</option>
           </select>
         </div>
       </div>
@@ -428,32 +522,39 @@
         </div>
 
         <div class="form-group">
+          <label>Initiated Name</label>
+          <input type="text" id="initiatedName" class="init-field">
+        </div>
+
+        <div class="form-group">
           <label>Initiation Status</label>
-          <select id="initiationStatus">
+          <select id="initiationStatus" class="init-field">
             <option value="">Select</option>
             <option>First</option>
             <option>Second</option>
             <option>No</option>
           </select>
         </div>
-
-        <div class="form-group">
-          <label>Place of Initiation</label>
-          <input type="text" id="placeOfInitiation">
-        </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label>Date of Initiation</label>
-          <input type="date" id="initiationDate">
+          <label>Place of Initiation</label>
+          <input type="text" id="placeOfInitiation" class="init-field">
         </div>
 
         <div class="form-group">
-          <label>Shiksha Guru Name</label>
-          <input type="text" id="shikshaGuru">
+          <label>Date of Initiation</label>
+          <input type="date" id="initiationDate" class="init-field">
         </div>
 
+        <div class="form-group">
+          <label>Siksha Guru / Mentor (optional)</label>
+          <input type="text" id="shikshaGuru">
+        </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
           <label>Diksha Guru Name</label>
           <input type="text" id="dikshaGuru">
@@ -488,6 +589,138 @@
     <button id="adminLoginBtn">Login</button>
   </div>
 </div>
+
+<!-- EDIT MODAL -->
+<div id="editModalBackdrop" class="edit-modal-backdrop">
+  <div class="edit-modal">
+    <h3>Edit Devotee</h3>
+    <form id="editForm">
+      <div class="edit-row">
+        <div>
+          <label>First Name</label>
+          <input type="text" id="edit_firstName">
+        </div>
+        <div>
+          <label>Last Name</label>
+          <input type="text" id="edit_lastName">
+        </div>
+      </div>
+
+      <div class="edit-row">
+        <div>
+          <label>Full Name as per passport</label>
+          <input type="text" id="edit_fullName">
+        </div>
+        <div>
+          <label>Email</label>
+          <input type="email" id="edit_email">
+        </div>
+      </div>
+
+      <div class="edit-row">
+        <div>
+          <label>Gender</label>
+          <input type="text" id="edit_gender">
+        </div>
+        <div>
+          <label>DOB</label>
+          <input type="date" id="edit_dob">
+        </div>
+      </div>
+
+      <div class="edit-row">
+        <div>
+          <label>Passport</label>
+          <input type="text" id="edit_passport">
+        </div>
+        <div>
+          <label>Mobile</label>
+          <input type="text" id="edit_mobile">
+        </div>
+      </div>
+
+      <div class="edit-row">
+        <div>
+          <label>Family Head</label>
+          <input type="text" id="edit_familyHead">
+        </div>
+        <div>
+          <label>Country</label>
+          <input type="text" id="edit_country">
+        </div>
+      </div>
+
+      <div class="edit-row">
+        <div>
+          <label>Address Line 1</label>
+          <input type="text" id="edit_addrLine1">
+        </div>
+        <div>
+          <label>Address Line 2</label>
+          <input type="text" id="edit_addrLine2">
+        </div>
+      </div>
+
+      <div class="edit-row">
+        <div>
+          <label>City</label>
+          <input type="text" id="edit_city">
+        </div>
+        <div>
+          <label>State</label>
+          <input type="text" id="edit_state">
+        </div>
+        <div>
+          <label>Postcode</label>
+          <input type="text" id="edit_postcode">
+        </div>
+      </div>
+
+      <div class="edit-row">
+        <div>
+          <label>Are Initiated</label>
+          <input type="text" id="edit_areInitiated">
+        </div>
+        <div>
+          <label>Initiated Name</label>
+          <input type="text" id="edit_initiatedName">
+        </div>
+      </div>
+
+      <div class="edit-row">
+        <div>
+          <label>Initiation Status</label>
+          <input type="text" id="edit_initiationStatus">
+        </div>
+        <div>
+          <label>Place of Initiation</label>
+          <input type="text" id="edit_placeOfInitiation">
+        </div>
+      </div>
+
+      <div class="edit-row">
+        <div>
+          <label>Initiation Date</label>
+          <input type="date" id="edit_initiationDate">
+        </div>
+        <div>
+          <label>Siksha Guru / Mentor</label>
+          <input type="text" id="edit_shikshaGuru">
+        </div>
+        <div>
+          <label>Diksha Guru</label>
+          <input type="text" id="edit_dikshaGuru">
+        </div>
+      </div>
+
+      <div class="edit-modal-buttons">
+        <button type="button" class="edit-cancel-btn" id="editCancelBtn">Cancel</button>
+        <button type="submit" class="edit-save-btn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script>
 /* ============================================================
    FIREBASE INITIALIZATION
@@ -542,21 +775,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let devotees = [];
   let devoteesKeys = [];
+  let currentEditKey = null;
 
   /* ------------------------------------------------------------
-     COUNTRY CODE DROPDOWN
+     COUNTRY CODE DROPDOWN (Australia only)
   ------------------------------------------------------------ */
   if (countryCodeInput && countryOptions) {
     countryCodeInput.onclick = () => {
+      // Only Australia; no search needed
       countryOptions.style.display = "block";
-      countryCodeInput.value = "";
-    };
-
-    countryCodeInput.onkeyup = () => {
-      const filter = countryCodeInput.value.toLowerCase();
-      countryOptions.querySelectorAll(".country-option").forEach(opt => {
-        opt.style.display = opt.textContent.toLowerCase().includes(filter) ? "flex" : "none";
-      });
     };
 
     document.addEventListener("click", (e) => {
@@ -585,6 +812,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ------------------------------------------------------------
+     INITIATION FIELDS ENABLE/DISABLE
+  ------------------------------------------------------------ */
+  const areInitiatedEl = document.getElementById("areInitiated");
+  const initFields = document.querySelectorAll(".init-field");
+
+  function updateInitiationFields() {
+    const val = (areInitiatedEl.value || "").toUpperCase();
+    const disabled = (val === "NO");
+    initFields.forEach(el => {
+      el.disabled = disabled;
+      if (disabled) {
+        el.classList.add("disabled-field");
+        el.value = "";
+      } else {
+        el.classList.remove("disabled-field");
+      }
+    });
+  }
+
+  areInitiatedEl.addEventListener("change", updateInitiationFields);
+  updateInitiationFields();
+  /* ------------------------------------------------------------
      FORM SUBMISSION
   ------------------------------------------------------------ */
   form.onsubmit = async (e) => {
@@ -596,17 +845,18 @@ document.addEventListener("DOMContentLoaded", () => {
       ["firstName", "First name is required"],
       ["lastName", "Last name is required"],
       ["dob", "Date of birth is required"],
-      ["passportNumber", "Passport number is required"]
+      ["passportNumber", "Passport number is required"],
+      ["email", "Email is required"]
     ];
 
     required.forEach(([id, msg]) => {
       const input = document.getElementById(id);
       const error = document.getElementById(id + "Error");
       if (!input.value.trim()) {
-        error.textContent = msg;
+        if (error) error.textContent = msg;
         valid = false;
       } else {
-        error.textContent = "";
+        if (error) error.textContent = "";
       }
     });
 
@@ -620,23 +870,12 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileError.textContent = "Mobile number with country code is required";
       valid = false;
     } else {
-      if (countryCode === "+61") {
-        const formatted = formatAustralianMobile(mobileNumber);
-        if (!formatted) {
-          mobileError.textContent = "Australian mobile must be 10 digits and start with 04";
-          valid = false;
-        } else {
-          mobileNumberEl.value = formatted;
-          mobileError.textContent = "";
-        }
-      } else if (countryCode === "+91") {
-        if (!/^\d{10}$/.test(mobileNumber)) {
-          mobileError.textContent = "Indian mobile must be 10 digits";
-          valid = false;
-        } else {
-          mobileError.textContent = "";
-        }
+      const formatted = formatAustralianMobile(mobileNumber);
+      if (!formatted) {
+        mobileError.textContent = "Australian mobile must be 10 digits and start with 04";
+        valid = false;
       } else {
+        mobileNumberEl.value = formatted;
         mobileError.textContent = "";
       }
     }
@@ -649,16 +888,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const first = document.getElementById("firstName").value.trim();
     const last = document.getElementById("lastName").value.trim();
     const fullNameInput = document.getElementById("fullName").value.trim();
-
     const fullName = fullNameInput || `${first} ${last}`.trim();
 
     /* ------------------------------------------------------------
        DATA OBJECT
     ------------------------------------------------------------ */
+    const now = Date.now();
+
     const data = {
       firstName: first,
       lastName: last,
       fullName,
+      email: document.getElementById("email").value.trim(),
       gender: document.getElementById("gender").value,
       dob: document.getElementById("dob").value,
       passport: document.getElementById("passportNumber").value.trim(),
@@ -668,13 +909,17 @@ document.addEventListener("DOMContentLoaded", () => {
       addrLine2: document.getElementById("addrLine2").value.trim(),
       city: document.getElementById("city").value.trim(),
       state: document.getElementById("state").value.trim(),
+      postcode: document.getElementById("postcode").value.trim(),
       country: document.getElementById("country").value,
       areInitiated: document.getElementById("areInitiated").value,
+      initiatedName: document.getElementById("initiatedName").value.trim(),
       initiationStatus: document.getElementById("initiationStatus").value,
       placeOfInitiation: document.getElementById("placeOfInitiation").value.trim(),
       initiationDate: document.getElementById("initiationDate").value,
       shikshaGuru: document.getElementById("shikshaGuru").value.trim(),
-      dikshaGuru: document.getElementById("dikshaGuru").value.trim()
+      dikshaGuru: document.getElementById("dikshaGuru").value.trim(),
+      submissionDate: now,
+      lastUpdatedDate: now
     };
 
     /* ------------------------------------------------------------
@@ -685,8 +930,9 @@ document.addEventListener("DOMContentLoaded", () => {
       await ref.set(data);
 
       form.reset();
-      countryCodeInput.value = "";
+      countryCodeInput.value = "+61";
       document.querySelectorAll(".error").forEach(e => e.textContent = "");
+      updateInitiationFields();
 
       successModalBackdrop.style.display = "flex";
     } catch (err) {
@@ -700,8 +946,9 @@ document.addEventListener("DOMContentLoaded", () => {
   ------------------------------------------------------------ */
   resetBtn.onclick = () => {
     form.reset();
-    countryCodeInput.value = "";
+    countryCodeInput.value = "+61";
     document.querySelectorAll(".error").forEach(e => e.textContent = "");
+    updateInitiationFields();
   };
 
   successCloseBtn.onclick = () => {
@@ -742,131 +989,109 @@ document.addEventListener("DOMContentLoaded", () => {
     if (welcomeMessage) welcomeMessage.style.display = "none";
   };
 
- /* ------------------------------------------------------------
+  /* ------------------------------------------------------------
      LOAD DATA FOR ADMIN TABLE
------------------------------------------------------------- */
-function loadFromDatabase() {
-  db.ref("devotees").once("value", (snapshot) => {
-    devotees = [];
-    devoteesKeys = [];
-    snapshot.forEach(child => {
-      devoteesKeys.push(child.key);
-      devotees.push(child.val());
+  ------------------------------------------------------------ */
+  function loadFromDatabase() {
+    db.ref("devotees").once("value", (snapshot) => {
+      devotees = [];
+      devoteesKeys = [];
+      snapshot.forEach(child => {
+        devoteesKeys.push(child.key);
+        devotees.push(child.val());
+      });
+      renderTable();
     });
-    renderTable();
-  });
-}
+  }
 
-/* ------------------------------------------------------------
-     FORMAT DOB (DD-MMM-YYYY)
------------------------------------------------------------- */
-function formatDOB(dateStr) {
-  if (!dateStr) return "";
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const [yyyy, mm, dd] = dateStr.split("-");
-  return `${dd}-${months[parseInt(mm, 10) - 1]}-${yyyy}`;
-}
+  /* ------------------------------------------------------------
+     FORMAT DOB (DD-MMM-YYYY) & TIMESTAMP
+  ------------------------------------------------------------ */
+  function formatDOB(dateStr) {
+    if (!dateStr) return "";
+    const parts = dateStr.split("-");
+    if (parts.length !== 3) return dateStr;
+    const [yyyy, mm, dd] = parts;
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const mIndex = parseInt(mm, 10) - 1;
+    if (isNaN(mIndex) || mIndex < 0 || mIndex > 11) return dateStr;
+    return `${dd}-${months[mIndex]}-${yyyy}`;
+  }
 
-/* ------------------------------------------------------------
-     RENDER ADMIN TABLE
------------------------------------------------------------- */
-function renderTable() {
-  const tbody = document.querySelector("#devoteeTable tbody");
-  tbody.innerHTML = "";
-
-  devotees.forEach((d, index) => {
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-      <td><input type="checkbox" class="row-select" data-index="${index}"></td>
-      <td>${d.firstName || ""}</td>
-      <td>${d.lastName || ""}</td>
-      <td>${d.fullName || ""}</td>
-      <td>${d.gender || ""}</td>
-      <td>${formatDOB(d.dob)}</td>
-      <td>${d.passport || ""}</td>
-      <td>${d.mobile || ""}</td>
-      <td>${d.familyHead || ""}</td>
-      <td>${d.addrLine1 || ""}</td>
-      <td>${d.addrLine2 || ""}</td>
-      <td>${d.city || ""}</td>
-      <td>${d.state || ""}</td>
-      <td>${d.country || ""}</td>
-      <td>${d.areInitiated || ""}</td>
-      <td>${d.initiationStatus || ""}</td>
-      <td>${d.placeOfInitiation || ""}</td>
-      <td>${formatDOB(d.initiationDate)}</td>
-      <td>${d.shikshaGuru || ""}</td>
-      <td>${d.dikshaGuru || ""}</td>
-    `;
-
-    tbody.appendChild(row);
-  });
+function formatTimestamp(ts) {
+  if (!ts) return "";
+  const d = new Date(ts);
+  const dd = String(d.getDate()).padStart(2, "0");
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const mmm = months[d.getMonth()];
+  const yyyy = d.getFullYear();
+  return `${dd}-${mmm}-${yyyy}`;
 }
 
 
   /* ------------------------------------------------------------
-     EXPORT FUNCTIONS
+     RENDER ADMIN TABLE
   ------------------------------------------------------------ */
-  function exportCSV(rows) {
-    let csv = "First Name,Last Name,Full Name,Gender,DOB,Passport,Mobile,Family Head,Addr1,Addr2,City,State,Country,Are Initiated,Initiation Status,Place of Initiation,Initiation Date,Shiksha Guru,Diksha Guru\n";
-    rows.forEach(r => {
-      csv += [
-        r.firstName || "",
-        r.lastName || "",
-        r.fullName || "",
-        r.gender || "",
-        r.dob || "",
-        r.passport || "",
-        r.mobile || "",
-        r.familyHead || "",
-        r.addrLine1 || "",
-        r.addrLine2 || "",
-        r.city || "",
-        r.state || "",
-        r.country || "",
-        r.areInitiated || "",
-        r.initiationStatus || "",
-        r.placeOfInitiation || "",
-        r.initiationDate || "",
-        r.shikshaGuru || "",
-        r.dikshaGuru || ""
-      ].join(",") + "\n";
+  function renderTable() {
+    const tbody = document.querySelector("#devoteeTable tbody");
+    tbody.innerHTML = "";
+
+    devotees.forEach((d, index) => {
+      const row = document.createElement("tr");
+
+      const checkboxTd = document.createElement("td");
+      checkboxTd.innerHTML = `<input type="checkbox" class="row-select" data-index="${index}">`;
+      row.appendChild(checkboxTd);
+
+      const editTd = document.createElement("td");
+      const editBtn = document.createElement("button");
+      editBtn.textContent = "Edit";
+      editBtn.style.padding = "4px 8px";
+      editBtn.style.borderRadius = "12px";
+      editBtn.style.border = "none";
+      editBtn.style.background = "#74b9ff";
+      editBtn.style.color = "#fff";
+      editBtn.style.cursor = "pointer";
+      editBtn.onclick = () => openEditModal(index);
+      editTd.appendChild(editBtn);
+      row.appendChild(editTd);
+
+      const cells = [
+        d.firstName || "",
+        d.lastName || "",
+        d.fullName || "",
+        d.email || "",
+        d.gender || "",
+        formatDOB(d.dob || ""),
+        d.passport || "",
+        d.mobile || "",
+        d.familyHead || "",
+        d.addrLine1 || "",
+        d.addrLine2 || "",
+        d.city || "",
+        d.state || "",
+        d.postcode || "",
+        d.country || "",
+        d.areInitiated || "",
+        d.initiatedName || "",
+        d.initiationStatus || "",
+        d.placeOfInitiation || "",
+        formatDOB(d.initiationDate || ""),
+        d.shikshaGuru || "",
+        d.dikshaGuru || "",
+        formatTimestamp(d.submissionDate),
+        formatTimestamp(d.lastUpdatedDate)
+      ];
+
+      cells.forEach(val => {
+        const td = document.createElement("td");
+        td.textContent = val;
+        row.appendChild(td);
+      });
+
+      tbody.appendChild(row);
     });
-
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "devotees.csv";
-    a.click();
   }
-
-  function exportExcel(rows) {
-    const ws = XLSX.utils.json_to_sheet(rows);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Devotees");
-    XLSX.writeFile(wb, "devotees.xlsx");
-  }
-
-  function exportPDF(rows) {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    let y = 10;
-    rows.forEach((r, i) => {
-      const line = `${i+1}. ${r.fullName || ""} | ${r.mobile || ""} | ${r.initiationStatus || ""}`;
-      doc.text(line, 10, y);
-      y += 8;
-      if (y > 280) {
-        doc.addPage();
-        y = 10;
-      }
-    });
-
-    doc.save("devotees.pdf");
-  }
-
   /* ------------------------------------------------------------
      DELETE SELECTED
   ------------------------------------------------------------ */
@@ -883,105 +1108,331 @@ function renderTable() {
     setTimeout(() => loadFromDatabase(), 500);
   };
 
-/* ------------------------------------------------------------
-   EXPORT FUNCTIONS
------------------------------------------------------------- */
+  /* ------------------------------------------------------------
+     EDIT MODAL LOGIC
+  ------------------------------------------------------------ */
+  const editModalBackdrop = document.getElementById("editModalBackdrop");
+  const editForm = document.getElementById("editForm");
+  const editCancelBtn = document.getElementById("editCancelBtn");
 
-const exportFields = [
-  "firstName", "lastName", "fullName", "gender", "dob", "passport", "mobile", "familyHead",
-  "addrLine1", "addrLine2", "city", "state", "country",
-  "areInitiated", "initiationStatus", "placeOfInitiation", "initiationDate",
-  "shikshaGuru", "dikshaGuru"
-];
+  function openEditModal(index) {
+    const d = devotees[index];
+    currentEditKey = devoteesKeys[index];
 
-function exportCSV(rows) {
-  const header = exportFields.join(",");
-  const csvRows = rows.map(r =>
-    exportFields.map(f => `"${(r[f] || "").replace(/"/g, '""')}"`).join(",")
-  );
-  const csv = [header, ...csvRows].join("\n");
+    document.getElementById("edit_firstName").value = d.firstName || "";
+    document.getElementById("edit_lastName").value = d.lastName || "";
+    document.getElementById("edit_fullName").value = d.fullName || "";
+    document.getElementById("edit_email").value = d.email || "";
+    document.getElementById("edit_gender").value = d.gender || "";
+    document.getElementById("edit_dob").value = d.dob || "";
+    document.getElementById("edit_passport").value = d.passport || "";
+    document.getElementById("edit_mobile").value = d.mobile || "";
+    document.getElementById("edit_familyHead").value = d.familyHead || "";
+    document.getElementById("edit_country").value = d.country || "";
+    document.getElementById("edit_addrLine1").value = d.addrLine1 || "";
+    document.getElementById("edit_addrLine2").value = d.addrLine2 || "";
+    document.getElementById("edit_city").value = d.city || "";
+    document.getElementById("edit_state").value = d.state || "";
+    document.getElementById("edit_postcode").value = d.postcode || "";
+    document.getElementById("edit_areInitiated").value = d.areInitiated || "";
+    document.getElementById("edit_initiatedName").value = d.initiatedName || "";
+    document.getElementById("edit_initiationStatus").value = d.initiationStatus || "";
+    document.getElementById("edit_placeOfInitiation").value = d.placeOfInitiation || "";
+    document.getElementById("edit_initiationDate").value = d.initiationDate || "";
+    document.getElementById("edit_shikshaGuru").value = d.shikshaGuru || "";
+    document.getElementById("edit_dikshaGuru").value = d.dikshaGuru || "";
 
-  const blob = new Blob([csv], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "devotees.csv";
-  a.click();
-}
+    editModalBackdrop.style.display = "flex";
+  }
 
-function exportExcel(rows) {
-  const formatted = rows.map(r => {
-    const obj = {};
-    exportFields.forEach(f => obj[f] = r[f] || "");
-    return obj;
+  editCancelBtn.onclick = () => {
+    editModalBackdrop.style.display = "none";
+    currentEditKey = null;
+  };
+
+  editForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!currentEditKey) return;
+
+    const updated = {
+      firstName: document.getElementById("edit_firstName").value.trim(),
+      lastName: document.getElementById("edit_lastName").value.trim(),
+      fullName: document.getElementById("edit_fullName").value.trim(),
+      email: document.getElementById("edit_email").value.trim(),
+      gender: document.getElementById("edit_gender").value.trim(),
+      dob: document.getElementById("edit_dob").value,
+      passport: document.getElementById("edit_passport").value.trim(),
+      mobile: document.getElementById("edit_mobile").value.trim(),
+      familyHead: document.getElementById("edit_familyHead").value.trim(),
+      country: document.getElementById("edit_country").value.trim(),
+      addrLine1: document.getElementById("edit_addrLine1").value.trim(),
+      addrLine2: document.getElementById("edit_addrLine2").value.trim(),
+      city: document.getElementById("edit_city").value.trim(),
+      state: document.getElementById("edit_state").value.trim(),
+      postcode: document.getElementById("edit_postcode").value.trim(),
+      areInitiated: document.getElementById("edit_areInitiated").value.trim(),
+      initiatedName: document.getElementById("edit_initiatedName").value.trim(),
+      initiationStatus: document.getElementById("edit_initiationStatus").value.trim(),
+      placeOfInitiation: document.getElementById("edit_placeOfInitiation").value.trim(),
+      initiationDate: document.getElementById("edit_initiationDate").value,
+      shikshaGuru: document.getElementById("edit_shikshaGuru").value.trim(),
+      dikshaGuru: document.getElementById("edit_dikshaGuru").value.trim(),
+      lastUpdatedDate: Date.now()
+    };
+
+    db.ref("devotees/" + currentEditKey).update(updated)
+      .then(() => {
+        editModalBackdrop.style.display = "none";
+        currentEditKey = null;
+        loadFromDatabase();
+      })
+      .catch(err => console.error(err));
   });
 
-  const ws = XLSX.utils.json_to_sheet(formatted, { header: exportFields });
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Devotees");
-  XLSX.writeFile(wb, "devotees.xlsx");
-}
+  /* ------------------------------------------------------------
+     EXPORT FUNCTIONS
+  ------------------------------------------------------------ */
 
-/* ------------------------------------------------------------
-   PDF EXPORT — WITH BOLD GURU NAMES + DEVOTIONAL FOOTER
------------------------------------------------------------- */
+  const exportFields = [
+    "firstName", "lastName", "fullName", "email", "gender", "dob", "passport", "mobile", "familyHead",
+    "addrLine1", "addrLine2", "city", "state", "postcode", "country",
+    "areInitiated", "initiatedName", "initiationStatus", "placeOfInitiation", "initiationDate",
+    "shikshaGuru", "dikshaGuru", "submissionDate", "lastUpdatedDate"
+  ];
 
-function exportPDF(rows) {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  // Export to CSV
+  function exportCSV(rows) {
+    const header = exportFields.join(",");
 
-  let y = 20;
+    const csvRows = rows.map(r => {
+      const obj = {};
+      exportFields.forEach(f => {
+        if (f === "dob" || f === "initiationDate") {
+          obj[f] = formatDOB(r[f] || "");
+        } else if (f === "submissionDate" || f === "lastUpdatedDate") {
+          obj[f] = formatTimestamp(r[f]);
+        } else {
+          obj[f] = r[f] || "";
+        }
+      });
+      return exportFields.map(f => `"${String(obj[f]).replace(/"/g, '""')}"`).join(",");
+    });
 
-  // Title
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(14);
-  doc.text("Devotee List", 10, 10);
+    const csv = [header, ...csvRows].join("\n");
 
-  rows.forEach((r, i) => {
-    // Normal line
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(11);
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "devotees.csv";
+    a.click();
+  }
 
-    const line = `${i + 1}. ${r.firstName || ""} ${r.lastName || ""} | ${r.mobile || ""} | ${r.initiationStatus || ""}`;
-    doc.text(line, 10, y);
+  // Export to Excel
+  function exportExcel(rows) {
+    const formatted = rows.map(r => {
+      const obj = {};
+      exportFields.forEach(f => {
+        if (f === "dob" || f === "initiationDate") {
+          obj[f] = formatDOB(r[f] || "");
+        } else if (f === "submissionDate" || f === "lastUpdatedDate") {
+          obj[f] = formatTimestamp(r[f]);
+        } else {
+          obj[f] = r[f] || "";
+        }
+      });
+      return obj;
+    });
 
-    // Guru names in bold
+    const ws = XLSX.utils.json_to_sheet(formatted, { header: exportFields });
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Devotees");
+    XLSX.writeFile(wb, "devotees.xlsx");
+  }
+
+  /* ------------------------------------------------------------
+     PDF EXPORT — WITH BOLD GURU NAMES + DEVOTIONAL FOOTER
+  ------------------------------------------------------------ */
+  function exportPDF(rows) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF("landscape");
+
+    const margin = 10;
+    const rowHeight = 8;
+
+    /* -----------------------------
+       TABLE 1: PERSONAL DETAILS
+    ----------------------------- */
+
+    const headers1 = [
+      "First Name", "Last Name", "Full Name",
+      "Email", "Gender", "DOB", "Passport", "Mobile",
+      "Family Head", "Address 1", "Address 2",
+      "City", "State", "Postcode", "Country"
+    ];
+
+    const fields1 = [
+      "firstName", "lastName", "fullName",
+      "email", "gender", "dob", "passport", "mobile",
+      "familyHead", "addrLine1", "addrLine2",
+      "city", "state", "postcode", "country"
+    ];
+
+    let colWidth1 = 35;
+    let y = 20;
+
+    // Title
     doc.setFont("helvetica", "bold");
-    const guruLine = `Shiksha Guru: ${r.shikshaGuru || ""} | Diksha Guru: ${r.dikshaGuru || ""}`;
-    doc.text(guruLine, 10, y + 6);
+    doc.setFontSize(14);
+    doc.text("Devotee List - Personal Details", margin, 12);
 
-    y += 16;
+    // Header row
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
 
-    // Page break
-    if (y > 260) {
-      addFooter(doc);
-      doc.addPage();
-      y = 20;
-    }
-  });
+    let x = margin;
+    headers1.forEach(h => {
+      doc.text(h, x, y);
+      x += colWidth1;
+    });
 
-  // Final footer
-  addFooter(doc);
+    y += rowHeight;
 
-  doc.save("devotees.pdf");
-}
+    // Data rows
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0);
 
-// Footer function
-function addFooter(doc) {
-  doc.setFont("helvetica", "italic");
-  doc.setFontSize(10);
-  doc.text("Hare Krishna.. All glories to guru and Gaurango", 10, 290);
-}
+    rows.forEach(r => {
+      x = margin;
+      fields1.forEach(f => {
+        let value = r[f] || "";
+        if (f === "dob") value = formatDOB(r[f] || "");
+        doc.text(String(value), x, y);
+        x += colWidth1;
+      });
+      y += rowHeight;
 
-/* ------------------------------------------------------------
-   EXPORT BUTTONS
------------------------------------------------------------- */
-exportAllCsvBtn.onclick = () => exportCSV(devotees);
-exportAllXlsxBtn.onclick = () => exportExcel(devotees);
-exportAllPdfBtn.onclick = () => exportPDF(devotees);
+      if (y > 190) {
+        addFooter(doc);
+        doc.addPage();
+        y = 20;
+      }
+    });
+
+    addFooter(doc);
+
+    /* -----------------------------
+       TABLE 2: SPIRITUAL DETAILS
+    ----------------------------- */
+
+    doc.addPage();
+    y = 20;
+
+    const headers2 = [
+      "Full Name",
+      "Are Initiated",
+      "Initiated Name",
+      "Initiation Status",
+      "Place of Initiation",
+      "Initiation Date",
+      "Siksha Guru / Mentor",
+      "Diksha Guru",
+      "Submission Date",
+      "Last Updated"
+    ];
+
+    const fields2 = [
+      "fullName",
+      "areInitiated",
+      "initiatedName",
+      "initiationStatus",
+      "placeOfInitiation",
+      "initiationDate",
+      "shikshaGuru",
+      "dikshaGuru",
+      "submissionDate",
+      "lastUpdatedDate"
+    ];
+
+    let colWidth2 = 40;
+
+    // Title
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("Devotee List - Spiritual Details", margin, 12);
+
+    // Header row
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 0);
+
+    x = margin;
+    headers2.forEach(h => {
+      doc.text(h, x, y);
+      x += colWidth2;
+    });
+
+    y += rowHeight;
+
+    // Data rows
+    rows.forEach(r => {
+      x = margin;
+
+      fields2.forEach(f => {
+        let value = r[f] || "";
+
+        if (f === "initiationDate") {
+          value = formatDOB(r[f] || "");
+        } else if (f === "submissionDate" || f === "lastUpdatedDate") {
+          value = formatTimestamp(r[f]);
+        }
+
+        if (f === "shikshaGuru") {
+          doc.setFont("helvetica", "bold");
+          doc.setTextColor(0, 0, 0);
+        } else if (f === "dikshaGuru") {
+          doc.setFont("helvetica", "bold");
+          doc.setTextColor(255, 102, 0); // saffron
+        } else {
+          doc.setFont("helvetica", "normal");
+          doc.setTextColor(0, 0, 0);
+        }
+
+        doc.text(String(value), x, y);
+        x += colWidth2;
+      });
+
+      y += rowHeight;
+
+      if (y > 190) {
+        addFooter(doc);
+        doc.addPage();
+        y = 20;
+      }
+    });
+
+    addFooter(doc);
+
+    doc.save("devotees.pdf");
+  }
+
+  function addFooter(doc) {
+    doc.setFont("helvetica", "italic");
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text("Hare Krishna.. All glories to guru and Gaurango", 10, 200);
+  }
+
+  /* ------------------------------------------------------------
+     EXPORT BUTTONS
+  ------------------------------------------------------------ */
+  exportAllCsvBtn.onclick = () => exportCSV(devotees);
+  exportAllXlsxBtn.onclick = () => exportExcel(devotees);
+  exportAllPdfBtn.onclick = () => exportPDF(devotees);
 
 });
 </script>
 </body>
 </html>
+
 
