@@ -13,8 +13,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <style>
+/* Sorting icons */
+.sortable {
+  cursor: pointer;
+  position: relative;
+  padding-right: 18px;
+}
 
-	/* Narrower Country column */
+.sortable .sort-icon {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: black;
+  opacity: 0.8;
+  font-weight: bold;
+}
+
+/* Narrower Country column */
 #devoteeTable th:nth-child(16),
 #devoteeTable td:nth-child(16) {
   max-width: 80px;
@@ -27,299 +44,298 @@
   width: 90px;
 }
 
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-image: url('https://iskconnewtown.com/wp-content/uploads/2024/02/nitai-gauranga-iskconnewtown-kolkata-6.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
 
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background-image: url('https://iskconnewtown.com/wp-content/uploads/2024/02/nitai-gauranga-iskconnewtown-kolkata-6.jpeg');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
+header {
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  padding: 15px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    header {
-      background: rgba(0,0,0,0.7);
-      color: #fff;
-      padding: 15px 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.view-switch button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  background: #f6e58d;
+  margin-left: 8px;
+}
 
-    .view-switch button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: 600;
-      background: #f6e58d;
-      margin-left: 8px;
-    }
+.view-switch button.active {
+  background: #e17055;
+  color: #fff;
+}
 
-    .view-switch button.active {
-      background: #e17055;
-      color: #fff;
-    }
+main { padding: 25px; }
 
-    main { padding: 25px; }
+.card {
+  background: rgba(255,255,255,0.92);
+  border-radius: 14px;
+  padding: 22px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
 
-    .card {
-      background: rgba(255,255,255,0.92);
-      border-radius: 14px;
-      padding: 22px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+.card#adminView {
+  max-width: 100%;
+  width: 100%;
+}
 
-    .card#adminView {
-      max-width: 100%;
-      width: 100%;
-    }
+.hidden { display: none; }
 
-    .hidden { display: none; }
+.form-section-title {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #e67e22;
+}
 
-    .form-section-title {
-      font-size: 18px;
-      margin-top: 20px;
-      margin-bottom: 8px;
-      font-weight: 700;
-      color: #e67e22;
-    }
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 10px;
+}
 
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 10px;
-    }
+.form-group {
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+}
 
-    .form-group {
-      flex: 1 1 260px;
-      display: flex;
-      flex-direction: column;
-    }
+input, select {
+  padding: 7px 9px;
+  border-radius: 6px;
+  border: 1px solid #b2bec3;
+  background: #fffdf8;
+}
 
-    input, select {
-      padding: 7px 9px;
-      border-radius: 6px;
-      border: 1px solid #b2bec3;
-      background: #fffdf8;
-    }
+.submit-row {
+  margin-top: 20px;
+  text-align: right;
+}
 
-    .submit-row {
-      margin-top: 20px;
-      text-align: right;
-    }
+.submit-row button {
+  padding: 9px 18px;
+  border-radius: 20px;
+  border: none;
+  background: #e17055;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 8px;
+}
 
-    .submit-row button {
-      padding: 9px 18px;
-      border-radius: 20px;
-      border: none;
-      background: #e17055;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-left: 8px;
-    }
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 3px;
+}
 
-    .error {
-      color: red;
-      font-size: 12px;
-      margin-top: 3px;
-    }
+.admin-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
 
-    .admin-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
+.admin-controls button {
+  padding: 7px 14px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  background: #fab1a0;
+  color: #2d3436;
+}
 
-    .admin-controls button {
-      padding: 7px 14px;
-      border-radius: 18px;
-      border: none;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      background: #fab1a0;
-      color: #2d3436;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+  font-size: 13px;
+  table-layout: fixed;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      background: #fff;
-      font-size: 13px;
-      table-layout: fixed;
-    }
+th, td {
+  padding: 10px 12px;
+  border: 1px solid #dfe6e9;
+  vertical-align: top;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  max-width: 180px;
+  min-width: 100px;
+}
 
-    th, td {
-      padding: 10px 12px;
-      border: 1px solid #dfe6e9;
-      vertical-align: top;
-      word-wrap: break-word;
-      white-space: normal;
-      overflow-wrap: break-word;
-      max-width: 180px;
-      min-width: 100px;
-    }
+th {
+  background: #e67e22;
+  color: #fff;
+}
 
-    th {
-      background: #e67e22;
-      color: #fff;
-    }
+.country-select {
+  position: relative;
+  width: 120px;
+}
 
-    .country-select {
-      position: relative;
-      width: 120px;
-    }
+.country-select input {
+  width: 100%;
+  padding: 7px 9px;
+  border-radius: 6px;
+  border: 1px solid #b2bec3;
+  background: #fffdf8;
+  cursor: default;
+}
 
-    .country-select input {
-      width: 100%;
-      padding: 7px 9px;
-      border-radius: 6px;
-      border: 1px solid #b2bec3;
-      background: #fffdf8;
-      cursor: default;
-    }
+.country-options {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+}
 
-    .country-options {
-      position: absolute;
-      top: 38px;
-      left: 0;
-      width: 100%;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      max-height: 180px;
-      overflow-y: auto;
-      z-index: 1000;
-      display: none;
-    }
+.country-option {
+  padding: 6px 10px;
+  cursor: pointer;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
 
-    .country-option {
-      padding: 6px 10px;
-      cursor: pointer;
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
+.flag {
+  font-size: 18px;
+}
 
-    .flag {
-      font-size: 18px;
-    }
+.modal-backdrop,
+.admin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
 
-    .modal-backdrop,
-    .admin-modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
+.modal,
+.admin-modal {
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 10px;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
 
-    .modal,
-    .admin-modal {
-      background: #fff;
-      padding: 20px 24px;
-      border-radius: 10px;
-      max-width: 320px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
+.modal button,
+.admin-modal button {
+  margin-top: 12px;
+  padding: 7px 16px;
+  border-radius: 18px;
+  border: none;
+  background: #e17055;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
 
-    .modal button,
-    .admin-modal button {
-      margin-top: 12px;
-      padding: 7px 16px;
-      border-radius: 18px;
-      border: none;
-      background: #e17055;
-      color: #fff;
-      cursor: pointer;
-      font-weight: 600;
-    }
+.admin-modal input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 7px 9px;
+  border-radius: 6px;
+  border: 1px solid #b2bec3;
+}
 
-    .admin-modal input {
-      width: 100%;
-      margin-top: 8px;
-      padding: 7px 9px;
-      border-radius: 6px;
-      border: 1px solid #b2bec3;
-    }
+.disabled-field {
+  background: #eee;
+}
 
-    .disabled-field {
-      background: #eee;
-    }
-
-    /* Edit modal */
-    .edit-modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2100;
-    }
-    .edit-modal {
-      background: #fff;
-      padding: 16px 20px;
-      border-radius: 10px;
-      max-width: 600px;
-      width: 100%;
-      max-height: 80vh;
-      overflow-y: auto;
-    }
-    .edit-modal h3 {
-      margin-top: 0;
-    }
-    .edit-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .edit-row > div {
-      flex: 1;
-    }
-    .edit-modal label {
-      display: block;
-      font-size: 12px;
-      margin-bottom: 2px;
-    }
-    .edit-modal input, .edit-modal select {
-      width: 100%;
-      padding: 5px 7px;
-      border-radius: 6px;
-      border: 1px solid #b2bec3;
-    }
-    .edit-modal-buttons {
-      margin-top: 10px;
-      text-align: right;
-    }
-    .edit-modal-buttons button {
-      margin-left: 8px;
-      padding: 6px 14px;
-      border-radius: 18px;
-      border: none;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-    }
-    .edit-save-btn {
-      background: #27ae60;
-      color: #fff;
-    }
-    .edit-cancel-btn {
-      background: #777;
-      color: #fff;
-    }
+/* Edit modal */
+.edit-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2100;
+}
+.edit-modal {
+  background: #fff;
+  padding: 16px 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.edit-modal h3 {
+  margin-top: 0;
+}
+.edit-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.edit-row > div {
+  flex: 1;
+}
+.edit-modal label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+.edit-modal input, .edit-modal select {
+  width: 100%;
+  padding: 5px 7px;
+  border-radius: 6px;
+  border: 1px solid #b2bec3;
+}
+.edit-modal-buttons {
+  margin-top: 10px;
+  text-align: right;
+}
+.edit-modal-buttons button {
+  margin-left: 8px;
+  padding: 6px 14px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+.edit-save-btn {
+  background: #27ae60;
+  color: #fff;
+}
+.edit-cancel-btn {
+  background: #777;
+  color: #fff;
+}
   </style>
 </head>
 <body>
@@ -346,57 +362,57 @@
     <h2>Admin Dashboard</h2>
 
     <div class="admin-controls">
-      <button id="deleteSelectedBtn">Delete Selected</button>
+      <button id="deleteSelectedBtn">Delete</button>
       <button id="exportAllCsvBtn">Export to .csv</button>
       <button id="exportAllXlsxBtn">Export to .xlsx</button>
-      <button id="exportAllPdfBtn">Export to PDF</button>
     </div>
     <input 
-  type="text" 
-  id="adminSearchInput" 
-  placeholder="Search devotees..." 
-  style="padding:8px; width:260px; border-radius:6px; border:1px solid #ccc; margin-bottom:10px;">
+      type="text" 
+      id="adminSearchInput" 
+      placeholder="Search devotees..." 
+      style="padding:8px; width:260px; border-radius:6px; border:1px solid #ccc; margin-bottom:10px;">
 
     <table id="devoteeTable">
       <thead>
         <tr>
-<th></th>
-<th>Edit</th>
+          <th></th>
+          <th>Edit</th>
 
-<th data-field="firstName" class="sortable">First Name</th>
-<th data-field="lastName" class="sortable">Last Name</th>
-<th data-field="fullName" class="sortable">Full Name as per passport</th>
-<th data-field="email" class="sortable">Email</th>
-<th data-field="gender" class="sortable">Gender</th>
-<th data-field="dob" class="sortable">DOB</th>
+          <th data-field="firstName" class="sortable">First Name <span class="sort-icon"></span></th>
+          <th data-field="lastName" class="sortable">Last Name <span class="sort-icon"></span></th>
+          <th data-field="fullName" class="sortable">Full Name as per passport <span class="sort-icon"></span></th>
+          <th data-field="email" class="sortable">Email <span class="sort-icon"></span></th>
+          <th data-field="gender" class="sortable">Gender <span class="sort-icon"></span></th>
+          <th data-field="dob" class="sortable">DOB <span class="sort-icon"></span></th>
 
-<th data-field="passport" class="sortable">Passport</th>
-<th data-field="mobile" class="sortable">Mobile</th>
-<th data-field="familyHead" class="sortable">Family Head</th>
-<th data-field="addrLine1" class="sortable">Addr1</th>
-<th data-field="addrLine2" class="sortable">Addr2</th>
-<th data-field="city" class="sortable">City</th>
-<th data-field="state" class="sortable">State</th>
-<th data-field="postcode" class="sortable">Postcode</th>
-<th data-field="country" class="sortable">Country</th>
+          <th data-field="passport" class="sortable">Passport <span class="sort-icon"></span></th>
+          <th data-field="mobile" class="sortable">Mobile <span class="sort-icon"></span></th>
+          <th data-field="familyHead" class="sortable">Family Head <span class="sort-icon"></span></th>
+          <th data-field="addrLine1" class="sortable">Addr1 <span class="sort-icon"></span></th>
+          <th data-field="addrLine2" class="sortable">Addr2 <span class="sort-icon"></span></th>
+          <th data-field="city" class="sortable">City <span class="sort-icon"></span></th>
+          <th data-field="state" class="sortable">State <span class="sort-icon"></span></th>
+          <th data-field="postcode" class="sortable">Postcode <span class="sort-icon"></span></th>
+          <th data-field="country" class="sortable">Country <span class="sort-icon"></span></th>
 
-<th data-field="areInitiated" class="sortable">Are Initiated</th>
-<th data-field="initiatedName" class="sortable">Initiated Name</th>
-<th data-field="initiationStatus" class="sortable">Initiation Status</th>
-<th data-field="placeOfInitiation" class="sortable">Place of Initiation</th>
-<th data-field="initiationDate" class="sortable">Initiation Date</th>
+          <th data-field="areInitiated" class="sortable">Are Initiated <span class="sort-icon"></span></th>
+          <th data-field="initiatedName" class="sortable">Initiated Name <span class="sort-icon"></span></th>
+          <th data-field="initiationStatus" class="sortable">Initiation Status <span class="sort-icon"></span></th>
+          <th data-field="placeOfInitiation" class="sortable">Place of Initiation <span class="sort-icon"></span></th>
+          <th data-field="initiationDate" class="sortable">Initiation Date <span class="sort-icon"></span></th>
 
-<th data-field="shikshaGuru" class="sortable">Siksha Guru / Mentor</th>
-<th data-field="dikshaGuru" class="sortable">Diksha Guru</th>
+          <th data-field="shikshaGuru" class="sortable">Siksha Guru / Mentor <span class="sort-icon"></span></th>
+          <th data-field="dikshaGuru" class="sortable">Diksha Guru <span class="sort-icon"></span></th>
 
-<th data-field="submissionDate" class="sortable">Submission Date</th>
-<th data-field="lastUpdatedDate" class="sortable">Last Updated</th>
-
+          <th data-field="submissionDate" class="sortable">Submission Date <span class="sort-icon"></span></th>
+          <th data-field="lastUpdatedDate" class="sortable">Last Updated <span class="sort-icon"></span></th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
+<!-- Pagination controls --> <div id="paginationControls" style="margin-top:15px; text-align:center; font-weight:600;"></div>
   </div>
+
   <!-- ===================== USER VIEW ===================== -->
   <div id="userView" class="card">
     <h2>Dear Devotee, please fill the below details</h2>
@@ -601,6 +617,16 @@
   </div>
 </div>
 
+<!-- DUPLICATE CONFIRM MODAL -->
+<div id="duplicateModalBackdrop" class="admin-modal-backdrop">
+  <div class="admin-modal">
+    <h3>Duplicate Record Found</h3>
+    <p>There’s already a record existing with this passport number.<br>Do you want to update that record?</p>
+    <button id="duplicateYesBtn">Yes</button>
+    <button id="duplicateNoBtn" style="background:#777;">No</button>
+  </div>
+</div>
+
 <!-- EDIT MODAL -->
 <div id="editModalBackdrop" class="edit-modal-backdrop">
   <div class="edit-modal">
@@ -631,7 +657,12 @@
       <div class="edit-row">
         <div>
           <label>Gender</label>
-          <input type="text" id="edit_gender">
+          <select id="edit_gender">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
         </div>
         <div>
           <label>DOB</label>
@@ -652,8 +683,10 @@
 
       <div class="edit-row">
         <div>
-          <label>Family Head</label>
-          <input type="text" id="edit_familyHead">
+          <div style="display:flex; flex-direction:column; align-items:flex-start;">
+            <label for="edit_familyHead">Family Head</label>
+            <input type="checkbox" id="edit_familyHead" style="margin-top:4px;">
+          </div>
         </div>
         <div>
           <label>Country</label>
@@ -690,7 +723,11 @@
       <div class="edit-row">
         <div>
           <label>Are Initiated</label>
-          <input type="text" id="edit_areInitiated">
+          <select id="edit_areInitiated">
+            <option value="">Select</option>
+            <option>YES</option>
+            <option>NO</option>
+          </select>
         </div>
         <div>
           <label>Initiated Name</label>
@@ -777,7 +814,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteSelectedBtn = document.getElementById("deleteSelectedBtn");
   const exportAllCsvBtn = document.getElementById("exportAllCsvBtn");
   const exportAllXlsxBtn = document.getElementById("exportAllXlsxBtn");
-  const exportAllPdfBtn = document.getElementById("exportAllPdfBtn");
 
   const countryCodeInput = document.getElementById("countryCodeInput");
   const countryOptions = document.getElementById("countryOptions");
@@ -788,12 +824,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let devoteesKeys = [];
   let currentEditKey = null;
 
+  // Pagination
+  let currentPage = 1;
+  const pageSize = 50;
+
+
   /* ------------------------------------------------------------
      COUNTRY CODE DROPDOWN (Australia only)
   ------------------------------------------------------------ */
   if (countryCodeInput && countryOptions) {
     countryCodeInput.onclick = () => {
-      // Only Australia; no search needed
       countryOptions.style.display = "block";
     };
 
@@ -822,15 +862,34 @@ document.addEventListener("DOMContentLoaded", () => {
     return digits.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
   }
 
+  // Strict normalizer for admin edit: returns "+61 4xx xxx xxx" or null
+  function formatMobile(input) {
+    let cleaned = input.replace(/\D/g, "");
+
+    if (cleaned.startsWith("04") && cleaned.length === 10) {
+      cleaned = "614" + cleaned.slice(2);
+    } else if (cleaned.startsWith("4") && cleaned.length === 9) {
+      cleaned = "614" + cleaned;
+    } else if (cleaned.startsWith("614") && cleaned.length === 11) {
+      // already correct
+    } else {
+      return null; // invalid
+    }
+
+    return `+61 ${cleaned.slice(2,5)} ${cleaned.slice(5,8)} ${cleaned.slice(8)}`;
+  }
+
   /* ------------------------------------------------------------
-     INITIATION FIELDS ENABLE/DISABLE
+     INITIATION FIELDS ENABLE/DISABLE (USER FORM)
   ------------------------------------------------------------ */
   const areInitiatedEl = document.getElementById("areInitiated");
   const initFields = document.querySelectorAll(".init-field");
+  const dikshaGuruEl = document.getElementById("dikshaGuru");
 
   function updateInitiationFields() {
     const val = (areInitiatedEl.value || "").toUpperCase();
     const disabled = (val === "NO");
+
     initFields.forEach(el => {
       el.disabled = disabled;
       if (disabled) {
@@ -840,13 +899,36 @@ document.addEventListener("DOMContentLoaded", () => {
         el.classList.remove("disabled-field");
       }
     });
+
+    if (val === "NO") {
+      dikshaGuruEl.disabled = true;
+      dikshaGuruEl.classList.add("disabled-field");
+      dikshaGuruEl.value = "";
+    } else {
+      dikshaGuruEl.disabled = false;
+      dikshaGuruEl.classList.remove("disabled-field");
+    }
   }
 
   areInitiatedEl.addEventListener("change", updateInitiationFields);
   updateInitiationFields();
   /* ------------------------------------------------------------
-     FORM SUBMISSION
+     FORM SUBMISSION (USER) WITH DUPLICATE CHECK
   ------------------------------------------------------------ */
+  async function findDuplicateKey(passport, emailLower) {
+    const snap = await db.ref("devotees").once("value");
+    let foundKey = null;
+    snap.forEach(child => {
+      const v = child.val() || {};
+      const p = (v.passport || "").trim();
+      const e = (v.email || "").toLowerCase().trim();
+      if (p === passport || e === emailLower) {
+        foundKey = child.key;
+      }
+    });
+    return foundKey;
+  }
+
   form.onsubmit = async (e) => {
     e.preventDefault();
 
@@ -886,35 +968,37 @@ document.addEventListener("DOMContentLoaded", () => {
         mobileError.textContent = "Australian mobile must be 10 digits and start with 04";
         valid = false;
       } else {
+        // Store as +61 4xx xxx xxx (strip leading 0 after +61)
+        const normalized = "+61 " + formatted.slice(1);
         mobileNumberEl.value = formatted;
         mobileError.textContent = "";
+        mobileNumberEl.dataset.normalizedMobile = normalized;
       }
     }
 
     if (!valid) return;
 
-    /* ------------------------------------------------------------
-       FULL NAME AUTO-GENERATION
-    ------------------------------------------------------------ */
+    /* FULL NAME AUTO-GENERATION */
     const first = document.getElementById("firstName").value.trim();
     const last = document.getElementById("lastName").value.trim();
     const fullNameInput = document.getElementById("fullName").value.trim();
     const fullName = fullNameInput || `${first} ${last}`.trim();
 
-    /* ------------------------------------------------------------
-       DATA OBJECT
-    ------------------------------------------------------------ */
     const now = Date.now();
+    const passport = document.getElementById("passportNumber").value.trim();
+    const emailRaw = document.getElementById("email").value.trim();
+    const emailLower = emailRaw.toLowerCase();
+    const normalizedMobile = mobileNumberEl.dataset.normalizedMobile;
 
     const data = {
       firstName: first,
       lastName: last,
       fullName,
-      email: document.getElementById("email").value.trim(),
+      email: emailRaw,
       gender: document.getElementById("gender").value,
       dob: document.getElementById("dob").value,
-      passport: document.getElementById("passportNumber").value.trim(),
-      mobile: countryCode + " " + document.getElementById("mobileNumber").value.trim(),
+      passport,
+      mobile: normalizedMobile,
       familyHead: document.getElementById("familyHead").checked ? "Yes" : "No",
       addrLine1: document.getElementById("addrLine1").value.trim(),
       addrLine2: document.getElementById("addrLine2").value.trim(),
@@ -933,18 +1017,21 @@ document.addEventListener("DOMContentLoaded", () => {
       lastUpdatedDate: now
     };
 
-    /* ------------------------------------------------------------
-       SAVE TO FIREBASE
-    ------------------------------------------------------------ */
     try {
-      const ref = db.ref("devotees").push();
-      await ref.set(data);
+      const dupKey = await findDuplicateKey(passport, emailLower);
+      if (dupKey) {
+        const overwrite = await showDuplicateModal();
+        if (!overwrite) return;
+        await db.ref("devotees/" + dupKey).update(data);
+      } else {
+        const ref = db.ref("devotees").push();
+        await ref.set(data);
+      }
 
       form.reset();
       countryCodeInput.value = "+61";
       document.querySelectorAll(".error").forEach(e => e.textContent = "");
       updateInitiationFields();
-
       successModalBackdrop.style.display = "flex";
     } catch (err) {
       alert("Error submitting details. Please try again.");
@@ -952,9 +1039,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  /* ------------------------------------------------------------
-     RESET BUTTON
-  ------------------------------------------------------------ */
+  /* RESET BUTTON */
   resetBtn.onclick = () => {
     form.reset();
     countryCodeInput.value = "+61";
@@ -994,6 +1079,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+const duplicateModalBackdrop = document.getElementById("duplicateModalBackdrop");
+const duplicateYesBtn = document.getElementById("duplicateYesBtn");
+const duplicateNoBtn = document.getElementById("duplicateNoBtn");
+
+function showDuplicateModal() {
+  return new Promise(resolve => {
+    duplicateModalBackdrop.style.display = "flex";
+    duplicateYesBtn.onclick = () => {
+      duplicateModalBackdrop.style.display = "none";
+      resolve(true);
+    };
+    duplicateNoBtn.onclick = () => {
+      duplicateModalBackdrop.style.display = "none";
+      resolve(false);
+    };
+  });
+}
+
   userBtn.onclick = () => {
     adminView.classList.add("hidden");
     userView.classList.remove("hidden");
@@ -1011,9 +1114,12 @@ document.addEventListener("DOMContentLoaded", () => {
         devoteesKeys.push(child.key);
         devotees.push(child.val());
       });
-      renderTable();
+      currentPage = 1;           // reset to first page
+      renderWithPagination();    // use paginated render
+      updateSortIcons();
     });
   }
+
 
   /* ------------------------------------------------------------
      FORMAT DOB (DD-MMM-YYYY) & TIMESTAMP
@@ -1032,26 +1138,42 @@ document.addEventListener("DOMContentLoaded", () => {
 function formatTimestamp(ts) {
   if (!ts) return "";
   const d = new Date(ts);
+
   const dd = String(d.getDate()).padStart(2, "0");
   const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   const mmm = months[d.getMonth()];
   const yyyy = d.getFullYear();
-  return `${dd}-${mmm}-${yyyy}`;
+
+  let hours = d.getHours();
+  const minutes = String(d.getMinutes()).padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // 0 → 12
+
+  return `${dd}-${mmm}-${yyyy} ${hours}:${minutes} ${ampm}`;
 }
 
-/* ------------------------------------------------------------
+
+  /* ------------------------------------------------------------
      RENDER ADMIN TABLE (supports sorting + search)
------------------------------------------------------------- */
-function renderTable(list = devotees) {
+  ------------------------------------------------------------ */
+  function renderTable(list = devotees, page = 1) {
   const tbody = document.querySelector("#devoteeTable tbody");
   tbody.innerHTML = "";
 
-  list.forEach((d, index) => {
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+  const pageItems = list.slice(start, end);
+
+  pageItems.forEach((d, indexOnPage) => {
+    const globalIndex = start + indexOnPage; // index in full devotees array
+
     const row = document.createElement("tr");
 
     // Checkbox
     const checkboxTd = document.createElement("td");
-    checkboxTd.innerHTML = `<input type="checkbox" class="row-select" data-index="${index}">`;
+    checkboxTd.innerHTML = `<input type="checkbox" class="row-select" data-index="${globalIndex}">`;
     row.appendChild(checkboxTd);
 
     // Edit button
@@ -1064,11 +1186,10 @@ function renderTable(list = devotees) {
     editBtn.style.background = "#74b9ff";
     editBtn.style.color = "#fff";
     editBtn.style.cursor = "pointer";
-    editBtn.onclick = () => openEditModal(index);
+    editBtn.onclick = () => openEditModal(globalIndex);
     editTd.appendChild(editBtn);
     row.appendChild(editTd);
 
-    // Data cells
     const cells = [
       d.firstName || "",
       d.lastName || "",
@@ -1106,14 +1227,75 @@ function renderTable(list = devotees) {
   });
 }
 
-/* ------------------------------------------------------------
-     SEARCH + SORT LOGIC (Patch C)
------------------------------------------------------------- */
+function renderWithPagination(list = devotees) {
+  renderTable(list, currentPage);
+  buildPaginationControls(list);
+}
 
-let currentSortField = null;
-let currentSortDirection = 1; // 1 = asc, -1 = desc
+function buildPaginationControls(list = devotees) {
+  const totalItems = list.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const container = document.getElementById("paginationControls");
+  if (!container) return;
 
-// SEARCH BAR LISTENER
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  container.innerHTML = "";
+
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "« Prev";
+  prevBtn.style.marginRight = "10px";
+  prevBtn.disabled = (currentPage === 1);
+  prevBtn.onclick = () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderWithPagination(list);
+      updateSortIcons();
+    }
+  };
+
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "Next »";
+  nextBtn.style.marginLeft = "10px";
+  nextBtn.disabled = (currentPage === totalPages);
+  nextBtn.onclick = () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderWithPagination(list);
+      updateSortIcons();
+    }
+  };
+
+  const infoSpan = document.createElement("span");
+  infoSpan.textContent = `Page ${currentPage} of ${totalPages}`;
+
+  [prevBtn, infoSpan, nextBtn].forEach(el => {
+    el.style.padding = "5px 10px";
+    el.style.borderRadius = "14px";
+    el.style.border = "none";
+    el.style.cursor = "pointer";
+    el.style.fontSize = "13px";
+    el.style.fontWeight = "600";
+  });
+
+  prevBtn.style.background = "#fab1a0";
+  nextBtn.style.background = "#fab1a0";
+  infoSpan.style.background = "transparent";
+  infoSpan.style.cursor = "default";
+
+  container.appendChild(prevBtn);
+  container.appendChild(infoSpan);
+  container.appendChild(nextBtn);
+}
+
+
+
+  /* ------------------------------------------------------------
+     SEARCH + SORT LOGIC
+  ------------------------------------------------------------ */
+  let currentSortField = null;
+  let currentSortDirection = 1; // 1 = asc, -1 = desc
+
 document.getElementById("adminSearchInput").addEventListener("input", function () {
   const q = this.value.toLowerCase();
 
@@ -1123,42 +1305,59 @@ document.getElementById("adminSearchInput").addEventListener("input", function (
     );
   });
 
-  renderTable(filtered);
+  currentPage = 1;          // reset to first page on new search
+  renderWithPagination(filtered);
 });
 
-// SORTING HANDLER
-document.querySelectorAll(".sortable").forEach(th => {
-  th.addEventListener("click", () => {
-    const field = th.dataset.field;
 
-    if (currentSortField === field) {
-      currentSortDirection *= -1; // reverse direction
-    } else {
-      currentSortField = field;
-      currentSortDirection = 1;
-    }
+  document.querySelectorAll(".sortable").forEach(th => {
+    th.addEventListener("click", () => {
+      const field = th.dataset.field;
 
-    devotees.sort((a, b) => {
+      if (currentSortField === field) {
+        currentSortDirection *= -1;
+      } else {
+        currentSortField = field;
+        currentSortDirection = 1;
+      }
+
+          devotees.sort((a, b) => {
       let A = a[field] || "";
       let B = b[field] || "";
 
-      // Date sorting
       if (["dob", "initiationDate", "submissionDate", "lastUpdatedDate"].includes(field)) {
         return (new Date(A) - new Date(B)) * currentSortDirection;
       }
 
-      // Number sorting
       if (field === "postcode") {
         return (parseInt(A) - parseInt(B)) * currentSortDirection;
       }
 
-      // Text sorting
       return A.toString().localeCompare(B.toString()) * currentSortDirection;
     });
 
-    renderTable();
+    currentPage = 1;          // go back to first page after sort
+    renderWithPagination();   // use pagination-aware render
+    updateSortIcons();
   });
 });
+
+
+  function updateSortIcons() {
+    document.querySelectorAll(".sortable").forEach(th => {
+      const icon = th.querySelector(".sort-icon");
+      const field = th.dataset.field;
+
+      if (!icon) return;
+
+      if (field !== currentSortField) {
+        icon.textContent = "";
+        return;
+      }
+
+      icon.textContent = currentSortDirection === 1 ? "▲" : "▼";
+    });
+  }
 
   /* ------------------------------------------------------------
      DELETE SELECTED
@@ -1166,6 +1365,17 @@ document.querySelectorAll(".sortable").forEach(th => {
   deleteSelectedBtn.onclick = () => {
     const checkboxes = document.querySelectorAll(".row-select:checked");
     const indexes = [...checkboxes].map(cb => parseInt(cb.dataset.index));
+
+    if (indexes.length === 0) {
+      alert("Please select at least one record to delete.");
+      return;
+    }
+
+    const names = indexes.map(i => devotees[i].fullName || "this devotee").join(", ");
+
+    if (!confirm(`Are you sure you want to delete ${names}?`)) {
+      return;
+    }
 
     const toDelete = indexes.map(i => devoteesKeys[i]).filter(k => k);
 
@@ -1195,7 +1405,7 @@ document.querySelectorAll(".sortable").forEach(th => {
     document.getElementById("edit_dob").value = d.dob || "";
     document.getElementById("edit_passport").value = d.passport || "";
     document.getElementById("edit_mobile").value = d.mobile || "";
-    document.getElementById("edit_familyHead").value = d.familyHead || "";
+    document.getElementById("edit_familyHead").checked = (d.familyHead === "Yes");
     document.getElementById("edit_country").value = d.country || "";
     document.getElementById("edit_addrLine1").value = d.addrLine1 || "";
     document.getElementById("edit_addrLine2").value = d.addrLine2 || "";
@@ -1210,28 +1420,89 @@ document.querySelectorAll(".sortable").forEach(th => {
     document.getElementById("edit_shikshaGuru").value = d.shikshaGuru || "";
     document.getElementById("edit_dikshaGuru").value = d.dikshaGuru || "";
 
+    updateAdminInitiationFields();
     editModalBackdrop.style.display = "flex";
   }
+
+  /* ------------------------------------------------------------
+     ADMIN INITIATION FIELD ENABLE/DISABLE
+  ------------------------------------------------------------ */
+  function updateAdminInitiationFields() {
+    const val = (document.getElementById("edit_areInitiated").value || "").toUpperCase();
+    const disabled = (val === "NO");
+
+    const fields = [
+      "edit_initiatedName",
+      "edit_initiationStatus",
+      "edit_placeOfInitiation",
+      "edit_initiationDate",
+      "edit_dikshaGuru"
+    ];
+
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      el.disabled = disabled;
+
+      if (disabled) {
+        el.classList.add("disabled-field");
+        el.value = "";
+      } else {
+        el.classList.remove("disabled-field");
+      }
+    });
+  }
+
+  document.getElementById("edit_areInitiated")
+    .addEventListener("change", updateAdminInitiationFields);
 
   editCancelBtn.onclick = () => {
     editModalBackdrop.style.display = "none";
     currentEditKey = null;
   };
 
+  /* ------------------------------------------------------------
+     EDIT FORM SUBMIT WITH DUPLICATE CHECK + MOBILE NORMALIZATION
+  ------------------------------------------------------------ */
   editForm.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!currentEditKey) return;
+
+    const passport = document.getElementById("edit_passport").value.trim();
+    const emailRaw = document.getElementById("edit_email").value.trim();
+    const emailLower = emailRaw.toLowerCase();
+    const mobileInput = document.getElementById("edit_mobile").value.trim();
+    const mobileFormatted = formatMobile(mobileInput);
+
+    if (!passport || !emailRaw || !mobileFormatted) {
+      alert("Passport, email, and a valid Australian mobile are required.");
+      return;
+    }
+
+    const duplicateKey = devoteesKeys.find((key, i) => {
+      const d = devotees[i];
+      const p = (d.passport || "").trim();
+      const e = (d.email || "").toLowerCase().trim();
+      return key !== currentEditKey && (p === passport || e === emailLower);
+    });
+
+    if (duplicateKey) {
+      const confirmUpdate = confirm("Another devotee with this passport or email exists. Overwrite that record instead?");
+      if (!confirmUpdate) return;
+      currentEditKey = duplicateKey;
+    }
 
     const updated = {
       firstName: document.getElementById("edit_firstName").value.trim(),
       lastName: document.getElementById("edit_lastName").value.trim(),
       fullName: document.getElementById("edit_fullName").value.trim(),
-      email: document.getElementById("edit_email").value.trim(),
+      email: emailRaw,
       gender: document.getElementById("edit_gender").value.trim(),
       dob: document.getElementById("edit_dob").value,
-      passport: document.getElementById("edit_passport").value.trim(),
-      mobile: document.getElementById("edit_mobile").value.trim(),
-      familyHead: document.getElementById("edit_familyHead").value.trim(),
+      passport,
+      mobile: mobileFormatted,
+      familyHead: document.getElementById("edit_familyHead").checked ? "Yes" : "No",
       country: document.getElementById("edit_country").value.trim(),
       addrLine1: document.getElementById("edit_addrLine1").value.trim(),
       addrLine2: document.getElementById("edit_addrLine2").value.trim(),
@@ -1260,7 +1531,6 @@ document.querySelectorAll(".sortable").forEach(th => {
   /* ------------------------------------------------------------
      EXPORT FUNCTIONS
   ------------------------------------------------------------ */
-
   const exportFields = [
     "firstName", "lastName", "fullName", "email", "gender", "dob", "passport", "mobile", "familyHead",
     "addrLine1", "addrLine2", "city", "state", "postcode", "country",
@@ -1268,7 +1538,6 @@ document.querySelectorAll(".sortable").forEach(th => {
     "shikshaGuru", "dikshaGuru", "submissionDate", "lastUpdatedDate"
   ];
 
-  // Export to CSV
   function exportCSV(rows) {
     const header = exportFields.join(",");
 
@@ -1296,7 +1565,6 @@ document.querySelectorAll(".sortable").forEach(th => {
     a.click();
   }
 
-  // Export to Excel
   function exportExcel(rows) {
     const formatted = rows.map(r => {
       const obj = {};
@@ -1319,188 +1587,13 @@ document.querySelectorAll(".sortable").forEach(th => {
   }
 
   /* ------------------------------------------------------------
-     PDF EXPORT — WITH BOLD GURU NAMES + DEVOTIONAL FOOTER
-  ------------------------------------------------------------ */
-  function exportPDF(rows) {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF("landscape");
-
-    const margin = 10;
-    const rowHeight = 8;
-
-    /* -----------------------------
-       TABLE 1: PERSONAL DETAILS
-    ----------------------------- */
-
-    const headers1 = [
-      "First Name", "Last Name", "Full Name",
-      "Email", "Gender", "DOB", "Passport", "Mobile",
-      "Family Head", "Address 1", "Address 2",
-      "City", "State", "Postcode", "Country"
-    ];
-
-    const fields1 = [
-      "firstName", "lastName", "fullName",
-      "email", "gender", "dob", "passport", "mobile",
-      "familyHead", "addrLine1", "addrLine2",
-      "city", "state", "postcode", "country"
-    ];
-
-    let colWidth1 = 35;
-    let y = 20;
-
-    // Title
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.text("Devotee List - Personal Details", margin, 12);
-
-    // Header row
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "bold");
-
-    let x = margin;
-    headers1.forEach(h => {
-      doc.text(h, x, y);
-      x += colWidth1;
-    });
-
-    y += rowHeight;
-
-    // Data rows
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(0, 0, 0);
-
-    rows.forEach(r => {
-      x = margin;
-      fields1.forEach(f => {
-        let value = r[f] || "";
-        if (f === "dob") value = formatDOB(r[f] || "");
-        doc.text(String(value), x, y);
-        x += colWidth1;
-      });
-      y += rowHeight;
-
-      if (y > 190) {
-        addFooter(doc);
-        doc.addPage();
-        y = 20;
-      }
-    });
-
-    addFooter(doc);
-
-    /* -----------------------------
-       TABLE 2: SPIRITUAL DETAILS
-    ----------------------------- */
-
-    doc.addPage();
-    y = 20;
-
-    const headers2 = [
-      "Full Name",
-      "Are Initiated",
-      "Initiated Name",
-      "Initiation Status",
-      "Place of Initiation",
-      "Initiation Date",
-      "Siksha Guru / Mentor",
-      "Diksha Guru",
-      "Submission Date",
-      "Last Updated"
-    ];
-
-    const fields2 = [
-      "fullName",
-      "areInitiated",
-      "initiatedName",
-      "initiationStatus",
-      "placeOfInitiation",
-      "initiationDate",
-      "shikshaGuru",
-      "dikshaGuru",
-      "submissionDate",
-      "lastUpdatedDate"
-    ];
-
-    let colWidth2 = 40;
-
-    // Title
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(14);
-    doc.text("Devotee List - Spiritual Details", margin, 12);
-
-    // Header row
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 0);
-
-    x = margin;
-    headers2.forEach(h => {
-      doc.text(h, x, y);
-      x += colWidth2;
-    });
-
-    y += rowHeight;
-
-    // Data rows
-    rows.forEach(r => {
-      x = margin;
-
-      fields2.forEach(f => {
-        let value = r[f] || "";
-
-        if (f === "initiationDate") {
-          value = formatDOB(r[f] || "");
-        } else if (f === "submissionDate" || f === "lastUpdatedDate") {
-          value = formatTimestamp(r[f]);
-        }
-
-        if (f === "shikshaGuru") {
-          doc.setFont("helvetica", "bold");
-          doc.setTextColor(0, 0, 0);
-        } else if (f === "dikshaGuru") {
-          doc.setFont("helvetica", "bold");
-          doc.setTextColor(255, 102, 0); // saffron
-        } else {
-          doc.setFont("helvetica", "normal");
-          doc.setTextColor(0, 0, 0);
-        }
-
-        doc.text(String(value), x, y);
-        x += colWidth2;
-      });
-
-      y += rowHeight;
-
-      if (y > 190) {
-        addFooter(doc);
-        doc.addPage();
-        y = 20;
-      }
-    });
-
-    addFooter(doc);
-
-    doc.save("devotees.pdf");
-  }
-
-  function addFooter(doc) {
-    doc.setFont("helvetica", "italic");
-    doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0);
-    doc.text("Hare Krishna.. All glories to guru and Gaurango", 10, 200);
-  }
-
-  /* ------------------------------------------------------------
      EXPORT BUTTONS
   ------------------------------------------------------------ */
   exportAllCsvBtn.onclick = () => exportCSV(devotees);
   exportAllXlsxBtn.onclick = () => exportExcel(devotees);
-  exportAllPdfBtn.onclick = () => exportPDF(devotees);
 
 });
 </script>
 </body>
 </html>
-
 
