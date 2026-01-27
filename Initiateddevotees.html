@@ -463,15 +463,18 @@ th {
         <div class="error" id="emailError"></div>
       </div>
 
-      <div class="form-group">
-        <label>Gender</label>
-        <select id="gender">
-          <option value="">Select</option>
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
-        </select>
-      </div>
+<div class="form-group">
+  <label>Gender *</label>
+  <select id="gender">
+    <option value="">Select</option>
+    <option>Male</option>
+    <option>Female</option>
+    <option>Other</option>
+    <option>Prefer not to say</option>
+  </select>
+  <div class="error" id="genderError"></div>
+</div>
+
 
       <div class="form-group">
         <label>Date of Birth *</label>
@@ -537,10 +540,11 @@ th {
         <input type="text" id="state">
       </div>
 
-      <div class="form-group">
-        <label>Postcode</label>
-        <input type="text" id="postcode">
-      </div>
+	<div class="form-group">
+  	<label>Postcode *</label>
+  	<input type="text" id="postcode">
+  	<div class="error" id="postcodeError"></div>
+	</div>
     </div>
 
     <div class="form-row">
@@ -566,29 +570,28 @@ th {
       </div>
 
       <div class="form-group">
-        <label>Initiated Name</label>
+        <label id="label_initiatedName">Initiated Name</label>
         <input type="text" id="initiatedName" class="init-field">
       </div>
 
       <div class="form-group">
-        <label>Initiation Status</label>
-        <select id="initiationStatus" class="init-field">
-          <option value="">Select</option>
-          <option>First</option>
-          <option>Second</option>
-          <option>No</option>
-        </select>
+        <label id="label_initiationStatus">Initiation Status</label>
+<select id="initiationStatus">
+    <option value="First" selected>First</option>
+    <option value="Second">Second</option>
+</select>
+
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
-        <label>Place of Initiation</label>
+        <label id="label_placeOfInitiation">Place of Initiation</label>
         <input type="text" id="placeOfInitiation" class="init-field">
       </div>
 
       <div class="form-group">
-        <label>Date of Initiation</label>
+        <label id="label_initiationDate">Date of Initiation</label>
         <input type="date" id="initiationDate" class="init-field">
       </div>
 
@@ -599,14 +602,14 @@ th {
     </div>
 
 <div class="form-group">
-  <label>Diksha Guru Name</label>
-  <input list="dikshaGuruList" id="dikshaGuru" placeholder="<Enter/Select your Guru Maharaj Name>" style="max-width:280px;">
+  <label id="label_dikshaGuru">Diksha Guru Name</label>
+  <input list="dikshaGuruList" id="dikshaGuru" placeholder="<Enter/Select your Guru  Name>" style="max-width:280px;">
   <datalist id="dikshaGuruList">
-    <option value="HH Jayapataka Swami Maharaj">
-    <option value="HH Radhanath Swami Maharaj">
-    <option value="HH Romapada Swami Maharaj">
-    <option value="HH Gopal Krishna Goswami Maharaj">
-    <option value="HH Bhakti Vikasa Swami Maharaj">
+    <option value="HH Jayapataka Swami ">
+    <option value="HH Radhanath Swami ">
+    <option value="HH Romapada Swami ">
+    <option value="HH Gopal Krishna Goswami ">
+    <option value="HH Bhakti Vikasa Swami ">
   </datalist>
 </div>
 
@@ -694,6 +697,7 @@ th {
             <option>Male</option>
             <option>Female</option>
             <option>Other</option>
+	    <option>Prefer not to say</option>
           </select>
         </div>
         <div>
@@ -792,12 +796,12 @@ th {
           <label>Diksha Guru</label>
           <input list="editDikshaGuruList" id="edit_dikshaGuru" style="max-width:300px;">
 <datalist id="editDikshaGuruList">
-  <option value="HH Jayapataka Swami Maharaj">
-  <option value="HH Radhanath Swami Maharaj">
-  <option value="HH Romapada Swami Maharaj">
-  <option value="HH Gopal Krishna Goswami Maharaj">
-  <option value="HH Bhakti Vikasa Swami Maharaj">
-  <option value="<Enter/Select your Guru Maharaj Name>">
+  <option value="HH Jayapataka Swami ">
+  <option value="HH Radhanath Swami ">
+  <option value="HH Romapada Swami ">
+  <option value="HH Gopal Krishna Goswami ">
+  <option value="HH Bhakti Vikasa Swami ">
+  <option value="<Enter/Select your Guru  Name>">
 </datalist>
 
         </div>
@@ -833,13 +837,13 @@ const db = firebase.database();
    UNIFIED APPLICATION LOGIC
 ============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
-/* Guru Maharaj List */
+/* Guru  List */
 const guruList = [
-  "HH Jayapataka Swami Maharaj",
-  "HH Radhanath Swami Maharaj",
-  "HH Romapada Swami Maharaj",
-  "HH Gopal Krishna Goswami Maharaj",
-  "HH Bhakti Vikasa Swami Maharaj"
+  "HH Jayapataka Swami ",
+  "HH Radhanath Swami ",
+  "HH Romapada Swami ",
+  "HH Gopal Krishna Goswami ",
+  "HH Bhakti Vikasa Swami "
 ];
 /* Sentence case: "I live in India" */
 function toSentenceCase(str) {
@@ -951,39 +955,79 @@ function toTitleCase(str) {
     return `+61 ${cleaned.slice(2,5)} ${cleaned.slice(5,8)} ${cleaned.slice(8)}`;
   }
 
-  /* ------------------------------------------------------------
-     INITIATION FIELDS ENABLE/DISABLE (USER FORM)
-  ------------------------------------------------------------ */
-  const areInitiatedEl = document.getElementById("areInitiated");
-  const initFields = document.querySelectorAll(".init-field");
-  const dikshaGuruEl = document.getElementById("dikshaGuru");
+/* ------------------------------------------------------------
+   INITIATION FIELDS ENABLE/DISABLE (USER FORM)
+------------------------------------------------------------ */
+const areInitiatedEl = document.getElementById("areInitiated");
+const initFields = document.querySelectorAll(".init-field");
+const dikshaGuruEl = document.getElementById("dikshaGuru");
 
-  function updateInitiationFields() {
-    const val = (areInitiatedEl.value || "").toUpperCase();
-    const disabled = (val === "NO");
+function updateInitiationFields() {
+  const val = (areInitiatedEl.value || "").toUpperCase();
+  const disabled = (val === "NO");
 
-    initFields.forEach(el => {
-      el.disabled = disabled;
-      if (disabled) {
-        el.classList.add("disabled-field");
-        el.value = "";
-      } else {
-        el.classList.remove("disabled-field");
-      }
-    });
-
-    if (val === "NO") {
-      dikshaGuruEl.disabled = true;
-      dikshaGuruEl.classList.add("disabled-field");
-      dikshaGuruEl.value = "";
+  // Disable all .init-field elements
+  initFields.forEach(el => {
+    el.disabled = disabled;
+    if (disabled) {
+      el.classList.add("disabled-field");
+      el.value = "";
     } else {
-      dikshaGuruEl.disabled = false;
-      dikshaGuruEl.classList.remove("disabled-field");
+      el.classList.remove("disabled-field");
+    }
+  });
+
+  // Explicitly disable Initiation Status
+  const initiationStatusEl = document.getElementById("initiationStatus");
+  if (initiationStatusEl) {
+    initiationStatusEl.disabled = disabled;
+    if (disabled) {
+      initiationStatusEl.classList.add("disabled-field");
+      initiationStatusEl.value = "";
+    } else {
+      initiationStatusEl.classList.remove("disabled-field");
     }
   }
 
-  areInitiatedEl.addEventListener("change", updateInitiationFields);
-  updateInitiationFields();
+  // Diksha Guru special handling
+  if (disabled) {
+    dikshaGuruEl.disabled = true;
+    dikshaGuruEl.classList.add("disabled-field");
+    dikshaGuruEl.value = "";
+  } else {
+    dikshaGuruEl.disabled = false;
+    dikshaGuruEl.classList.remove("disabled-field");
+  }
+
+  /* ------------------------------------------------------------
+     DYNAMIC ASTERISKS FOR INITIATION FIELDS
+  ------------------------------------------------------------ */
+  const labels = [
+    "label_initiatedName",
+    "label_initiationStatus",
+    "label_placeOfInitiation",
+    "label_initiationDate",
+    "label_dikshaGuru"
+  ];
+
+  labels.forEach(id => {
+    const label = document.getElementById(id);
+    if (!label) return;
+
+    if (disabled) {
+      // Remove asterisk
+      label.innerHTML = label.innerHTML.replace(/\s*\*$/, "");
+    } else {
+      // Add asterisk if missing
+      if (!label.innerHTML.trim().endsWith("*")) {
+        label.innerHTML = label.innerHTML.trim() + " *";
+      }
+    }
+  });
+}
+
+areInitiatedEl.addEventListener("change", updateInitiationFields);
+updateInitiationFields();
 
 
   /* ------------------------------------------------------------
@@ -1053,6 +1097,54 @@ function toTitleCase(str) {
         mobileNumberEl.dataset.normalizedMobile = normalized;
       }
     }
+
+/* GENDER VALIDATION */
+const gender = document.getElementById("gender").value.trim();
+const genderError = document.getElementById("genderError");
+if (!gender) {
+  genderError.textContent = "Gender is required";
+  valid = false;
+} else {
+  genderError.textContent = "";
+}
+
+/* POSTCODE VALIDATION */
+const postcode = document.getElementById("postcode").value.trim();
+const postcodeError = document.getElementById("postcodeError");
+if (!postcode) {
+  postcodeError.textContent = "Postcode is required";
+  valid = false;
+} else {
+  postcodeError.textContent = "";
+}
+
+/* INITIATION MANDATORY VALIDATION (USER FORM) */
+const areInitiatedVal = document.getElementById("areInitiated").value.trim().toUpperCase();
+
+if (areInitiatedVal === "YES") {
+  const initiatedName = document.getElementById("initiatedName").value.trim();
+  const initiationStatus = document.getElementById("initiationStatus").value.trim();
+  const placeOfInitiation = document.getElementById("placeOfInitiation").value.trim();
+  const initiationDate = document.getElementById("initiationDate").value.trim();
+  const dikshaGuru = document.getElementById("dikshaGuru").value.trim();
+
+  if (!initiatedName) {
+    alert("Initiated Name is required when you are initiated.");
+    valid = false;
+  } else if (!initiationStatus) {
+    alert("Initiation Status is required when you are initiated.");
+    valid = false;
+  } else if (!placeOfInitiation) {
+    alert("Place of Initiation is required when you are initiated.");
+    valid = false;
+  } else if (!initiationDate) {
+    alert("Date of Initiation is required when you are initiated.");
+    valid = false;
+  } else if (!dikshaGuru) {
+    alert("Diksha Guru Name is required when you are initiated.");
+    valid = false;
+  }
+}
 
     if (!valid) return;
 
@@ -1529,7 +1621,7 @@ toTitleCase(d.shikshaGuru || ""),
     document.getElementById("edit_postcode").value = d.postcode || "";
     document.getElementById("edit_areInitiated").value = d.areInitiated || "";
     document.getElementById("edit_initiatedName").value = d.initiatedName || "";
-    document.getElementById("edit_initiationStatus").value = d.initiationStatus || "";
+    document.getElementById("edit_initiationStatus").value = d.initiationStatus || "First";
     document.getElementById("edit_placeOfInitiation").value = d.placeOfInitiation || "";
     document.getElementById("edit_initiationDate").value = d.initiationDate || "";
     document.getElementById("edit_shikshaGuru").value = d.shikshaGuru || "";
@@ -1579,73 +1671,124 @@ toTitleCase(d.shikshaGuru || ""),
     currentEditKey = null;
   };
 
-  /* ------------------------------------------------------------
-     EDIT FORM SUBMIT (Email + Mobile duplicate check)
-  ------------------------------------------------------------ */
-  editForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!currentEditKey) return;
+/* ------------------------------------------------------------
+   EDIT FORM SUBMIT (Email + Mobile duplicate check)
+------------------------------------------------------------ */
+editForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (!currentEditKey) return;
 
-    const emailRaw = document.getElementById("edit_email").value.trim();
-    const emailLower = emailRaw.toLowerCase();
-    const mobileInput = document.getElementById("edit_mobile").value.trim();
-    const mobileFormatted = formatMobile(mobileInput);
+  const emailRaw = document.getElementById("edit_email").value.trim();
+  const emailLower = emailRaw.toLowerCase();
+  const mobileInput = document.getElementById("edit_mobile").value.trim();
+  const mobileFormatted = formatMobile(mobileInput);
 
-    if (!emailRaw || !mobileFormatted) {
-      alert("Email and a valid Australian mobile are required.");
-      return;
-    }
+  if (!emailRaw || !mobileFormatted) {
+    alert("Email and a valid Australian mobile are required.");
+    return;
+  }
 
-    const duplicateKey = devoteesKeys.find((key, i) => {
-      const d = devotees[i];
-      const e = (d.email || "").toLowerCase().trim();
-      const m = (d.mobile || "").trim();
-      return key !== currentEditKey && (e === emailLower || m === mobileFormatted);
-    });
+/* MANDATORY: GENDER (EDIT FORM) */
+if (!document.getElementById("edit_gender").value.trim()) {
+  alert("Gender is required.");
+  return;
+}
 
-    if (duplicateKey) {
-      const confirmUpdate = confirm("Another devotee with this email or mobile exists. Overwrite that record instead?");
-      if (!confirmUpdate) return;
-      currentEditKey = duplicateKey;
-    }
+/* MANDATORY: POSTCODE (EDIT FORM) */
+if (!document.getElementById("edit_postcode").value.trim()) {
+  alert("Postcode is required.");
+  return;
+}
 
-    const updated = {
-      firstName: document.getElementById("edit_firstName").value.trim(),
-      lastName: document.getElementById("edit_lastName").value.trim(),
-      fullName: document.getElementById("edit_fullName").value.trim(),
-      email: emailRaw,
-      gender: document.getElementById("edit_gender").value.trim(),
-      dob: document.getElementById("edit_dob").value,
+/* INITIATION MANDATORY VALIDATION (ADMIN EDIT FORM) */
+const adminInitiatedVal = document.getElementById("edit_areInitiated").value.trim().toUpperCase();
 
-      /* NEW FIELD */
-      drivingLicence: document.getElementById("edit_drivingLicence").value.trim(),
+if (adminInitiatedVal === "YES") {
+  const initiatedName = document.getElementById("edit_initiatedName").value.trim();
+  const initiationStatus = document.getElementById("edit_initiationStatus").value.trim();
+  const placeOfInitiation = document.getElementById("edit_placeOfInitiation").value.trim();
+  const initiationDate = document.getElementById("edit_initiationDate").value.trim();
+  const dikshaGuru = document.getElementById("edit_dikshaGuru").value.trim();
 
-      mobile: mobileFormatted,
-      familyHead: document.getElementById("edit_familyHead").checked ? "Yes" : "No",
-      country: document.getElementById("edit_country").value.trim(),
-addrLine1: toSentenceCase(document.getElementById("edit_addrLine1").value.trim()), 
-addrLine2: toSentenceCase(document.getElementById("edit_addrLine2").value.trim()), 
-city: toSentenceCase(document.getElementById("edit_city").value.trim()), 
-state: toSentenceCase(document.getElementById("edit_state").value.trim()),
-      postcode: document.getElementById("edit_postcode").value.trim(),
-      areInitiated: document.getElementById("edit_areInitiated").value.trim(),
-initiatedName: toSentenceCase(document.getElementById("edit_initiatedName").value.trim()),
-      initiationStatus: document.getElementById("edit_initiationStatus").value.trim(),
-placeOfInitiation: toSentenceCase(document.getElementById("edit_placeOfInitiation").value.trim()),
-      initiationDate: document.getElementById("edit_initiationDate").value,
-shikshaGuru: toTitleCase(document.getElementById("edit_shikshaGuru").value.trim()),
-      dikshaGuru: document.getElementById("edit_dikshaGuru").value.trim().toUpperCase(),
-      lastUpdatedDate: Date.now()
-    };
+  if (!initiatedName) {
+    alert("Initiated Name is required when the devotee is initiated.");
+    return;
+  }
+  if (!initiationStatus) {
+    alert("Initiation Status is required when the devotee is initiated.");
+    return;
+  }
+  if (!placeOfInitiation) {
+    alert("Place of Initiation is required when the devotee is initiated.");
+    return;
+  }
+  if (!initiationDate) {
+    alert("Date of Initiation is required when the devotee is initiated.");
+    return;
+  }
+  if (!dikshaGuru) {
+    alert("Diksha Guru Name is required when the devotee is initiated.");
+    return;
+  }
+}
 
-    db.ref("devotees/" + currentEditKey).update(updated)
-      .then(() => {
-        editModalBackdrop.style.display = "none";
-        currentEditKey = null;
-        loadFromDatabase();
-      })
-      .catch(err => console.error(err));
+  /* -----------------------------
+     DUPLICATE CHECK
+  ----------------------------- */
+  const duplicateKey = devoteesKeys.find((key, i) => {
+    const d = devotees[i];
+    const e = (d.email || "").toLowerCase().trim();
+    const m = (d.mobile || "").trim();
+    return key !== currentEditKey && (e === emailLower || m === mobileFormatted);
   });
+
+  if (duplicateKey) {
+    const confirmUpdate = confirm("Another devotee with this email or mobile exists. Overwrite that record instead?");
+    if (!confirmUpdate) return;
+    currentEditKey = duplicateKey;
+  }
+
+  /* -----------------------------
+     UPDATE OBJECT (unchanged)
+  ----------------------------- */
+  const updated = {
+    firstName: document.getElementById("edit_firstName").value.trim(),
+    lastName: document.getElementById("edit_lastName").value.trim(),
+    fullName: document.getElementById("edit_fullName").value.trim(),
+    email: emailRaw,
+    gender: document.getElementById("edit_gender").value.trim(),
+    dob: document.getElementById("edit_dob").value,
+    drivingLicence: document.getElementById("edit_drivingLicence").value.trim(),
+    mobile: mobileFormatted,
+    familyHead: document.getElementById("edit_familyHead").checked ? "Yes" : "No",
+    country: document.getElementById("edit_country").value.trim(),
+
+    addrLine1: toSentenceCase(document.getElementById("edit_addrLine1").value.trim()),
+    addrLine2: toSentenceCase(document.getElementById("edit_addrLine2").value.trim()),
+    city: toSentenceCase(document.getElementById("edit_city").value.trim()),
+    state: toSentenceCase(document.getElementById("edit_state").value.trim()),
+    postcode: document.getElementById("edit_postcode").value.trim(),
+
+    areInitiated: document.getElementById("edit_areInitiated").value.trim(),
+    initiatedName: toSentenceCase(document.getElementById("edit_initiatedName").value.trim()),
+    initiationStatus: document.getElementById("edit_initiationStatus").value.trim(),
+    placeOfInitiation: toSentenceCase(document.getElementById("edit_placeOfInitiation").value.trim()),
+    initiationDate: document.getElementById("edit_initiationDate").value,
+
+    shikshaGuru: toTitleCase(document.getElementById("edit_shikshaGuru").value.trim()),
+    dikshaGuru: document.getElementById("edit_dikshaGuru").value.trim().toUpperCase(),
+
+    lastUpdatedDate: Date.now()
+  };
+
+  db.ref("devotees/" + currentEditKey).update(updated)
+    .then(() => {
+      editModalBackdrop.style.display = "none";
+      currentEditKey = null;
+      loadFromDatabase();
+    })
+    .catch(err => console.error(err));
+});
 
   /* ------------------------------------------------------------
      EXPORT FUNCTIONS
