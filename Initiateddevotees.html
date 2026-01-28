@@ -72,6 +72,27 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 250px;
+}
+
+.mobile-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-wrapper .prefix {
+  margin-right: 8px;
+  font-weight: bold;
+}
 
 .view-switch button {
   padding: 10px 20px;
@@ -402,7 +423,8 @@ th {
 
         <th data-field="mobile" class="sortable">Mobile <span class="sort-icon"></span></th>
         <th data-field="familyHead" class="sortable">Family Head <span class="sort-icon"></span></th>
-        <th data-field="addrLine1" class="sortable">Addr1 <span class="sort-icon"></span></th>
+<th data-field="familyHeadName" class="sortable">Family Head Name <span class="sort-icon"></span></th>
+<th data-field="addrLine1" class="sortable">Addr1 <span class="sort-icon"></span></th>
         <th data-field="addrLine2" class="sortable">Addr2 <span class="sort-icon"></span></th>
         <th data-field="city" class="sortable">City <span class="sort-icon"></span></th>
         <th data-field="state" class="sortable">State <span class="sort-icon"></span></th>
@@ -507,6 +529,12 @@ th {
         <div class="error" id="mobileError"></div>
       </div>
 
+    </div>
+    <div class="form-group" id="familyHeadGroup" style="display: none;"> 
+    <label for="familyHeadName" id="label_familyHeadName">Family Head Name *</label>
+    <select id="familyHeadName" name="familyHeadName"> 
+    <option value="">Select</option> 
+    </select> 
     </div>
 
     <div class="checkbox-group">
@@ -731,6 +759,16 @@ th {
         </div>
       </div>
 
+<div class="edit-row" id="edit_familyHeadNameGroup" style="display:none;">
+  <div>
+    <label>Family Head Name *</label>
+    <select id="edit_familyHeadName">
+      <option value="">Select</option>
+    </select>
+  </div>
+</div>
+
+
       <div class="edit-row">
         <div>
           <label>Address Line 1</label>
@@ -893,6 +931,84 @@ function toTitleCase(str) {
 
   const countryCodeInput = document.getElementById("countryCodeInput");
   const countryOptions = document.getElementById("countryOptions");
+
+/* FAMILY HEAD — ELEMENT REFERENCES */
+const dobEl = document.getElementById("dob");
+const familyHeadGroup = document.getElementById("familyHeadGroup");
+const familyHeadNameEl = document.getElementById("familyHeadName");
+
+/* FAMILY HEAD — AGE CALCULATION */
+function calculateAge(dobString) {
+  if (!dobString) return null;
+  // dob is type="date" → "yyyy-mm-dd"
+  const parts = dobString.split("-");
+  if (parts.length !== 3) return null;
+
+  const birthDate = new Date(`${parts[0]}-${parts[1]}-${parts[2]}`);
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+}
+
+/* FAMILY HEAD — DOB LISTENER */
+if (dobEl) {
+  dobEl.addEventListener("change", () => {
+    const dob = dobEl.value.trim();
+    if (!dob) return;
+
+    const age = calculateAge(dob);
+    if (age === null) return;
+
+    if (age < 18) {
+      showFamilyHeadDropdown();
+    } else {
+      hideFamilyHeadDropdown();
+    }
+  });
+}
+
+/* FAMILY HEAD — SHOW/HIDE DROPDOWN */
+function showFamilyHeadDropdown() {
+  const heads = JSON.parse(localStorage.getItem("familyHeads") || "[]");
+
+  if (heads.length === 0) {
+    alert("Please ensure the parent’s details are entered first and marked as Family Head before adding a child.");
+  }
+
+  familyHeadNameEl.innerHTML = '<option value="">Select</option>';
+  heads.forEach(name => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    familyHeadNameEl.appendChild(opt);
+  });
+
+  familyHeadGroup.style.display = "block";
+}
+
+function hideFamilyHeadDropdown() {
+  familyHeadGroup.style.display = "none";
+  familyHeadNameEl.value = "";
+}
+/* FAMILY HEAD — POPULATE ADMIN EDIT DROPDOWN */
+function populateAdminFamilyHeadDropdown() {
+  const heads = JSON.parse(localStorage.getItem("familyHeads") || "[]");
+
+  editFamilyHeadNameEl.innerHTML = '<option value="">Select</option>';
+  heads.forEach(name => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    editFamilyHeadNameEl.appendChild(opt);
+  });
+}
 
   const ADMIN_PASSWORD = "Kalamunda";
 
@@ -1146,6 +1262,16 @@ if (areInitiatedVal === "YES") {
   }
 }
 
+/* FAMILY HEAD — MINOR VALIDATION */
+const ageFH = calculateAge(document.getElementById("dob").value.trim());
+if (ageFH !== null && ageFH < 18) {
+  const fhVal = document.getElementById("familyHeadName").value.trim();
+  if (!fhVal) {
+    alert("Please select a Family Head for minors.");
+    valid = false;
+  }
+}
+
     if (!valid) return;
 
     /* FULL NAME AUTO-GENERATION */
@@ -1159,6 +1285,18 @@ if (areInitiatedVal === "YES") {
     const emailLower = emailRaw.toLowerCase();
     const normalizedMobile = mobileNumberEl.dataset.normalizedMobile;
 
+/* FAMILY HEAD — STORE FAMILY HEAD NAMES */
+const isFamilyHead = document.getElementById("familyHead").checked;
+const fullNameFH = fullName;
+
+if (isFamilyHead && fullNameFH) {
+  const heads = JSON.parse(localStorage.getItem("familyHeads") || "[]");
+  if (!heads.includes(fullNameFH)) {
+    heads.push(fullNameFH);
+    localStorage.setItem("familyHeads", JSON.stringify(heads));
+  }
+}
+
     const data = {
       firstName: first,
       lastName: last,
@@ -1170,8 +1308,9 @@ if (areInitiatedVal === "YES") {
       /* NEW FIELD */
       drivingLicence: document.getElementById("drivingLicence").value.trim(),
 
-      mobile: normalizedMobile,
-      familyHead: document.getElementById("familyHead").checked ? "Yes" : "No",
+  mobile: normalizedMobile,
+  familyHead: document.getElementById("familyHead").checked ? "Yes" : "No",
+  familyHeadName: document.getElementById("familyHeadName").value.trim(),
       addrLine1: document.getElementById("addrLine1").value.trim(),
       addrLine2: document.getElementById("addrLine2").value.trim(),
       city: document.getElementById("city").value.trim(),
@@ -1194,14 +1333,26 @@ if (areInitiatedVal === "YES") {
     try {
       const dupKey = await findDuplicateKey(emailLower, normalizedMobile);
 
-      if (dupKey) {
-        const overwrite = await showDuplicateModal();
-        if (!overwrite) return;
-        await db.ref("devotees/" + dupKey).update(data);
-      } else {
-        const ref = db.ref("devotees").push();
-        await ref.set(data);
-      }
+const ageForDupCheck = calculateAge(document.getElementById("dob").value.trim());
+
+if (ageForDupCheck !== null && ageForDupCheck < 18) {
+  // Minor — skip duplicate check
+  const ref = db.ref("devotees").push();
+  await ref.set(data);
+} else {
+  // Major — perform duplicate check
+  const dupKey = await findDuplicateKey(emailLower, normalizedMobile);
+
+  if (dupKey) {
+    const overwrite = await showDuplicateModal();
+    if (!overwrite) return;
+    await db.ref("devotees/" + dupKey).update(data);
+  } else {
+    const ref = db.ref("devotees").push();
+    await ref.set(data);
+  }
+}
+
 
       form.reset();
       countryCodeInput.value = "+61";
@@ -1312,23 +1463,50 @@ if (areInitiatedVal === "YES") {
     adminView.classList.add("hidden");
     userView.classList.remove("hidden");
     if (welcomeMessage) welcomeMessage.style.display = "none";
+
+// FAMILY HEAD — RECHECK ON VIEW SWITCH
+const dobVal = dobEl.value.trim();
+if (dobVal) {
+  const age = calculateAge(dobVal);
+  if (age !== null && age < 18) {
+    showFamilyHeadDropdown();
+  } else {
+    hideFamilyHeadDropdown();
+  }
+} else {
+  hideFamilyHeadDropdown();
+}
+
   };
   /* ------------------------------------------------------------
      LOAD DATA FOR ADMIN TABLE
   ------------------------------------------------------------ */
-  function loadFromDatabase() {
-    db.ref("devotees").once("value", (snapshot) => {
-      devotees = [];
-      devoteesKeys = [];
-      snapshot.forEach(child => {
-        devoteesKeys.push(child.key);
-        devotees.push(child.val());
-      });
-      currentPage = 1;
-      renderWithPagination();
-      updateSortIcons();
+function loadFromDatabase() {
+  db.ref("devotees").once("value", (snapshot) => {
+    devotees = [];
+    devoteesKeys = [];
+
+    const freshHeads = [];
+
+    snapshot.forEach(child => {
+      const val = child.val() || {};
+      devoteesKeys.push(child.key);
+      devotees.push(val);
+
+      if (val.familyHead === "Yes" && val.fullName) {
+        freshHeads.push(val.fullName);
+      }
     });
-  }
+
+    // FAMILY HEAD — FULL SYNC
+    localStorage.setItem("familyHeads", JSON.stringify(freshHeads));
+
+    currentPage = 1;
+    renderWithPagination();
+    updateSortIcons();
+  });
+}
+
 
   /* ------------------------------------------------------------
      FORMAT DOB & TIMESTAMP
@@ -1341,6 +1519,21 @@ if (areInitiatedVal === "YES") {
     const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     return `${dd}-${months[parseInt(mm)-1]}-${yyyy}`;
   }
+
+function getAgeFromDob(dobStr) {
+  if (!dobStr) return null;
+  const parts = dobStr.split("-");
+  if (parts.length !== 3) return null;
+  const birthDate = new Date(`${parts[0]}-${parts[1]}-${parts[2]}`);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+}
+
 
   function formatTimestamp(ts) {
     if (!ts) return "";
@@ -1410,6 +1603,10 @@ if (areInitiatedVal === "YES") {
       };
       deleteTd.appendChild(deleteBtn);
       row.appendChild(deleteTd);
+      const ageForRow = getAgeFromDob(d.dob || "");
+      const familyHeadNameDisplay = (ageForRow !== null && ageForRow < 18)
+        ? (d.familyHeadName || "")
+        : "";
 
       // Data cells (Driving Licence included)
       const cells = [
@@ -1422,6 +1619,7 @@ if (areInitiatedVal === "YES") {
         d.drivingLicence || "",
         d.mobile || "",
         d.familyHead || "",
+familyHeadNameDisplay,
 toSentenceCase(d.addrLine1 || ""), 
 toSentenceCase(d.addrLine2 || ""), 
 toSentenceCase(d.city || ""), 
@@ -1596,6 +1794,36 @@ toTitleCase(d.shikshaGuru || ""),
   const editModalBackdrop = document.getElementById("editModalBackdrop");
   const editForm = document.getElementById("editForm");
   const editCancelBtn = document.getElementById("editCancelBtn");
+/* FAMILY HEAD — ADMIN EDIT ELEMENTS */
+const editDobEl = document.getElementById("edit_dob");
+const editFamilyHeadCheckbox = document.getElementById("edit_familyHead");
+const editFamilyHeadNameGroup = document.getElementById("edit_familyHeadNameGroup");
+const editFamilyHeadNameEl = document.getElementById("edit_familyHeadName");
+
+
+/* FAMILY HEAD — ADMIN EDIT DOB LISTENER */
+if (editDobEl) {
+  editDobEl.addEventListener("change", () => {
+    const dob = editDobEl.value.trim();
+    if (!dob) {
+      editFamilyHeadNameGroup.style.display = "none";
+      return;
+    }
+
+    const age = calculateAge(dob);
+    if (age !== null && age < 18) {
+      populateAdminFamilyHeadDropdown();
+      editFamilyHeadNameGroup.style.display = "block";
+      editFamilyHeadCheckbox.checked = false;
+      editFamilyHeadCheckbox.parentElement.style.display = "none";
+    } else {
+      editFamilyHeadNameGroup.style.display = "none";
+      editFamilyHeadCheckbox.parentElement.style.display = "block";
+    }
+  });
+}
+
+
 
   function openEditModal(index) {
     const d = devotees[index];
@@ -1607,6 +1835,24 @@ toTitleCase(d.shikshaGuru || ""),
     document.getElementById("edit_email").value = d.email || "";
     document.getElementById("edit_gender").value = d.gender || "";
     document.getElementById("edit_dob").value = d.dob || "";
+/* FAMILY HEAD — ADMIN EDIT INITIAL DOB CHECK */
+const dobEditVal = d.dob || "";
+if (dobEditVal) {
+  const age = calculateAge(dobEditVal);
+  if (age !== null && age < 18) {
+    populateAdminFamilyHeadDropdown();
+    editFamilyHeadNameGroup.style.display = "block";
+    editFamilyHeadNameEl.value = d.familyHeadName || "";
+    editFamilyHeadCheckbox.checked = false;
+    editFamilyHeadCheckbox.parentElement.style.display = "none";
+  } else {
+    editFamilyHeadNameGroup.style.display = "none";
+    editFamilyHeadCheckbox.parentElement.style.display = "block";
+  }
+} else {
+  editFamilyHeadNameGroup.style.display = "none";
+  editFamilyHeadCheckbox.parentElement.style.display = "block";
+}
 
     /* NEW FIELD */
     document.getElementById("edit_drivingLicence").value = d.drivingLicence || "";
@@ -1735,6 +1981,12 @@ if (adminInitiatedVal === "YES") {
   /* -----------------------------
      DUPLICATE CHECK
   ----------------------------- */
+const ageEdit = calculateAge(document.getElementById("edit_dob").value.trim());
+
+if (ageEdit !== null && ageEdit < 18) {
+  // Minor — skip duplicate check
+} else {
+  // Major — perform duplicate check
   const duplicateKey = devoteesKeys.find((key, i) => {
     const d = devotees[i];
     const e = (d.email || "").toLowerCase().trim();
@@ -1747,6 +1999,8 @@ if (adminInitiatedVal === "YES") {
     if (!confirmUpdate) return;
     currentEditKey = duplicateKey;
   }
+}
+
 
   /* -----------------------------
      UPDATE OBJECT (unchanged)
@@ -1761,6 +2015,7 @@ if (adminInitiatedVal === "YES") {
     drivingLicence: document.getElementById("edit_drivingLicence").value.trim(),
     mobile: mobileFormatted,
     familyHead: document.getElementById("edit_familyHead").checked ? "Yes" : "No",
+    familyHeadName: document.getElementById("edit_familyHeadName").value.trim(),
     country: document.getElementById("edit_country").value.trim(),
 
     addrLine1: toSentenceCase(document.getElementById("edit_addrLine1").value.trim()),
@@ -1795,7 +2050,7 @@ if (adminInitiatedVal === "YES") {
   ------------------------------------------------------------ */
   const exportFields = [
     "firstName", "lastName", "fullName", "email", "gender", "dob",
-    "drivingLicence", "mobile", "familyHead",
+      "drivingLicence", "mobile", "familyHead", "familyHeadName",
     "addrLine1", "addrLine2", "city", "state", "postcode", "country",
     "areInitiated", "initiatedName", "initiationStatus", "placeOfInitiation",
     "initiationDate", "shikshaGuru", "dikshaGuru",
@@ -1858,5 +2113,4 @@ exportAllXlsxBtn.onclick = () => exportExcel(devotees);
 </script>
 </body>
 </html>
-
 
