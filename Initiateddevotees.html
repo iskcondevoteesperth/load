@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <head>
   <meta charset="UTF-8" />
   <title>Perth Initiated Devotee List</title>
@@ -40,58 +42,32 @@
   width: 100%;
 }
 
-
 /* Narrower Country column */
-#devoteeTable th:nth-child(16),
-#devoteeTable td:nth-child(16) {
+#devoteeTable th:nth-child(17),
+#devoteeTable td:nth-child(17) {
   max-width: 80px;
   width: 80px;
 }
-#devoteeTable th[data-field="dikshaGuru"],
-#devoteeTable td:nth-child(??) {
-  max-width: 220px;
-  width: 220px;
-}
-
 
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background-image: url('https://iskconnewtown.com/wp-content/uploads/2024/02/nitai-gauranga-iskconnewtown-kolkata-6.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-color: #f5f5f5;
 }
 
 header {
-  background: rgba(0,0,0,0.7);
-  color: #fff;
+  background: #ffffff;
+  color: #2d3436;
   padding: 15px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.form-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 20px;
+  border-bottom: 1px solid #dfe6e9;
 }
 
-.form-row .form-group {
-  flex: 1;
-  min-width: 250px;
-}
-
-.mobile-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.mobile-wrapper .prefix {
-  margin-right: 8px;
-  font-weight: bold;
+header h1 {
+  font-size: 20px;
+  margin: 0;
 }
 
 .view-switch button {
@@ -100,23 +76,26 @@ header {
   border-radius: 25px;
   cursor: pointer;
   font-weight: 600;
-  background: #f6e58d;
+  background: #f1f3f4;
   margin-left: 8px;
 }
 
 .view-switch button.active {
-  background: #e17055;
+  background: #1a73e8;
   color: #fff;
 }
 
-main { padding: 25px; }
+main {
+  padding: 20px 10px 40px;
+}
 
 .card {
-  background: rgba(255,255,255,0.92);
+  background: #ffffff;
   border-radius: 14px;
   padding: 22px;
-  max-width: 1100px;
-  margin: 0 auto;
+  max-width: 900px;
+  margin: 0 auto 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .card#adminView {
@@ -131,7 +110,7 @@ main { padding: 25px; }
   margin-top: 20px;
   margin-bottom: 8px;
   font-weight: 700;
-  color: #e67e22;
+  color: #1a73e8;
 }
 
 .form-row {
@@ -148,10 +127,17 @@ main { padding: 25px; }
 }
 
 input, select {
-  padding: 7px 9px;
+  padding: 9px 10px;
   border-radius: 6px;
   border: 1px solid #b2bec3;
-  background: #fffdf8;
+  background: #fff;
+  font-size: 14px;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 1px rgba(26,115,232,0.2);
 }
 
 .submit-row {
@@ -163,12 +149,16 @@ input, select {
   padding: 9px 18px;
   border-radius: 20px;
   border: none;
-  background: #e17055;
+  background: #1a73e8;
   color: white;
   font-size: 14px;
   cursor: pointer;
   font-weight: 600;
   margin-left: 8px;
+}
+
+.submit-row button#resetBtn {
+  background: #777;
 }
 
 .error {
@@ -191,8 +181,8 @@ input, select {
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
-  background: #fab1a0;
-  color: #2d3436;
+  background: #e8f0fe;
+  color: #1a73e8;
 }
 
 table {
@@ -212,11 +202,11 @@ th, td {
   white-space: normal;
   overflow-wrap: break-word;
   max-width: 180px;
-  min-width: 100px;
+  min-width: 80px;
 }
 
 th {
-  background: #e67e22;
+  background: #1a73e8;
   color: #fff;
 }
 
@@ -230,7 +220,7 @@ th {
   padding: 7px 9px;
   border-radius: 6px;
   border: 1px solid #b2bec3;
-  background: #fffdf8;
+  background: #fff;
   cursor: default;
 }
 
@@ -287,7 +277,7 @@ th {
   padding: 7px 16px;
   border-radius: 18px;
   border: none;
-  background: #e17055;
+  background: #1a73e8;
   color: #fff;
   cursor: pointer;
   font-weight: 600;
@@ -367,6 +357,132 @@ th {
   background: #777;
   color: #fff;
 }
+
+/* FINAL FIX — Strong override for mobile number layout */
+.form-group .mobile-row {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.form-group .mobile-row .country-select {
+  width: 90px !important;
+  min-width: 90px !important;
+  max-width: 90px !important;
+}
+
+.form-group .mobile-row .country-select input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.form-group .mobile-row #mobileNumber {
+  flex: 1 !important;
+  min-width: 200px !important;
+  width: 100% !important;
+}
+
+@media (max-width: 600px) {
+  .form-group .mobile-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .form-group .mobile-row .country-select {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .form-group .mobile-row .country-select input {
+    width: 100% !important;
+  }
+
+  .form-group .mobile-row #mobileNumber {
+    width: 100% !important;
+  }
+}
+
+/* ============================
+   USER VIEW — Soft Sky Blue
+   ============================ */
+#userView.card {
+  background: #f0f7ff; /* soft sky blue */
+  border: 1px solid #d6e6ff;
+}
+
+/* ============================
+   ADMIN VIEW — Slightly deeper blue-grey
+   ============================ */
+#adminView.card {
+  background: #e8f7ef; /* soft blue-grey */
+  border: 1px solid #d3dced;
+}
+
+/* ============================
+   PAGE BACKGROUND
+   ============================ */
+body {
+  background: #e3f2ea; /* very light blue */
+}
+
+/* ==========================================
+   ADMIN EDIT VIEW — FINAL SPACING FIX
+   ========================================== */
+
+/* Increase spacing between each row */
+.edit-modal .edit-row {
+  margin-bottom: 20px !important;
+  gap: 16px !important; /* wider gap between columns */
+}
+
+/* Add spacing inside each column */
+.edit-modal .edit-row > div {
+  margin-bottom: 10px !important;
+}
+
+/* Add spacing between label and input */
+.edit-modal label {
+  margin-bottom: 6px !important;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Make inputs more breathable */
+.edit-modal input,
+.edit-modal select {
+  padding-top: 11px !important;
+  padding-bottom: 11px !important;
+}
+
+/* Add padding inside the modal itself */
+.edit-modal {
+  padding: 26px 28px !important;
+}
+
+/* ==========================================
+   ADMIN EDIT VIEW — Bigger Family Head Checkbox
+   ========================================== */
+
+.edit-modal input[type="checkbox"] {
+  width: 22px !important;
+  height: 22px !important;
+  transform: scale(1.2);
+  cursor: pointer;
+  accent-color: #1a73e8; /* Google blue */
+  margin-right: 6px;
+}
+
+/* Improve alignment with label */
+.edit-modal .checkbox-wrapper,
+.edit-modal label[for="editFamilyHead"] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
   </style>
 </head>
 <body>
@@ -412,25 +528,22 @@ th {
         <th style="width:60px;">Delete</th>    <!-- delete button -->
 
         <th data-field="firstName" class="sortable">First Name <span class="sort-icon"></span></th>
+        <th data-field="middleName" class="sortable">Middle Name <span class="sort-icon"></span></th>
         <th data-field="lastName" class="sortable">Last Name <span class="sort-icon"></span></th>
-        <th data-field="fullName" class="sortable">Full Name as per passport <span class="sort-icon"></span></th>
+        <th data-field="fullName" class="sortable">Full Name <span class="sort-icon"></span></th>
         <th data-field="email" class="sortable">Email <span class="sort-icon"></span></th>
         <th data-field="gender" class="sortable">Gender <span class="sort-icon"></span></th>
         <th data-field="dob" class="sortable">DOB <span class="sort-icon"></span></th>
 
-        <!-- REPLACED PASSPORT WITH DRIVING LICENCE -->
-        <th data-field="drivingLicence" class="sortable">Driving Licence <span class="sort-icon"></span></th>
-
         <th data-field="mobile" class="sortable">Mobile <span class="sort-icon"></span></th>
         <th data-field="familyHead" class="sortable">Family Head <span class="sort-icon"></span></th>
-<th data-field="familyHeadName" class="sortable">Family Head Name <span class="sort-icon"></span></th>
-<th data-field="addrLine1" class="sortable">Addr1 <span class="sort-icon"></span></th>
+        <th data-field="familyHeadName" class="sortable">Family Head Name <span class="sort-icon"></span></th>
+        <th data-field="addrLine1" class="sortable">Addr1 <span class="sort-icon"></span></th>
         <th data-field="addrLine2" class="sortable">Addr2 <span class="sort-icon"></span></th>
         <th data-field="city" class="sortable">City <span class="sort-icon"></span></th>
         <th data-field="state" class="sortable">State <span class="sort-icon"></span></th>
         <th data-field="postcode" class="sortable">Postcode <span class="sort-icon"></span></th>
         <th data-field="country" class="sortable">Country <span class="sort-icon"></span></th>
-
         <th data-field="areInitiated" class="sortable">Are Initiated <span class="sort-icon"></span></th>
         <th data-field="initiatedName" class="sortable">Initiated Name <span class="sort-icon"></span></th>
         <th data-field="initiationStatus" class="sortable">Initiation Status <span class="sort-icon"></span></th>
@@ -461,20 +574,20 @@ th {
 
     <div class="form-row">
       <div class="form-group">
-        <label>First Name (as per passport) *</label>
+        <label>First Name *</label>
         <input type="text" id="firstName">
         <div class="error" id="firstNameError"></div>
       </div>
 
       <div class="form-group">
-        <label>Last Name (as per passport) *</label>
-        <input type="text" id="lastName">
-        <div class="error" id="lastNameError"></div>
+        <label>Middle Name (optional)</label>
+        <input type="text" id="middleName">
       </div>
 
       <div class="form-group">
-        <label>Full Name as per passport</label>
-        <input type="text" id="fullName">
+        <label>Last Name *</label>
+        <input type="text" id="lastName">
+        <div class="error" id="lastNameError"></div>
       </div>
     </div>
 
@@ -485,18 +598,17 @@ th {
         <div class="error" id="emailError"></div>
       </div>
 
-<div class="form-group">
-  <label>Gender *</label>
-  <select id="gender">
-    <option value="">Select</option>
-    <option>Male</option>
-    <option>Female</option>
-    <option>Other</option>
-    <option>Prefer not to say</option>
-  </select>
-  <div class="error" id="genderError"></div>
-</div>
-
+      <div class="form-group">
+        <label>Gender *</label>
+        <select id="gender">
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+          <option>Prefer not to say</option>
+        </select>
+        <div class="error" id="genderError"></div>
+      </div>
 
       <div class="form-group">
         <label>Date of Birth *</label>
@@ -505,39 +617,36 @@ th {
       </div>
     </div>
 
-    <div class="form-row">
+<div class="form-row">
+  <div class="form-group">
+    <label>Mobile Number (Australia only) *</label>
 
-      <!-- REPLACED PASSPORT WITH DRIVING LICENCE -->
-      <div class="form-group">
-        <label>Driving Licence Number (optional)</label>
-        <input type="text" id="drivingLicence">
+<div class="mobile-row">
+  <div class="country-select">
+    <input type="text" id="countryCodeInput" value="+61" readonly>
+    <div class="country-options" id="countryOptions">
+      <div class="country-option" data-code="+61">
+        <span class="flag">🇦🇺</span> +61 Australia
       </div>
-
-      <div class="form-group">
-        <label>Mobile Number (Australia only) *</label>
-        <div style="display:flex; gap:8px; align-items:center;">
-          <div class="country-select">
-            <input type="text" id="countryCodeInput" value="+61" readonly>
-            <div class="country-options" id="countryOptions">
-              <div class="country-option" data-code="+61">
-                <span class="flag">🇦🇺</span> +61 Australia
-              </div>
-            </div>
-          </div>
-          <input type="text" id="mobileNumber" placeholder="04xx xxx xxx" style="width:140px;">
-        </div>
-        <div class="error" id="mobileError"></div>
-      </div>
-
     </div>
+  </div>
+
+      <input type="text" id="mobileNumber" placeholder="04xx xxx xxx">
+    </div>
+
+    <div class="error" id="mobileError"></div>
+  </div>
+</div>
+
+
     <div class="form-group" id="familyHeadGroup" style="display: none;"> 
-    <label for="familyHeadName" id="label_familyHeadName">Family Head Name *</label>
-    <select id="familyHeadName" name="familyHeadName"> 
-    <option value="">Select</option> 
-    </select> 
+      <label for="familyHeadName" id="label_familyHeadName">Family Head Name *</label>
+      <select id="familyHeadName" name="familyHeadName"> 
+        <option value="">Select</option> 
+      </select> 
     </div>
 
-    <div class="checkbox-group">
+    <div class="checkbox-group" style="margin-top:8px;">
       <input type="checkbox" id="familyHead">
       <label for="familyHead">Are you family head?</label>
     </div>
@@ -568,11 +677,11 @@ th {
         <input type="text" id="state">
       </div>
 
-	<div class="form-group">
-  	<label>Postcode *</label>
-  	<input type="text" id="postcode">
-  	<div class="error" id="postcodeError"></div>
-	</div>
+      <div class="form-group">
+        <label>Postcode *</label>
+        <input type="text" id="postcode">
+        <div class="error" id="postcodeError"></div>
+      </div>
     </div>
 
     <div class="form-row">
@@ -604,11 +713,10 @@ th {
 
       <div class="form-group">
         <label id="label_initiationStatus">Initiation Status</label>
-<select id="initiationStatus">
-    <option value="First" selected>First</option>
-    <option value="Second">Second</option>
-</select>
-
+        <select id="initiationStatus">
+          <option value="First" selected>First</option>
+          <option value="Second">Second</option>
+        </select>
       </div>
     </div>
 
@@ -629,26 +737,26 @@ th {
       </div>
     </div>
 
-<div class="form-group">
-  <label id="label_dikshaGuru">Diksha Guru Name</label>
-  <input list="dikshaGuruList" id="dikshaGuru" placeholder="<Enter/Select your Guru  Name>" style="max-width:280px;">
-  <datalist id="dikshaGuruList">
-    <option value="HH Jayapataka Swami ">
-    <option value="HH Radhanath Swami ">
-    <option value="HH Romapada Swami ">
-    <option value="HH Gopal Krishna Goswami ">
-    <option value="HH Bhakti Vikasa Swami ">
-  </datalist>
-</div>
-
+    <div class="form-group">
+      <label id="label_dikshaGuru">Diksha Guru Name</label>
+      <input list="dikshaGuruList" id="dikshaGuru" placeholder="<Enter/Select your Guru  Name>" style="max-width:280px;">
+      <datalist id="dikshaGuruList">
+        <option value="HH Jayapataka Swami ">
+        <option value="HH Radhanath Swami ">
+        <option value="HH Romapada Swami ">
+        <option value="HH Gopal Krishna Goswami ">
+        <option value="HH Bhakti Vikasa Swami ">
+      </datalist>
+    </div>
 
     <div class="submit-row">
       <button type="submit">Submit</button>
-      <button type="button" id="resetBtn" style="background:#777;">Reset</button>
+      <button type="button" id="resetBtn">Reset</button>
     </div>
 
   </form>
 </div>
+
 <!-- SUCCESS MODAL -->
 <div id="successModalBackdrop" class="modal-backdrop">
   <div class="modal">
@@ -701,6 +809,10 @@ th {
           <input type="text" id="edit_firstName">
         </div>
         <div>
+          <label>Middle Name (optional)</label>
+          <input type="text" id="edit_middleName">
+        </div>
+        <div>
           <label>Last Name</label>
           <input type="text" id="edit_lastName">
         </div>
@@ -708,16 +820,9 @@ th {
 
       <div class="edit-row">
         <div>
-          <label>Full Name as per passport</label>
-          <input type="text" id="edit_fullName">
-        </div>
-        <div>
           <label>Email</label>
           <input type="email" id="edit_email">
         </div>
-      </div>
-
-      <div class="edit-row">
         <div>
           <label>Gender</label>
           <select id="edit_gender">
@@ -725,7 +830,7 @@ th {
             <option>Male</option>
             <option>Female</option>
             <option>Other</option>
-	    <option>Prefer not to say</option>
+            <option>Prefer not to say</option>
           </select>
         </div>
         <div>
@@ -733,16 +838,14 @@ th {
           <input type="date" id="edit_dob">
         </div>
       </div>
-
       <div class="edit-row">
-        <div>
-          <!-- REPLACED PASSPORT WITH DRIVING LICENCE -->
-          <label>Driving Licence Number (optional)</label>
-          <input type="text" id="edit_drivingLicence">
-        </div>
         <div>
           <label>Mobile</label>
           <input type="text" id="edit_mobile">
+        </div>
+        <div>
+          <label>Country</label>
+          <input type="text" id="edit_country">
         </div>
       </div>
 
@@ -753,21 +856,16 @@ th {
             <input type="checkbox" id="edit_familyHead" style="margin-top:4px;">
           </div>
         </div>
-        <div>
-          <label>Country</label>
-          <input type="text" id="edit_country">
-        </div>
       </div>
 
-<div class="edit-row" id="edit_familyHeadNameGroup" style="display:none;">
-  <div>
-    <label>Family Head Name *</label>
-    <select id="edit_familyHeadName">
-      <option value="">Select</option>
-    </select>
-  </div>
-</div>
-
+      <div class="edit-row" id="edit_familyHeadNameGroup" style="display:none;">
+        <div>
+          <label>Family Head Name *</label>
+          <select id="edit_familyHeadName">
+            <option value="">Select</option>
+          </select>
+        </div>
+      </div>
 
       <div class="edit-row">
         <div>
@@ -833,15 +931,14 @@ th {
         <div>
           <label>Diksha Guru</label>
           <input list="editDikshaGuruList" id="edit_dikshaGuru" style="max-width:300px;">
-<datalist id="editDikshaGuruList">
-  <option value="HH Jayapataka Swami ">
-  <option value="HH Radhanath Swami ">
-  <option value="HH Romapada Swami ">
-  <option value="HH Gopal Krishna Goswami ">
-  <option value="HH Bhakti Vikasa Swami ">
-  <option value="<Enter/Select your Guru  Name>">
-</datalist>
-
+          <datalist id="editDikshaGuruList">
+            <option value="HH Jayapataka Swami ">
+            <option value="HH Radhanath Swami ">
+            <option value="HH Romapada Swami ">
+            <option value="HH Gopal Krishna Goswami ">
+            <option value="HH Bhakti Vikasa Swami ">
+            <option value="<Enter/Select your Guru  Name>">
+          </datalist>
         </div>
       </div>
 
@@ -853,6 +950,7 @@ th {
     </form>
   </div>
 </div>
+
 <script>
 /* ============================================================
    FIREBASE INITIALIZATION
@@ -883,6 +981,7 @@ const guruList = [
   "HH Gopal Krishna Goswami ",
   "HH Bhakti Vikasa Swami "
 ];
+
 /* Sentence case: "I live in India" */
 function toSentenceCase(str) {
   if (!str) return "";
@@ -900,7 +999,27 @@ function toTitleCase(str) {
     .join(" ");
 }
 
+/* Australian postcode validation */
+function isValidAustralianPostcode(pc) {
+  const n = parseInt(pc, 10);
+  if (isNaN(n) || pc.length !== 4) return false;
 
+  if (n >= 200 && n <= 299) return true;      // ACT/NSW PO boxes
+  if (n >= 800 && n <= 899) return true;      // NT
+  if (n >= 1000 && n <= 1999) return true;    // NSW
+  if (n >= 2000 && n <= 2599) return true;    // NSW
+  if (n >= 2600 && n <= 2618) return true;    // ACT
+  if (n >= 2900 && n <= 2999) return true;    // ACT/NSW
+  if (n >= 3000 && n <= 3999) return true;    // VIC
+  if (n >= 4000 && n <= 4999) return true;    // QLD
+  if (n >= 5000 && n <= 5999) return true;    // SA
+  if (n >= 6000 && n <= 6799) return true;    // WA
+  if (n >= 7000 && n <= 7999) return true;    // TAS
+  if (n >= 8000 && n <= 8999) return true;    // NT/large users
+  if (n >= 9000 && n <= 9999) return true;    // reserved/large users
+
+  return false;
+}
 
   /* ------------------------------------------------------------
      ELEMENT REFERENCES
@@ -936,11 +1055,11 @@ function toTitleCase(str) {
 const dobEl = document.getElementById("dob");
 const familyHeadGroup = document.getElementById("familyHeadGroup");
 const familyHeadNameEl = document.getElementById("familyHeadName");
+const familyHeadCheckbox = document.getElementById("familyHead");
 
 /* FAMILY HEAD — AGE CALCULATION */
 function calculateAge(dobString) {
   if (!dobString) return null;
-  // dob is type="date" → "yyyy-mm-dd"
   const parts = dobString.split("-");
   if (parts.length !== 3) return null;
 
@@ -955,23 +1074,6 @@ function calculateAge(dobString) {
   }
 
   return age;
-}
-
-/* FAMILY HEAD — DOB LISTENER */
-if (dobEl) {
-  dobEl.addEventListener("change", () => {
-    const dob = dobEl.value.trim();
-    if (!dob) return;
-
-    const age = calculateAge(dob);
-    if (age === null) return;
-
-    if (age < 18) {
-      showFamilyHeadDropdown();
-    } else {
-      hideFamilyHeadDropdown();
-    }
-  });
 }
 
 /* FAMILY HEAD — SHOW/HIDE DROPDOWN */
@@ -997,6 +1099,7 @@ function hideFamilyHeadDropdown() {
   familyHeadGroup.style.display = "none";
   familyHeadNameEl.value = "";
 }
+
 /* FAMILY HEAD — POPULATE ADMIN EDIT DROPDOWN */
 function populateAdminFamilyHeadDropdown() {
   const heads = JSON.parse(localStorage.getItem("familyHeads") || "[]");
@@ -1019,57 +1122,55 @@ function populateAdminFamilyHeadDropdown() {
   // Pagination
   let currentPage = 1;
   const pageSize = 50;
+/* ------------------------------------------------------------
+   COUNTRY CODE DROPDOWN (Australia only)
+------------------------------------------------------------ */
+if (countryCodeInput && countryOptions) {
+  countryCodeInput.onclick = () => {
+    countryOptions.style.display = "block";
+  };
 
-
-  /* ------------------------------------------------------------
-     COUNTRY CODE DROPDOWN (Australia only)
-  ------------------------------------------------------------ */
-  if (countryCodeInput && countryOptions) {
-    countryCodeInput.onclick = () => {
-      countryOptions.style.display = "block";
-    };
-
-    document.addEventListener("click", (e) => {
-      if (!countryCodeInput.contains(e.target) && !countryOptions.contains(e.target)) {
-        countryOptions.style.display = "none";
-      }
-    });
-
-    countryOptions.querySelectorAll(".country-option").forEach(opt => {
-      opt.onclick = () => {
-        countryCodeInput.value = opt.dataset.code;
-        countryOptions.style.display = "none";
-      };
-    });
-  }
-
-  /* ------------------------------------------------------------
-     MOBILE VALIDATION HELPERS
-  ------------------------------------------------------------ */
-  function formatAustralianMobile(num) {
-    let digits = num.replace(/\D/g, "");
-    if (digits.length === 9 && digits.startsWith("4")) digits = "0" + digits;
-    if (!digits.startsWith("04")) return null;
-    if (digits.length !== 10) return null;
-    return digits.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
-  }
-
-  // Strict normalizer for admin edit: returns "+61 4xx xxx xxx" or null
-  function formatMobile(input) {
-    let cleaned = input.replace(/\D/g, "");
-
-    if (cleaned.startsWith("04") && cleaned.length === 10) {
-      cleaned = "614" + cleaned.slice(2);
-    } else if (cleaned.startsWith("4") && cleaned.length === 9) {
-      cleaned = "614" + cleaned;
-    } else if (cleaned.startsWith("614") && cleaned.length === 11) {
-      // already correct
-    } else {
-      return null; // invalid
+  document.addEventListener("click", (e) => {
+    if (!countryCodeInput.contains(e.target) && !countryOptions.contains(e.target)) {
+      countryOptions.style.display = "none";
     }
+  });
 
-    return `+61 ${cleaned.slice(2,5)} ${cleaned.slice(5,8)} ${cleaned.slice(8)}`;
+  countryOptions.querySelectorAll(".country-option").forEach(opt => {
+    opt.onclick = () => {
+      countryCodeInput.value = opt.dataset.code;
+      countryOptions.style.display = "none";
+    };
+  });
+}
+
+/* ------------------------------------------------------------
+   MOBILE VALIDATION HELPERS
+------------------------------------------------------------ */
+function formatAustralianMobile(num) {
+  let digits = num.replace(/\D/g, "");
+  if (digits.length === 9 && digits.startsWith("4")) digits = "0" + digits;
+  if (!digits.startsWith("04")) return null;
+  if (digits.length !== 10) return null;
+  return digits.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
+}
+
+// Strict normalizer for admin edit: returns "+61 4xx xxx xxx" or null
+function formatMobile(input) {
+  let cleaned = input.replace(/\D/g, "");
+
+  if (cleaned.startsWith("04") && cleaned.length === 10) {
+    cleaned = "614" + cleaned.slice(2);
+  } else if (cleaned.startsWith("4") && cleaned.length === 9) {
+    cleaned = "614" + cleaned;
+  } else if (cleaned.startsWith("614") && cleaned.length === 11) {
+    // already correct
+  } else {
+    return null; // invalid
   }
+
+  return `+61 ${cleaned.slice(2,5)} ${cleaned.slice(5,8)} ${cleaned.slice(8)}`;
+}
 
 /* ------------------------------------------------------------
    INITIATION FIELDS ENABLE/DISABLE (USER FORM)
@@ -1082,7 +1183,6 @@ function updateInitiationFields() {
   const val = (areInitiatedEl.value || "").toUpperCase();
   const disabled = (val === "NO");
 
-  // Disable all .init-field elements
   initFields.forEach(el => {
     el.disabled = disabled;
     if (disabled) {
@@ -1093,7 +1193,6 @@ function updateInitiationFields() {
     }
   });
 
-  // Explicitly disable Initiation Status
   const initiationStatusEl = document.getElementById("initiationStatus");
   if (initiationStatusEl) {
     initiationStatusEl.disabled = disabled;
@@ -1105,7 +1204,6 @@ function updateInitiationFields() {
     }
   }
 
-  // Diksha Guru special handling
   if (disabled) {
     dikshaGuruEl.disabled = true;
     dikshaGuruEl.classList.add("disabled-field");
@@ -1115,9 +1213,6 @@ function updateInitiationFields() {
     dikshaGuruEl.classList.remove("disabled-field");
   }
 
-  /* ------------------------------------------------------------
-     DYNAMIC ASTERISKS FOR INITIATION FIELDS
-  ------------------------------------------------------------ */
   const labels = [
     "label_initiatedName",
     "label_initiationStatus",
@@ -1131,10 +1226,8 @@ function updateInitiationFields() {
     if (!label) return;
 
     if (disabled) {
-      // Remove asterisk
       label.innerHTML = label.innerHTML.replace(/\s*\*$/, "");
     } else {
-      // Add asterisk if missing
       if (!label.innerHTML.trim().endsWith("*")) {
         label.innerHTML = label.innerHTML.trim() + " *";
       }
@@ -1145,342 +1238,379 @@ function updateInitiationFields() {
 areInitiatedEl.addEventListener("change", updateInitiationFields);
 updateInitiationFields();
 
+/* FAMILY HEAD — DOB LISTENER (USER FORM) */
+if (dobEl) {
+  dobEl.addEventListener("change", () => {
+    const dob = dobEl.value.trim();
+    if (!dob) {
+      hideFamilyHeadDropdown();
+      familyHeadCheckbox.disabled = false;
+      familyHeadCheckbox.checked = false;
+      return;
+    }
 
-  /* ------------------------------------------------------------
-     DUPLICATE CHECK (Email + Mobile ONLY)
-  ------------------------------------------------------------ */
-  async function findDuplicateKey(emailLower, normalizedMobile) {
-    const snap = await db.ref("devotees").once("value");
-    let foundKey = null;
+    const age = calculateAge(dob);
+    if (age === null) return;
 
-    snap.forEach(child => {
-      const v = child.val() || {};
-      const e = (v.email || "").toLowerCase().trim();
-      const m = (v.mobile || "").trim();
+    if (age < 18) {
+      showFamilyHeadDropdown();
+      familyHeadCheckbox.checked = false;
+      familyHeadCheckbox.disabled = true;
+    } else {
+      hideFamilyHeadDropdown();
+      familyHeadCheckbox.disabled = false;
+    }
+  });
+}
 
-      if (e === emailLower || m === normalizedMobile) {
-        foundKey = child.key;
-      }
-    });
+/* ------------------------------------------------------------
+   DUPLICATE CHECK (Email + Mobile ONLY)
+------------------------------------------------------------ */
+async function findDuplicateKey(emailLower, normalizedMobile) {
+  const snap = await db.ref("devotees").once("value");
+  let foundKey = null;
 
-    return foundKey;
-  }
+  snap.forEach(child => {
+    const v = child.val() || {};
+    const e = (v.email || "").toLowerCase().trim();
+    const m = (v.mobile || "").trim();
 
-  /* ------------------------------------------------------------
-     FORM SUBMISSION (USER)
-  ------------------------------------------------------------ */
-  form.onsubmit = async (e) => {
-    e.preventDefault();
+    if (e === emailLower || m === normalizedMobile) {
+      foundKey = child.key;
+    }
+  });
 
-    let valid = true;
+  return foundKey;
+}
 
-    const required = [
-      ["firstName", "First name is required"],
-      ["lastName", "Last name is required"],
-      ["dob", "Date of birth is required"],
-      ["email", "Email is required"]
-    ];
+/* ------------------------------------------------------------
+   FORM SUBMISSION (USER)
+------------------------------------------------------------ */
+form.onsubmit = async (e) => {
+  e.preventDefault();
 
-    required.forEach(([id, msg]) => {
-      const input = document.getElementById(id);
-      const error = document.getElementById(id + "Error");
-      if (!input.value.trim()) {
-        if (error) error.textContent = msg;
-        valid = false;
-      } else {
-        if (error) error.textContent = "";
-      }
-    });
+  let valid = true;
 
-    /* MOBILE VALIDATION */
-    const mobileNumberEl = document.getElementById("mobileNumber");
-    const mobileNumber = mobileNumberEl.value.trim();
-    const mobileError = document.getElementById("mobileError");
-    const countryCode = countryCodeInput.value.trim();
+  const required = [
+    ["firstName", "First name is required"],
+    ["lastName", "Last name is required"],
+    ["dob", "Date of birth is required"],
+    ["email", "Email is required"]
+  ];
 
-    if (!countryCode || !mobileNumber) {
-      mobileError.textContent = "Mobile number with country code is required";
+  required.forEach(([id, msg]) => {
+    const input = document.getElementById(id);
+    const error = document.getElementById(id + "Error");
+    if (!input.value.trim()) {
+      if (error) error.textContent = msg;
       valid = false;
     } else {
-      const formatted = formatAustralianMobile(mobileNumber);
-      if (!formatted) {
-        mobileError.textContent = "Australian mobile must be 10 digits and start with 04";
-        valid = false;
+      if (error) error.textContent = "";
+    }
+  });
+
+  const emailRaw = document.getElementById("email").value.trim();
+  const emailError = document.getElementById("emailError");
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  if (emailRaw && !emailPattern.test(emailRaw)) {
+    emailError.textContent = "Please enter a valid email address.";
+    valid = false;
+  } else if (emailRaw) {
+    emailError.textContent = "";
+  }
+
+  /* MOBILE VALIDATION */
+  const mobileNumberEl = document.getElementById("mobileNumber");
+  const mobileNumber = mobileNumberEl.value.trim();
+  const mobileError = document.getElementById("mobileError");
+  const countryCode = countryCodeInput.value.trim();
+
+  if (!countryCode || !mobileNumber) {
+    mobileError.textContent = "Mobile number with country code is required";
+    valid = false;
+  } else {
+    const formatted = formatAustralianMobile(mobileNumber);
+    if (!formatted) {
+      mobileError.textContent = "Australian mobile must be 10 digits and start with 04";
+      valid = false;
+    } else {
+      const normalized = "+61 " + formatted.slice(1);
+      mobileNumberEl.value = formatted;
+      mobileError.textContent = "";
+      mobileNumberEl.dataset.normalizedMobile = normalized;
+    }
+  }
+
+  /* GENDER VALIDATION */
+  const gender = document.getElementById("gender").value.trim();
+  const genderError = document.getElementById("genderError");
+  if (!gender) {
+    genderError.textContent = "Gender is required";
+    valid = false;
+  } else {
+    genderError.textContent = "";
+  }
+
+  /* POSTCODE VALIDATION */
+  const postcode = document.getElementById("postcode").value.trim();
+  const postcodeError = document.getElementById("postcodeError");
+  if (!postcode) {
+    postcodeError.textContent = "Postcode is required";
+    valid = false;
+  } else if (!/^\d{4}$/.test(postcode) || !isValidAustralianPostcode(postcode)) {
+    postcodeError.textContent = "Please enter a valid 4-digit Australian postcode.";
+    valid = false;
+  } else {
+    postcodeError.textContent = "";
+  }
+
+  /* INITIATION MANDATORY VALIDATION (USER FORM) */
+  const areInitiatedVal = document.getElementById("areInitiated").value.trim().toUpperCase();
+
+  if (areInitiatedVal === "YES") {
+    const initiatedName = document.getElementById("initiatedName").value.trim();
+    const initiationStatus = document.getElementById("initiationStatus").value.trim();
+    const placeOfInitiation = document.getElementById("placeOfInitiation").value.trim();
+    const initiationDate = document.getElementById("initiationDate").value.trim();
+    const dikshaGuru = document.getElementById("dikshaGuru").value.trim();
+
+    if (!initiatedName) {
+      alert("Initiated Name is required when you are initiated.");
+      valid = false;
+    } else if (!initiationStatus) {
+      alert("Initiation Status is required when you are initiated.");
+      valid = false;
+    } else if (!placeOfInitiation) {
+      alert("Place of Initiation is required when you are initiated.");
+      valid = false;
+    } else if (!initiationDate) {
+      alert("Date of Initiation is required when you are initiated.");
+      valid = false;
+    } else if (!dikshaGuru) {
+      alert("Diksha Guru Name is required when you are initiated.");
+      valid = false;
+    }
+  }
+
+  /* FAMILY HEAD — MINOR VALIDATION */
+  const ageFH = calculateAge(document.getElementById("dob").value.trim());
+  if (ageFH !== null && ageFH < 18) {
+    const fhVal = document.getElementById("familyHeadName").value.trim();
+    if (!fhVal) {
+      alert("Please select a Family Head for minors.");
+      valid = false;
+    }
+  }
+
+  if (!valid) return;
+
+  /* FULL NAME AUTO-GENERATION WITH MIDDLE NAME */
+  const first = document.getElementById("firstName").value.trim();
+  const middle = document.getElementById("middleName").value.trim();
+  const last = document.getElementById("lastName").value.trim();
+  const fullName = `${first} ${middle} ${last}`.replace(/\s+/g, " ").trim();
+
+  const now = Date.now();
+  const emailLower = emailRaw.toLowerCase();
+  const normalizedMobile = mobileNumberEl.dataset.normalizedMobile;
+
+  /* FAMILY HEAD — STORE FAMILY HEAD NAMES */
+  const isFamilyHead = document.getElementById("familyHead").checked;
+  const fullNameFH = fullName;
+
+  if (isFamilyHead && fullNameFH) {
+    const heads = JSON.parse(localStorage.getItem("familyHeads") || "[]");
+    if (!heads.includes(fullNameFH)) {
+      heads.push(fullNameFH);
+      localStorage.setItem("familyHeads", JSON.stringify(heads));
+    }
+  }
+
+  const data = {
+    firstName: first,
+    middleName: middle,
+    lastName: last,
+    fullName,
+    email: emailRaw,
+    gender: document.getElementById("gender").value,
+    dob: document.getElementById("dob").value,
+    mobile: normalizedMobile,
+    familyHead: document.getElementById("familyHead").checked ? "Yes" : "No",
+    familyHeadName: document.getElementById("familyHeadName").value.trim(),
+    addrLine1: document.getElementById("addrLine1").value.trim(),
+    addrLine2: document.getElementById("addrLine2").value.trim(),
+    city: document.getElementById("city").value.trim(),
+    state: document.getElementById("state").value.trim(),
+    postcode: document.getElementById("postcode").value.trim(),
+    country: document.getElementById("country").value,
+    areInitiated: document.getElementById("areInitiated").value,
+    initiatedName: document.getElementById("initiatedName").value.trim(),
+    initiationStatus: document.getElementById("initiationStatus").value,
+    placeOfInitiation: document.getElementById("placeOfInitiation").value.trim(),
+    initiationDate: document.getElementById("initiationDate").value,
+    shikshaGuru: document.getElementById("shikshaGuru").value.trim(),
+    dikshaGuru: document.getElementById("dikshaGuru").value.trim(),
+    submissionDate: now,
+    lastUpdatedDate: now
+  };
+
+  try {
+    const ageForDupCheck = calculateAge(document.getElementById("dob").value.trim());
+
+    if (ageForDupCheck !== null && ageForDupCheck < 18) {
+      const ref = db.ref("devotees").push();
+      await ref.set(data);
+    } else {
+      const dupKey = await findDuplicateKey(emailLower, normalizedMobile);
+
+      if (dupKey) {
+        const overwrite = await showDuplicateModal();
+        if (!overwrite) return;
+        await db.ref("devotees/" + dupKey).update(data);
       } else {
-        const normalized = "+61 " + formatted.slice(1);
-        mobileNumberEl.value = formatted;
-        mobileError.textContent = "";
-        mobileNumberEl.dataset.normalizedMobile = normalized;
+        const ref = db.ref("devotees").push();
+        await ref.set(data);
       }
     }
 
-/* GENDER VALIDATION */
-const gender = document.getElementById("gender").value.trim();
-const genderError = document.getElementById("genderError");
-if (!gender) {
-  genderError.textContent = "Gender is required";
-  valid = false;
-} else {
-  genderError.textContent = "";
-}
-
-/* POSTCODE VALIDATION */
-const postcode = document.getElementById("postcode").value.trim();
-const postcodeError = document.getElementById("postcodeError");
-if (!postcode) {
-  postcodeError.textContent = "Postcode is required";
-  valid = false;
-} else {
-  postcodeError.textContent = "";
-}
-
-/* INITIATION MANDATORY VALIDATION (USER FORM) */
-const areInitiatedVal = document.getElementById("areInitiated").value.trim().toUpperCase();
-
-if (areInitiatedVal === "YES") {
-  const initiatedName = document.getElementById("initiatedName").value.trim();
-  const initiationStatus = document.getElementById("initiationStatus").value.trim();
-  const placeOfInitiation = document.getElementById("placeOfInitiation").value.trim();
-  const initiationDate = document.getElementById("initiationDate").value.trim();
-  const dikshaGuru = document.getElementById("dikshaGuru").value.trim();
-
-  if (!initiatedName) {
-    alert("Initiated Name is required when you are initiated.");
-    valid = false;
-  } else if (!initiationStatus) {
-    alert("Initiation Status is required when you are initiated.");
-    valid = false;
-  } else if (!placeOfInitiation) {
-    alert("Place of Initiation is required when you are initiated.");
-    valid = false;
-  } else if (!initiationDate) {
-    alert("Date of Initiation is required when you are initiated.");
-    valid = false;
-  } else if (!dikshaGuru) {
-    alert("Diksha Guru Name is required when you are initiated.");
-    valid = false;
-  }
-}
-
-/* FAMILY HEAD — MINOR VALIDATION */
-const ageFH = calculateAge(document.getElementById("dob").value.trim());
-if (ageFH !== null && ageFH < 18) {
-  const fhVal = document.getElementById("familyHeadName").value.trim();
-  if (!fhVal) {
-    alert("Please select a Family Head for minors.");
-    valid = false;
-  }
-}
-
-    if (!valid) return;
-
-    /* FULL NAME AUTO-GENERATION */
-    const first = document.getElementById("firstName").value.trim();
-    const last = document.getElementById("lastName").value.trim();
-    const fullNameInput = document.getElementById("fullName").value.trim();
-    const fullName = fullNameInput || `${first} ${last}`.trim();
-
-    const now = Date.now();
-    const emailRaw = document.getElementById("email").value.trim();
-    const emailLower = emailRaw.toLowerCase();
-    const normalizedMobile = mobileNumberEl.dataset.normalizedMobile;
-
-/* FAMILY HEAD — STORE FAMILY HEAD NAMES */
-const isFamilyHead = document.getElementById("familyHead").checked;
-const fullNameFH = fullName;
-
-if (isFamilyHead && fullNameFH) {
-  const heads = JSON.parse(localStorage.getItem("familyHeads") || "[]");
-  if (!heads.includes(fullNameFH)) {
-    heads.push(fullNameFH);
-    localStorage.setItem("familyHeads", JSON.stringify(heads));
-  }
-}
-
-    const data = {
-      firstName: first,
-      lastName: last,
-      fullName,
-      email: emailRaw,
-      gender: document.getElementById("gender").value,
-      dob: document.getElementById("dob").value,
-
-      /* NEW FIELD */
-      drivingLicence: document.getElementById("drivingLicence").value.trim(),
-
-  mobile: normalizedMobile,
-  familyHead: document.getElementById("familyHead").checked ? "Yes" : "No",
-  familyHeadName: document.getElementById("familyHeadName").value.trim(),
-      addrLine1: document.getElementById("addrLine1").value.trim(),
-      addrLine2: document.getElementById("addrLine2").value.trim(),
-      city: document.getElementById("city").value.trim(),
-      state: document.getElementById("state").value.trim(),
-      postcode: document.getElementById("postcode").value.trim(),
-      country: document.getElementById("country").value,
-
-      areInitiated: document.getElementById("areInitiated").value,
-      initiatedName: document.getElementById("initiatedName").value.trim(),
-      initiationStatus: document.getElementById("initiationStatus").value,
-      placeOfInitiation: document.getElementById("placeOfInitiation").value.trim(),
-      initiationDate: document.getElementById("initiationDate").value,
-      shikshaGuru: document.getElementById("shikshaGuru").value.trim(),
-      dikshaGuru: document.getElementById("dikshaGuru").value.trim(),
-
-      submissionDate: now,
-      lastUpdatedDate: now
-    };
-
-    try {
-      const dupKey = await findDuplicateKey(emailLower, normalizedMobile);
-
-const ageForDupCheck = calculateAge(document.getElementById("dob").value.trim());
-
-if (ageForDupCheck !== null && ageForDupCheck < 18) {
-  // Minor — skip duplicate check
-  const ref = db.ref("devotees").push();
-  await ref.set(data);
-} else {
-  // Major — perform duplicate check
-  const dupKey = await findDuplicateKey(emailLower, normalizedMobile);
-
-  if (dupKey) {
-    const overwrite = await showDuplicateModal();
-    if (!overwrite) return;
-    await db.ref("devotees/" + dupKey).update(data);
-  } else {
-    const ref = db.ref("devotees").push();
-    await ref.set(data);
-  }
-}
-
-
-      form.reset();
-      countryCodeInput.value = "+61";
-      document.querySelectorAll(".error").forEach(e => e.textContent = "");
-      updateInitiationFields();
-      successModalBackdrop.style.display = "flex";
-
-    } catch (err) {
-      alert("Error submitting details. Please try again.");
-      console.error(err);
-    }
-  };
-
-  /* RESET BUTTON */
-  resetBtn.onclick = () => {
     form.reset();
     countryCodeInput.value = "+61";
     document.querySelectorAll(".error").forEach(e => e.textContent = "");
     updateInitiationFields();
-  };
-
-  successCloseBtn.onclick = () => {
-    successModalBackdrop.style.display = "none";
-  };
-
-  /* ------------------------------------------------------------
-     ADMIN LOGIN
-  ------------------------------------------------------------ */
-  function showAdminModal() {
-    adminPasswordInput.value = "";
-    adminPasswordError.textContent = "";
-    adminModalBackdrop.style.display = "flex";
-    adminPasswordInput.focus();
-  }
-
-  function hideAdminModal() {
-    adminModalBackdrop.style.display = "none";
-  }
-
-  adminBtn.onclick = () => showAdminModal();
-
-  adminLoginBtn.onclick = () => {
-    if (adminPasswordInput.value === ADMIN_PASSWORD) {
-      hideAdminModal();
-      adminView.classList.remove("hidden");
-      userView.classList.add("hidden");
-      if (welcomeMessage) welcomeMessage.style.display = "none";
-      loadFromDatabase();
-    } else {
-      adminPasswordError.textContent = "Incorrect password.";
-    }
-  };
-
-  /* ------------------------------------------------------------
-     DELETE MODAL
-  ------------------------------------------------------------ */
-  function showDeleteModal(names = []) {
-    return new Promise(resolve => {
-      const textEl = document.getElementById("deleteModalText");
-
-      if (names.length === 0) {
-        textEl.textContent = "Are you sure you want to delete these records?";
-      } else if (names.length === 1) {
-        textEl.textContent = `Are you sure you want to delete ${names[0]}?`;
-      } else {
-        const joined = names.join(", ");
-        textEl.textContent = `Are you sure you want to delete these ${names.length} records of ${joined}?`;
-      }
-
-      deleteModalBackdrop.style.display = "flex";
-
-      deleteYesBtn.onclick = () => {
-        deleteModalBackdrop.style.display = "none";
-        resolve(true);
-      };
-
-      deleteNoBtn.onclick = () => {
-        deleteModalBackdrop.style.display = "none";
-        resolve(false);
-      };
-    });
-  }
-
-  /* ------------------------------------------------------------
-     DUPLICATE MODAL
-  ------------------------------------------------------------ */
-  const duplicateModalBackdrop = document.getElementById("duplicateModalBackdrop");
-  const duplicateYesBtn = document.getElementById("duplicateYesBtn");
-  const duplicateNoBtn = document.getElementById("duplicateNoBtn");
-
-  function showDuplicateModal() {
-    return new Promise(resolve => {
-      duplicateModalBackdrop.style.display = "flex";
-
-      duplicateYesBtn.onclick = () => {
-        duplicateModalBackdrop.style.display = "none";
-        resolve(true);
-      };
-
-      duplicateNoBtn.onclick = () => {
-        duplicateModalBackdrop.style.display = "none";
-        resolve(false);
-      };
-    });
-  }
-
-  userBtn.onclick = () => {
-    adminView.classList.add("hidden");
-    userView.classList.remove("hidden");
-    if (welcomeMessage) welcomeMessage.style.display = "none";
-
-// FAMILY HEAD — RECHECK ON VIEW SWITCH
-const dobVal = dobEl.value.trim();
-if (dobVal) {
-  const age = calculateAge(dobVal);
-  if (age !== null && age < 18) {
-    showFamilyHeadDropdown();
-  } else {
     hideFamilyHeadDropdown();
+    familyHeadCheckbox.disabled = false;
+    familyHeadCheckbox.checked = false;
+    successModalBackdrop.style.display = "flex";
+
+  } catch (err) {
+    alert("Error submitting details. Please try again.");
+    console.error(err);
   }
-} else {
+};
+
+/* RESET BUTTON */
+resetBtn.onclick = () => {
+  form.reset();
+  countryCodeInput.value = "+61";
+  document.querySelectorAll(".error").forEach(e => e.textContent = "");
+  updateInitiationFields();
   hideFamilyHeadDropdown();
+  familyHeadCheckbox.disabled = false;
+  familyHeadCheckbox.checked = false;
+};
+
+successCloseBtn.onclick = () => {
+  successModalBackdrop.style.display = "none";
+};
+/* ------------------------------------------------------------
+   ADMIN LOGIN
+------------------------------------------------------------ */
+function showAdminModal() {
+  adminPasswordInput.value = "";
+  adminPasswordError.textContent = "";
+  adminModalBackdrop.style.display = "flex";
+  adminPasswordInput.focus();
 }
 
-  };
-  /* ------------------------------------------------------------
-     LOAD DATA FOR ADMIN TABLE
-  ------------------------------------------------------------ */
+function hideAdminModal() {
+  adminModalBackdrop.style.display = "none";
+}
+
+adminBtn.onclick = () => showAdminModal();
+
+adminLoginBtn.onclick = () => {
+  if (adminPasswordInput.value === ADMIN_PASSWORD) {
+    hideAdminModal();
+    adminView.classList.remove("hidden");
+    userView.classList.add("hidden");
+    if (welcomeMessage) welcomeMessage.style.display = "none";
+    loadFromDatabase();
+  } else {
+    adminPasswordError.textContent = "Incorrect password.";
+  }
+};
+
+/* ------------------------------------------------------------
+   DELETE MODAL
+------------------------------------------------------------ */
+function showDeleteModal(names = []) {
+  return new Promise(resolve => {
+    const textEl = document.getElementById("deleteModalText");
+
+    if (names.length === 0) {
+      textEl.textContent = "Are you sure you want to delete these records?";
+    } else if (names.length === 1) {
+      textEl.textContent = `Are you sure you want to delete ${names[0]}?`;
+    } else {
+      const joined = names.join(", ");
+      textEl.textContent = `Are you sure you want to delete these ${names.length} records of ${joined}?`;
+    }
+
+    deleteModalBackdrop.style.display = "flex";
+
+    deleteYesBtn.onclick = () => {
+      deleteModalBackdrop.style.display = "none";
+      resolve(true);
+    };
+
+    deleteNoBtn.onclick = () => {
+      deleteModalBackdrop.style.display = "none";
+      resolve(false);
+    };
+  });
+}
+
+/* ------------------------------------------------------------
+   DUPLICATE MODAL
+------------------------------------------------------------ */
+const duplicateModalBackdrop = document.getElementById("duplicateModalBackdrop");
+const duplicateYesBtn = document.getElementById("duplicateYesBtn");
+const duplicateNoBtn = document.getElementById("duplicateNoBtn");
+
+function showDuplicateModal() {
+  return new Promise(resolve => {
+    duplicateModalBackdrop.style.display = "flex";
+
+    duplicateYesBtn.onclick = () => {
+      duplicateModalBackdrop.style.display = "none";
+      resolve(true);
+    };
+
+    duplicateNoBtn.onclick = () => {
+      duplicateModalBackdrop.style.display = "none";
+      resolve(false);
+    };
+  });
+}
+
+userBtn.onclick = () => {
+  adminView.classList.add("hidden");
+  userView.classList.remove("hidden");
+
+  if (welcomeMessage) welcomeMessage.style.display = "block";
+
+  const dobVal = dobEl.value.trim();
+  if (dobVal) {
+    const age = calculateAge(dobVal);
+    if (age !== null && age < 18) {
+      showFamilyHeadDropdown();
+      familyHeadCheckbox.checked = false;
+      familyHeadCheckbox.disabled = true;
+    } else {
+      hideFamilyHeadDropdown();
+      familyHeadCheckbox.disabled = false;
+    }
+  } else {
+    hideFamilyHeadDropdown();
+    familyHeadCheckbox.disabled = false;
+    familyHeadCheckbox.checked = false;
+  }
+};
+
+/* ------------------------------------------------------------
+   LOAD DATA FOR ADMIN TABLE
+------------------------------------------------------------ */
 function loadFromDatabase() {
   db.ref("devotees").once("value", (snapshot) => {
     devotees = [];
@@ -1498,7 +1628,6 @@ function loadFromDatabase() {
       }
     });
 
-    // FAMILY HEAD — FULL SYNC
     localStorage.setItem("familyHeads", JSON.stringify(freshHeads));
 
     currentPage = 1;
@@ -1507,18 +1636,17 @@ function loadFromDatabase() {
   });
 }
 
-
-  /* ------------------------------------------------------------
-     FORMAT DOB & TIMESTAMP
-  ------------------------------------------------------------ */
-  function formatDOB(dateStr) {
-    if (!dateStr) return "";
-    const parts = dateStr.split("-");
-    if (parts.length !== 3) return dateStr;
-    const [yyyy, mm, dd] = parts;
-    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    return `${dd}-${months[parseInt(mm)-1]}-${yyyy}`;
-  }
+/* ------------------------------------------------------------
+   FORMAT DOB & TIMESTAMP
+------------------------------------------------------------ */
+function formatDOB(dateStr) {
+  if (!dateStr) return "";
+  const parts = dateStr.split("-");
+  if (parts.length !== 3) return dateStr;
+  const [yyyy, mm, dd] = parts;
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return `${dd}-${months[parseInt(mm)-1]}-${yyyy}`;
+}
 
 function getAgeFromDob(dobStr) {
   if (!dobStr) return null;
@@ -1534,272 +1662,266 @@ function getAgeFromDob(dobStr) {
   return age;
 }
 
+function formatTimestamp(ts) {
+  if (!ts) return "";
+  const d = new Date(ts);
+  const dd = String(d.getDate()).padStart(2,"0");
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const mmm = months[d.getMonth()];
+  const yyyy = d.getFullYear();
+  let hours = d.getHours();
+  const minutes = String(d.getMinutes()).padStart(2,"0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+  return `${dd}-${mmm}-${yyyy} ${hours}:${minutes} ${ampm}`;
+}
 
-  function formatTimestamp(ts) {
-    if (!ts) return "";
-    const d = new Date(ts);
-    const dd = String(d.getDate()).padStart(2,"0");
-    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const mmm = months[d.getMonth()];
-    const yyyy = d.getFullYear();
-    let hours = d.getHours();
-    const minutes = String(d.getMinutes()).padStart(2,"0");
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12;
-    return `${dd}-${mmm}-${yyyy} ${hours}:${minutes} ${ampm}`;
-  }
+/* ------------------------------------------------------------
+   RENDER ADMIN TABLE
+------------------------------------------------------------ */
+function renderTable(list = devotees, page = 1) {
+  const tbody = document.querySelector("#devoteeTable tbody");
+  tbody.innerHTML = "";
 
-  /* ------------------------------------------------------------
-     RENDER ADMIN TABLE
-  ------------------------------------------------------------ */
-  function renderTable(list = devotees, page = 1) {
-    const tbody = document.querySelector("#devoteeTable tbody");
-    tbody.innerHTML = "";
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+  const pageItems = list.slice(start, end);
 
-    const start = (page - 1) * pageSize;
-    const end = start + pageSize;
-    const pageItems = list.slice(start, end);
+  pageItems.forEach((d, indexOnPage) => {
+    const globalIndex = start + indexOnPage;
+    const row = document.createElement("tr");
 
-    pageItems.forEach((d, indexOnPage) => {
-      const globalIndex = start + indexOnPage;
-      const row = document.createElement("tr");
+    const checkboxTd = document.createElement("td");
+    checkboxTd.style.textAlign = "center";
+    checkboxTd.innerHTML = `<input type="checkbox" class="row-select" data-index="${globalIndex}">`;
+    row.appendChild(checkboxTd);
 
-      // Checkbox
-      const checkboxTd = document.createElement("td");
-      checkboxTd.style.textAlign = "center";
-      checkboxTd.innerHTML = `<input type="checkbox" class="row-select" data-index="${globalIndex}">`;
-      row.appendChild(checkboxTd);
+    const editTd = document.createElement("td");
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.style.padding = "4px 8px";
+    editBtn.style.borderRadius = "12px";
+    editBtn.style.border = "none";
+    editBtn.style.background = "#74b9ff";
+    editBtn.style.color = "#fff";
+    editBtn.style.cursor = "pointer";
+    editBtn.onclick = () => openEditModal(globalIndex);
+    editTd.appendChild(editBtn);
+    row.appendChild(editTd);
 
-      // Edit button
-      const editTd = document.createElement("td");
-      const editBtn = document.createElement("button");
-      editBtn.textContent = "Edit";
-      editBtn.style.padding = "4px 8px";
-      editBtn.style.borderRadius = "12px";
-      editBtn.style.border = "none";
-      editBtn.style.background = "#74b9ff";
-      editBtn.style.color = "#fff";
-      editBtn.style.cursor = "pointer";
-      editBtn.onclick = () => openEditModal(globalIndex);
-      editTd.appendChild(editBtn);
-      row.appendChild(editTd);
-
-      // Delete button
-      const deleteTd = document.createElement("td");
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete";
-      deleteBtn.style.padding = "4px 8px";
-      deleteBtn.style.borderRadius = "12px";
-      deleteBtn.style.border = "none";
-      deleteBtn.style.background = "#d63031";
-      deleteBtn.style.color = "#fff";
-      deleteBtn.style.cursor = "pointer";
-      deleteBtn.onclick = async () => {
-        const name = d.fullName || "this devotee";
-        const confirmed = await showDeleteModal([name]);
-        if (!confirmed) return;
-        const key = devoteesKeys[globalIndex];
-        if (key) db.ref("devotees/" + key).remove().then(() => loadFromDatabase());
-      };
-      deleteTd.appendChild(deleteBtn);
-      row.appendChild(deleteTd);
-      const ageForRow = getAgeFromDob(d.dob || "");
-      const familyHeadNameDisplay = (ageForRow !== null && ageForRow < 18)
-        ? (d.familyHeadName || "")
-        : "";
-
-      // Data cells (Driving Licence included)
-      const cells = [
-        d.firstName || "",
-        d.lastName || "",
-        d.fullName || "",
-        d.email || "",
-        d.gender || "",
-        formatDOB(d.dob || ""),
-        d.drivingLicence || "",
-        d.mobile || "",
-        d.familyHead || "",
-familyHeadNameDisplay,
-toSentenceCase(d.addrLine1 || ""), 
-toSentenceCase(d.addrLine2 || ""), 
-toSentenceCase(d.city || ""), 
-toSentenceCase(d.state || ""),
-        d.postcode || "",
-        d.country || "",
-        d.areInitiated || "",
-        d.initiatedName || "",
-        d.initiationStatus || "",
-toSentenceCase(d.placeOfInitiation || ""),
-        formatDOB(d.initiationDate || ""),
-toTitleCase(d.shikshaGuru || ""),
-(d.dikshaGuru || "").toUpperCase(),
-
-        formatTimestamp(d.submissionDate),
-        formatTimestamp(d.lastUpdatedDate)
-      ];
-
-      cells.forEach(val => {
-        const td = document.createElement("td");
-        td.textContent = val;
-        row.appendChild(td);
-      });
-
-      tbody.appendChild(row);
-    });
-  }
-
-  function renderWithPagination(list = devotees) {
-    renderTable(list, currentPage);
-    buildPaginationControls(list);
-  }
-
-  function buildPaginationControls(list = devotees) {
-    const totalItems = list.length;
-    const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
-    const container = document.getElementById("paginationControls");
-    if (!container) return;
-
-    if (currentPage > totalPages) currentPage = totalPages;
-
-    container.innerHTML = "";
-
-    const prevBtn = document.createElement("button");
-    prevBtn.textContent = "« Prev";
-    prevBtn.disabled = (currentPage === 1);
-    prevBtn.onclick = () => {
-      if (currentPage > 1) {
-        currentPage--;
-        renderWithPagination(list);
-        updateSortIcons();
-      }
+    const deleteTd = document.createElement("td");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.style.padding = "4px 8px";
+    deleteBtn.style.borderRadius = "12px";
+    deleteBtn.style.border = "none";
+    deleteBtn.style.background = "#d63031";
+    deleteBtn.style.color = "#fff";
+    deleteBtn.style.cursor = "pointer";
+    deleteBtn.onclick = async () => {
+      const name = d.fullName || "this devotee";
+      const confirmed = await showDeleteModal([name]);
+      if (!confirmed) return;
+      const key = devoteesKeys[globalIndex];
+      if (key) db.ref("devotees/" + key).remove().then(() => loadFromDatabase());
     };
+    deleteTd.appendChild(deleteBtn);
+    row.appendChild(deleteTd);
 
-    const nextBtn = document.createElement("button");
-    nextBtn.textContent = "Next »";
-    nextBtn.disabled = (currentPage === totalPages);
-    nextBtn.onclick = () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        renderWithPagination(list);
-        updateSortIcons();
-      }
-    };
+    const ageForRow = getAgeFromDob(d.dob || "");
+    const familyHeadNameDisplay = (ageForRow !== null && ageForRow < 18)
+      ? (d.familyHeadName || "")
+      : "";
 
-    const infoSpan = document.createElement("span");
-    infoSpan.textContent = `Page ${currentPage} of ${totalPages}`;
+    const cells = [
+      d.firstName || "",
+      d.middleName || "",
+      d.lastName || "",
+      d.fullName || "",
+      d.email || "",
+      d.gender || "",
+      formatDOB(d.dob || ""),
+      d.mobile || "",
+      d.familyHead || "",
+      familyHeadNameDisplay,
+      toSentenceCase(d.addrLine1 || ""), 
+      toSentenceCase(d.addrLine2 || ""), 
+      toSentenceCase(d.city || ""), 
+      toSentenceCase(d.state || ""),
+      d.postcode || "",
+      d.country || "",
+      d.areInitiated || "",
+      d.initiatedName || "",
+      d.initiationStatus || "",
+      toSentenceCase(d.placeOfInitiation || ""),
+      formatDOB(d.initiationDate || ""),
+      toTitleCase(d.shikshaGuru || ""),
+      (d.dikshaGuru || "").toUpperCase(),
+      formatTimestamp(d.submissionDate),
+      formatTimestamp(d.lastUpdatedDate)
+    ];
 
-    [prevBtn, infoSpan, nextBtn].forEach(el => {
-      el.style.padding = "5px 10px";
-      el.style.borderRadius = "14px";
-      el.style.border = "none";
-      el.style.cursor = "pointer";
-      el.style.fontSize = "13px";
-      el.style.fontWeight = "600";
+    cells.forEach(val => {
+      const td = document.createElement("td");
+      td.textContent = val;
+      row.appendChild(td);
     });
 
-    prevBtn.style.background = "#fab1a0";
-    nextBtn.style.background = "#fab1a0";
-    infoSpan.style.background = "transparent";
-
-    container.appendChild(prevBtn);
-    container.appendChild(infoSpan);
-    container.appendChild(nextBtn);
-  }
-
-  /* ------------------------------------------------------------
-     SEARCH + SORT
-  ------------------------------------------------------------ */
-  let currentSortField = null;
-  let currentSortDirection = 1;
-
-  document.getElementById("adminSearchInput").addEventListener("input", function () {
-    const q = this.value.toLowerCase();
-    const filtered = devotees.filter(d =>
-      Object.values(d).some(v => String(v || "").toLowerCase().includes(q))
-    );
-    currentPage = 1;
-    renderWithPagination(filtered);
+    tbody.appendChild(row);
   });
+}
 
-  document.querySelectorAll(".sortable").forEach(th => {
-    th.addEventListener("click", () => {
-      const field = th.dataset.field;
+function renderWithPagination(list = devotees) {
+  renderTable(list, currentPage);
+  buildPaginationControls(list);
+}
 
-      if (currentSortField === field) {
-        currentSortDirection *= -1;
-      } else {
-        currentSortField = field;
-        currentSortDirection = 1;
-      }
+function buildPaginationControls(list = devotees) {
+  const totalItems = list.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const container = document.getElementById("paginationControls");
+  if (!container) return;
 
-      devotees.sort((a, b) => {
-        let A = a[field] || "";
-        let B = b[field] || "";
+  if (currentPage > totalPages) currentPage = totalPages;
 
-        if (["dob","initiationDate","submissionDate","lastUpdatedDate"].includes(field)) {
-          return (new Date(A) - new Date(B)) * currentSortDirection;
-        }
+  container.innerHTML = "";
 
-        if (field === "postcode") {
-          return (parseInt(A) - parseInt(B)) * currentSortDirection;
-        }
-
-        return A.toString().localeCompare(B.toString()) * currentSortDirection;
-      });
-
-      currentPage = 1;
-      renderWithPagination();
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "« Prev";
+  prevBtn.disabled = (currentPage === 1);
+  prevBtn.onclick = () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderWithPagination(list);
       updateSortIcons();
-    });
-  });
-
-  function updateSortIcons() {
-    document.querySelectorAll(".sortable").forEach(th => {
-      const icon = th.querySelector(".sort-icon");
-      const field = th.dataset.field;
-      if (!icon) return;
-      if (field !== currentSortField) {
-        icon.textContent = "";
-      } else {
-        icon.textContent = currentSortDirection === 1 ? "▲" : "▼";
-      }
-    });
-  }
-
-  /* ------------------------------------------------------------
-     DELETE SELECTED
-  ------------------------------------------------------------ */
-  deleteSelectedBtn.onclick = async () => {
-    const checkboxes = document.querySelectorAll(".row-select:checked");
-    const indexes = [...checkboxes].map(cb => parseInt(cb.dataset.index));
-
-    if (indexes.length === 0) {
-      alert("Please select at least one record to delete.");
-      return;
     }
-
-    const names = indexes.map(i => devotees[i].fullName || "this devotee");
-    const confirmed = await showDeleteModal(names);
-    if (!confirmed) return;
-
-    const toDelete = indexes.map(i => devoteesKeys[i]).filter(k => k);
-    toDelete.forEach(key => db.ref("devotees/" + key).remove());
-
-    setTimeout(() => loadFromDatabase(), 500);
   };
 
-  /* ------------------------------------------------------------
-     EDIT MODAL LOGIC
-  ------------------------------------------------------------ */
-  const editModalBackdrop = document.getElementById("editModalBackdrop");
-  const editForm = document.getElementById("editForm");
-  const editCancelBtn = document.getElementById("editCancelBtn");
-/* FAMILY HEAD — ADMIN EDIT ELEMENTS */
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "Next »";
+  nextBtn.disabled = (currentPage === totalPages);
+  nextBtn.onclick = () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderWithPagination(list);
+      updateSortIcons();
+    }
+  };
+
+  const infoSpan = document.createElement("span");
+  infoSpan.textContent = `Page ${currentPage} of ${totalPages}`;
+
+  [prevBtn, infoSpan, nextBtn].forEach(el => {
+    el.style.padding = "5px 10px";
+    el.style.borderRadius = "14px";
+    el.style.border = "none";
+    el.style.cursor = "pointer";
+    el.style.fontSize = "13px";
+    el.style.fontWeight = "600";
+  });
+
+  prevBtn.style.background = "#e8f0fe";
+  nextBtn.style.background = "#e8f0fe";
+  infoSpan.style.background = "transparent";
+
+  container.appendChild(prevBtn);
+  container.appendChild(infoSpan);
+  container.appendChild(nextBtn);
+}
+
+/* ------------------------------------------------------------
+   SEARCH + SORT
+------------------------------------------------------------ */
+let currentSortField = null;
+let currentSortDirection = 1;
+
+document.getElementById("adminSearchInput").addEventListener("input", function () {
+  const q = this.value.toLowerCase();
+  const filtered = devotees.filter(d =>
+    Object.values(d).some(v => String(v || "").toLowerCase().includes(q))
+  );
+  currentPage = 1;
+  renderWithPagination(filtered);
+});
+
+document.querySelectorAll(".sortable").forEach(th => {
+  th.addEventListener("click", () => {
+    const field = th.dataset.field;
+
+    if (currentSortField === field) {
+      currentSortDirection *= -1;
+    } else {
+      currentSortField = field;
+      currentSortDirection = 1;
+    }
+
+    devotees.sort((a, b) => {
+      let A = a[field] || "";
+      let B = b[field] || "";
+
+      if (["dob","initiationDate","submissionDate","lastUpdatedDate"].includes(field)) {
+        return (new Date(A) - new Date(B)) * currentSortDirection;
+      }
+
+      if (field === "postcode") {
+        return (parseInt(A) - parseInt(B)) * currentSortDirection;
+      }
+
+      return A.toString().localeCompare(B.toString()) * currentSortDirection;
+    });
+
+    currentPage = 1;
+    renderWithPagination();
+    updateSortIcons();
+  });
+});
+
+function updateSortIcons() {
+  document.querySelectorAll(".sortable").forEach(th => {
+    const icon = th.querySelector(".sort-icon");
+    const field = th.dataset.field;
+    if (!icon) return;
+    if (field !== currentSortField) {
+      icon.textContent = "";
+    } else {
+      icon.textContent = currentSortDirection === 1 ? "▲" : "▼";
+    }
+  });
+}
+
+/* ------------------------------------------------------------
+   DELETE SELECTED
+------------------------------------------------------------ */
+deleteSelectedBtn.onclick = async () => {
+  const checkboxes = document.querySelectorAll(".row-select:checked");
+  const indexes = [...checkboxes].map(cb => parseInt(cb.dataset.index));
+
+  if (indexes.length === 0) {
+    alert("Please select at least one record to delete.");
+    return;
+  }
+
+  const names = indexes.map(i => devotees[i].fullName || "this devotee");
+  const confirmed = await showDeleteModal(names);
+  if (!confirmed) return;
+
+  const toDelete = indexes.map(i => devoteesKeys[i]).filter(k => k);
+  toDelete.forEach(key => db.ref("devotees/" + key).remove());
+
+  setTimeout(() => loadFromDatabase(), 500);
+};
+
+/* ------------------------------------------------------------
+   EDIT MODAL LOGIC
+------------------------------------------------------------ */
+const editModalBackdrop = document.getElementById("editModalBackdrop");
+const editForm = document.getElementById("editForm");
+const editCancelBtn = document.getElementById("editCancelBtn");
+
 const editDobEl = document.getElementById("edit_dob");
 const editFamilyHeadCheckbox = document.getElementById("edit_familyHead");
 const editFamilyHeadNameGroup = document.getElementById("edit_familyHeadNameGroup");
 const editFamilyHeadNameEl = document.getElementById("edit_familyHeadName");
-
 
 /* FAMILY HEAD — ADMIN EDIT DOB LISTENER */
 if (editDobEl) {
@@ -1807,6 +1929,7 @@ if (editDobEl) {
     const dob = editDobEl.value.trim();
     if (!dob) {
       editFamilyHeadNameGroup.style.display = "none";
+      editFamilyHeadCheckbox.parentElement.style.display = "block";
       return;
     }
 
@@ -1823,99 +1946,93 @@ if (editDobEl) {
   });
 }
 
+function openEditModal(index) {
+  const d = devotees[index];
+  currentEditKey = devoteesKeys[index];
 
+  document.getElementById("edit_firstName").value = d.firstName || "";
+  document.getElementById("edit_middleName").value = d.middleName || "";
+  document.getElementById("edit_lastName").value = d.lastName || "";
+  document.getElementById("edit_email").value = d.email || "";
+  document.getElementById("edit_gender").value = d.gender || "";
+  document.getElementById("edit_dob").value = d.dob || "";
 
-  function openEditModal(index) {
-    const d = devotees[index];
-    currentEditKey = devoteesKeys[index];
-
-    document.getElementById("edit_firstName").value = d.firstName || "";
-    document.getElementById("edit_lastName").value = d.lastName || "";
-    document.getElementById("edit_fullName").value = d.fullName || "";
-    document.getElementById("edit_email").value = d.email || "";
-    document.getElementById("edit_gender").value = d.gender || "";
-    document.getElementById("edit_dob").value = d.dob || "";
-/* FAMILY HEAD — ADMIN EDIT INITIAL DOB CHECK */
-const dobEditVal = d.dob || "";
-if (dobEditVal) {
-  const age = calculateAge(dobEditVal);
-  if (age !== null && age < 18) {
-    populateAdminFamilyHeadDropdown();
-    editFamilyHeadNameGroup.style.display = "block";
-    editFamilyHeadNameEl.value = d.familyHeadName || "";
-    editFamilyHeadCheckbox.checked = false;
-    editFamilyHeadCheckbox.parentElement.style.display = "none";
+  const dobEditVal = d.dob || "";
+  if (dobEditVal) {
+    const age = calculateAge(dobEditVal);
+    if (age !== null && age < 18) {
+      populateAdminFamilyHeadDropdown();
+      editFamilyHeadNameGroup.style.display = "block";
+      editFamilyHeadNameEl.value = d.familyHeadName || "";
+      editFamilyHeadCheckbox.checked = false;
+      editFamilyHeadCheckbox.parentElement.style.display = "none";
+    } else {
+      editFamilyHeadNameGroup.style.display = "none";
+      editFamilyHeadCheckbox.parentElement.style.display = "block";
+    }
   } else {
     editFamilyHeadNameGroup.style.display = "none";
     editFamilyHeadCheckbox.parentElement.style.display = "block";
   }
-} else {
-  editFamilyHeadNameGroup.style.display = "none";
-  editFamilyHeadCheckbox.parentElement.style.display = "block";
+
+  document.getElementById("edit_mobile").value = d.mobile || "";
+  document.getElementById("edit_familyHead").checked = (d.familyHead === "Yes");
+  document.getElementById("edit_country").value = d.country || "";
+  document.getElementById("edit_addrLine1").value = d.addrLine1 || "";
+  document.getElementById("edit_addrLine2").value = d.addrLine2 || "";
+  document.getElementById("edit_city").value = d.city || "";
+  document.getElementById("edit_state").value = d.state || "";
+  document.getElementById("edit_postcode").value = d.postcode || "";
+  document.getElementById("edit_areInitiated").value = d.areInitiated || "";
+  document.getElementById("edit_initiatedName").value = d.initiatedName || "";
+  document.getElementById("edit_initiationStatus").value = d.initiationStatus || "First";
+  document.getElementById("edit_placeOfInitiation").value = d.placeOfInitiation || "";
+  document.getElementById("edit_initiationDate").value = d.initiationDate || "";
+  document.getElementById("edit_shikshaGuru").value = d.shikshaGuru || "";
+  document.getElementById("edit_dikshaGuru").value =
+    guruList.includes(d.dikshaGuru)
+      ? d.dikshaGuru
+      : toTitleCase(d.dikshaGuru || "");
+
+  updateAdminInitiationFields();
+  editModalBackdrop.style.display = "flex";
 }
 
-    /* NEW FIELD */
-    document.getElementById("edit_drivingLicence").value = d.drivingLicence || "";
+/* ------------------------------------------------------------
+   ADMIN INITIATION FIELD ENABLE/DISABLE
+------------------------------------------------------------ */
+function updateAdminInitiationFields() {
+  const val = (document.getElementById("edit_areInitiated").value || "").toUpperCase();
+  const disabled = (val === "NO");
 
-    document.getElementById("edit_mobile").value = d.mobile || "";
-    document.getElementById("edit_familyHead").checked = (d.familyHead === "Yes");
-    document.getElementById("edit_country").value = d.country || "";
-    document.getElementById("edit_addrLine1").value = d.addrLine1 || "";
-    document.getElementById("edit_addrLine2").value = d.addrLine2 || "";
-    document.getElementById("edit_city").value = d.city || "";
-    document.getElementById("edit_state").value = d.state || "";
-    document.getElementById("edit_postcode").value = d.postcode || "";
-    document.getElementById("edit_areInitiated").value = d.areInitiated || "";
-    document.getElementById("edit_initiatedName").value = d.initiatedName || "";
-    document.getElementById("edit_initiationStatus").value = d.initiationStatus || "First";
-    document.getElementById("edit_placeOfInitiation").value = d.placeOfInitiation || "";
-    document.getElementById("edit_initiationDate").value = d.initiationDate || "";
-    document.getElementById("edit_shikshaGuru").value = d.shikshaGuru || "";
-    document.getElementById("edit_dikshaGuru").value =
-  guruList.includes(d.dikshaGuru)
-    ? d.dikshaGuru
-    : toTitleCase(d.dikshaGuru || "");
+  const fields = [
+    "edit_initiatedName",
+    "edit_initiationStatus",
+    "edit_placeOfInitiation",
+    "edit_initiationDate",
+    "edit_dikshaGuru"
+  ];
 
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.disabled = disabled;
+    if (disabled) {
+      el.classList.add("disabled-field");
+      el.value = "";
+    } else {
+      el.classList.remove("disabled-field");
+    }
+  });
+}
 
-    updateAdminInitiationFields();
-    editModalBackdrop.style.display = "flex";
-  }
+document.getElementById("edit_areInitiated")
+  .addEventListener("change", updateAdminInitiationFields);
 
-  /* ------------------------------------------------------------
-     ADMIN INITIATION FIELD ENABLE/DISABLE
-  ------------------------------------------------------------ */
-  function updateAdminInitiationFields() {
-    const val = (document.getElementById("edit_areInitiated").value || "").toUpperCase();
-    const disabled = (val === "NO");
-
-    const fields = [
-      "edit_initiatedName",
-      "edit_initiationStatus",
-      "edit_placeOfInitiation",
-      "edit_initiationDate",
-      "edit_dikshaGuru"
-    ];
-
-    fields.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.disabled = disabled;
-      if (disabled) {
-        el.classList.add("disabled-field");
-        el.value = "";
-      } else {
-        el.classList.remove("disabled-field");
-      }
-    });
-  }
-
-  document.getElementById("edit_areInitiated")
-    .addEventListener("change", updateAdminInitiationFields);
-
-  editCancelBtn.onclick = () => {
-    editModalBackdrop.style.display = "none";
-    currentEditKey = null;
-  };
+editCancelBtn.onclick = () => {
+  editModalBackdrop.style.display = "none";
+  currentEditKey = null;
+};
 
 /* ------------------------------------------------------------
    EDIT FORM SUBMIT (Email + Mobile duplicate check)
@@ -1929,110 +2046,112 @@ editForm.addEventListener("submit", (e) => {
   const mobileInput = document.getElementById("edit_mobile").value.trim();
   const mobileFormatted = formatMobile(mobileInput);
 
-  if (!emailRaw || !mobileFormatted) {
-    alert("Email and a valid Australian mobile are required.");
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!emailRaw) {
+    alert("Email is required.");
+    return;
+  }
+  if (!emailPattern.test(emailRaw)) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+  if (!mobileFormatted) {
+    alert("A valid Australian mobile is required.");
     return;
   }
 
-/* MANDATORY: GENDER (EDIT FORM) */
-if (!document.getElementById("edit_gender").value.trim()) {
-  alert("Gender is required.");
-  return;
-}
-
-/* MANDATORY: POSTCODE (EDIT FORM) */
-if (!document.getElementById("edit_postcode").value.trim()) {
-  alert("Postcode is required.");
-  return;
-}
-
-/* INITIATION MANDATORY VALIDATION (ADMIN EDIT FORM) */
-const adminInitiatedVal = document.getElementById("edit_areInitiated").value.trim().toUpperCase();
-
-if (adminInitiatedVal === "YES") {
-  const initiatedName = document.getElementById("edit_initiatedName").value.trim();
-  const initiationStatus = document.getElementById("edit_initiationStatus").value.trim();
-  const placeOfInitiation = document.getElementById("edit_placeOfInitiation").value.trim();
-  const initiationDate = document.getElementById("edit_initiationDate").value.trim();
-  const dikshaGuru = document.getElementById("edit_dikshaGuru").value.trim();
-
-  if (!initiatedName) {
-    alert("Initiated Name is required when the devotee is initiated.");
+  if (!document.getElementById("edit_gender").value.trim()) {
+    alert("Gender is required.");
     return;
   }
-  if (!initiationStatus) {
-    alert("Initiation Status is required when the devotee is initiated.");
+
+  const editPostcode = document.getElementById("edit_postcode").value.trim();
+  if (!editPostcode) {
+    alert("Postcode is required.");
     return;
   }
-  if (!placeOfInitiation) {
-    alert("Place of Initiation is required when the devotee is initiated.");
+  if (!/^\d{4}$/.test(editPostcode) || !isValidAustralianPostcode(editPostcode)) {
+    alert("Please enter a valid 4-digit Australian postcode.");
     return;
   }
-  if (!initiationDate) {
-    alert("Date of Initiation is required when the devotee is initiated.");
-    return;
+
+  const adminInitiatedVal = document.getElementById("edit_areInitiated").value.trim().toUpperCase();
+
+  if (adminInitiatedVal === "YES") {
+    const initiatedName = document.getElementById("edit_initiatedName").value.trim();
+    const initiationStatus = document.getElementById("edit_initiationStatus").value.trim();
+    const placeOfInitiation = document.getElementById("edit_placeOfInitiation").value.trim();
+    const initiationDate = document.getElementById("edit_initiationDate").value.trim();
+    const dikshaGuru = document.getElementById("edit_dikshaGuru").value.trim();
+
+    if (!initiatedName) {
+      alert("Initiated Name is required when the devotee is initiated.");
+      return;
+    }
+    if (!initiationStatus) {
+      alert("Initiation Status is required when the devotee is initiated.");
+      return;
+    }
+    if (!placeOfInitiation) {
+      alert("Place of Initiation is required when the devotee is initiated.");
+      return;
+    }
+    if (!initiationDate) {
+      alert("Date of Initiation is required when the devotee is initiated.");
+      return;
+    }
+    if (!dikshaGuru) {
+      alert("Diksha Guru Name is required when the devotee is initiated.");
+      return;
+    }
   }
-  if (!dikshaGuru) {
-    alert("Diksha Guru Name is required when the devotee is initiated.");
-    return;
+
+  const ageEdit = calculateAge(document.getElementById("edit_dob").value.trim());
+
+  if (!(ageEdit !== null && ageEdit < 18)) {
+    const duplicateKey = devoteesKeys.find((key, i) => {
+      const d = devotees[i];
+      const e = (d.email || "").toLowerCase().trim();
+      const m = (d.mobile || "").trim();
+      return key !== currentEditKey && (e === emailLower || m === mobileFormatted);
+    });
+
+    if (duplicateKey) {
+      const confirmUpdate = confirm("Another devotee with this email or mobile exists. Overwrite that record instead?");
+      if (!confirmUpdate) return;
+      currentEditKey = duplicateKey;
+    }
   }
-}
 
-  /* -----------------------------
-     DUPLICATE CHECK
-  ----------------------------- */
-const ageEdit = calculateAge(document.getElementById("edit_dob").value.trim());
+  const first = document.getElementById("edit_firstName").value.trim();
+  const middle = document.getElementById("edit_middleName").value.trim();
+  const last = document.getElementById("edit_lastName").value.trim();
+  const fullName = `${first} ${middle} ${last}`.replace(/\s+/g, " ").trim();
 
-if (ageEdit !== null && ageEdit < 18) {
-  // Minor — skip duplicate check
-} else {
-  // Major — perform duplicate check
-  const duplicateKey = devoteesKeys.find((key, i) => {
-    const d = devotees[i];
-    const e = (d.email || "").toLowerCase().trim();
-    const m = (d.mobile || "").trim();
-    return key !== currentEditKey && (e === emailLower || m === mobileFormatted);
-  });
-
-  if (duplicateKey) {
-    const confirmUpdate = confirm("Another devotee with this email or mobile exists. Overwrite that record instead?");
-    if (!confirmUpdate) return;
-    currentEditKey = duplicateKey;
-  }
-}
-
-
-  /* -----------------------------
-     UPDATE OBJECT (unchanged)
-  ----------------------------- */
   const updated = {
-    firstName: document.getElementById("edit_firstName").value.trim(),
-    lastName: document.getElementById("edit_lastName").value.trim(),
-    fullName: document.getElementById("edit_fullName").value.trim(),
+    firstName: first,
+    middleName: middle,
+    lastName: last,
+    fullName,
     email: emailRaw,
     gender: document.getElementById("edit_gender").value.trim(),
     dob: document.getElementById("edit_dob").value,
-    drivingLicence: document.getElementById("edit_drivingLicence").value.trim(),
     mobile: mobileFormatted,
     familyHead: document.getElementById("edit_familyHead").checked ? "Yes" : "No",
     familyHeadName: document.getElementById("edit_familyHeadName").value.trim(),
     country: document.getElementById("edit_country").value.trim(),
-
     addrLine1: toSentenceCase(document.getElementById("edit_addrLine1").value.trim()),
     addrLine2: toSentenceCase(document.getElementById("edit_addrLine2").value.trim()),
     city: toSentenceCase(document.getElementById("edit_city").value.trim()),
     state: toSentenceCase(document.getElementById("edit_state").value.trim()),
     postcode: document.getElementById("edit_postcode").value.trim(),
-
     areInitiated: document.getElementById("edit_areInitiated").value.trim(),
     initiatedName: toSentenceCase(document.getElementById("edit_initiatedName").value.trim()),
     initiationStatus: document.getElementById("edit_initiationStatus").value.trim(),
     placeOfInitiation: toSentenceCase(document.getElementById("edit_placeOfInitiation").value.trim()),
     initiationDate: document.getElementById("edit_initiationDate").value,
-
     shikshaGuru: toTitleCase(document.getElementById("edit_shikshaGuru").value.trim()),
     dikshaGuru: document.getElementById("edit_dikshaGuru").value.trim().toUpperCase(),
-
     lastUpdatedDate: Date.now()
   };
 
@@ -2045,62 +2164,62 @@ if (ageEdit !== null && ageEdit < 18) {
     .catch(err => console.error(err));
 });
 
-  /* ------------------------------------------------------------
-     EXPORT FUNCTIONS
-  ------------------------------------------------------------ */
-  const exportFields = [
-    "firstName", "lastName", "fullName", "email", "gender", "dob",
-      "drivingLicence", "mobile", "familyHead", "familyHeadName",
-    "addrLine1", "addrLine2", "city", "state", "postcode", "country",
-    "areInitiated", "initiatedName", "initiationStatus", "placeOfInitiation",
-    "initiationDate", "shikshaGuru", "dikshaGuru",
-    "submissionDate", "lastUpdatedDate"
-  ];
+/* ------------------------------------------------------------
+   EXPORT FUNCTIONS
+------------------------------------------------------------ */
+const exportFields = [
+  "firstName", "middleName", "lastName", "fullName", "email", "gender", "dob",
+  "mobile", "familyHead", "familyHeadName",
+  "addrLine1", "addrLine2", "city", "state", "postcode", "country",
+  "areInitiated", "initiatedName", "initiationStatus", "placeOfInitiation",
+  "initiationDate", "shikshaGuru", "dikshaGuru",
+  "submissionDate", "lastUpdatedDate"
+];
 
-  function exportCSV(rows) {
-    const header = exportFields.join(",");
-    const csvRows = rows.map(r => {
-      const obj = {};
-      exportFields.forEach(f => {
-        if (f === "dob" || f === "initiationDate") {
-          obj[f] = formatDOB(r[f] || "");
-        } else if (f === "submissionDate" || f === "lastUpdatedDate") {
-          obj[f] = formatTimestamp(r[f]);
-        } else {
-          obj[f] = r[f] || "";
-        }
-      });
-      return exportFields.map(f => `"${String(obj[f]).replace(/"/g,'""')}"`).join(",");
+function exportCSV(rows) {
+  const header = exportFields.join(",");
+  const csvRows = rows.map(r => {
+    const obj = {};
+    exportFields.forEach(f => {
+      if (f === "dob" || f === "initiationDate") {
+        obj[f] = formatDOB(r[f] || "");
+      } else if (f === "submissionDate" || f === "lastUpdatedDate") {
+        obj[f] = formatTimestamp(r[f]);
+      } else {
+        obj[f] = r[f] || "";
+      }
     });
+    return exportFields.map(f => `"${String(obj[f]).replace(/"/g,'""')}"`).join(",");
+  });
 
-    const csv = [header, ...csvRows].join("\n");
-    const blob = new Blob([csv], { type:"text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "devotees.csv";
-    a.click();
-  }
+  const csv = [header, ...csvRows].join("\n");
+  const blob = new Blob([csv], { type:"text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "devotees.csv";
+  a.click();
+}
 
-  function exportExcel(rows) {
-    const formatted = rows.map(r => {
-      const obj = {};
-      exportFields.forEach(f => {
-        if (f === "dob" || f === "initiationDate") {
-          obj[f] = formatDOB(r[f] || "");
-        } else if (f === "submissionDate" || f === "lastUpdatedDate") {
-          obj[f] = formatTimestamp(r[f]);
-        } else {
-          obj[f] = r[f] || "";
-        }
-      });
-      return obj;
+function exportExcel(rows) {
+  const formatted = rows.map(r => {
+    const obj = {};
+    exportFields.forEach(f => {
+      if (f === "dob" || f === "initiationDate") {
+        obj[f] = formatDOB(r[f] || "");
+      } else if (f === "submissionDate" || f === "lastUpdatedDate") {
+        obj[f] = formatTimestamp(r[f]);
+      } else {
+        obj[f] = r[f] || "";
+      }
     });
+    return obj;
+  });
 
-    const ws = XLSX.utils.json_to_sheet(formatted, { header: exportFields });
-    const wb = XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb, ws, "Devotees");
-XLSX.writeFile(wb, "devotees.xlsx");
+  const ws = XLSX.utils.json_to_sheet(formatted, { header: exportFields });
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Devotees");
+  XLSX.writeFile(wb, "devotees.xlsx");
 }
 
 /* ------------------------------------------------------------
@@ -2113,4 +2232,5 @@ exportAllXlsxBtn.onclick = () => exportExcel(devotees);
 </script>
 </body>
 </html>
+
 
