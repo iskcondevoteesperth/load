@@ -482,6 +482,59 @@ body {
   gap: 8px;
 }
 
+/* ==========================================
+   USER VIEW — ONE FIELD PER ROW (Mobile-first)
+   ========================================== */
+
+#userView .form-row {
+  display: block !important;
+}
+
+#userView .form-group {
+  width: 100% !important;
+  margin-bottom: 18px !important;
+}
+
+/* Ensure labels have breathing room */
+#userView .form-group label {
+  margin-bottom: 6px !important;
+  font-weight: 600;
+}
+
+/* Inputs feel clean and modern */
+#userView input,
+#userView select {
+  width: 100% !important;
+  padding-top: 11px !important;
+  padding-bottom: 11px !important;
+}
+/* ==========================================
+   USER VIEW — Family Head Checkbox Styling
+   ========================================== */
+
+/* Make the label bold */
+#userView label[for="familyHead"] {
+  font-weight: 700 !important;
+  letter-spacing: 0.2px;
+}
+
+/* Make the checkbox bigger and modern */
+#userView input[type="checkbox"] {
+  width: 22px !important;
+  height: 22px !important;
+  transform: scale(1.2);
+  cursor: pointer;
+  accent-color: #1a73e8; /* Google blue */
+  margin-right: 8px;
+}
+
+/* Align checkbox + label nicely */
+#userView .checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 
   </style>
 </head>
@@ -647,8 +700,8 @@ body {
     </div>
 
     <div class="checkbox-group" style="margin-top:8px;">
-      <input type="checkbox" id="familyHead">
       <label for="familyHead">Are you family head?</label>
+      <input type="checkbox" id="familyHead">
     </div>
 
     <!-- ADDRESS -->
