@@ -491,9 +491,12 @@ body {
 }
 
 #userView .form-group {
-  width: 100% !important;
-  margin-bottom: 18px !important;
+    width: 60% !important;
+    margin-bottom: 18px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
+
 
 /* Ensure labels have breathing room */
 #userView .form-group label {
@@ -535,13 +538,68 @@ body {
   gap: 8px;
 }
 
+/* Marquee container */
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(to right, #e3f2fd, #bbdefb);
+  padding: 10px 0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-left 12s linear infinite;
+}
+
+.marquee-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #0d47a1;
+  white-space: nowrap;
+  padding-right: 60px; /* spacing between repeats */
+}
+
+.tilak-icon {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+@keyframes scroll-left {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
 
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Perth Initiated Devotee List</h1>
+<div class="marquee-container">
+  <div class="marquee-track">
+    <div class="marquee-content">
+      <img src="tilak.png" class="tilak-icon" alt="">
+      Perth Initiated Devotee List
+      <img src="tilak.png" class="tilak-icon" alt="">
+    </div>
+
+    <div class="marquee-content">
+      <img src="tilak.png" class="tilak-icon" alt="">
+      Perth Initiated Devotee List
+      <img src="tilak.png" class="tilak-icon" alt="">
+    </div>
+  </div>
+</div>
+
   <div class="view-switch">
     <button id="adminViewBtn">Admin View</button>
     <button id="userViewBtn" class="active">User View</button>
