@@ -861,6 +861,7 @@ body {
     <input type="password" id="adminPasswordInput" placeholder="Enter password">
     <div class="error" id="adminPasswordError"></div>
     <button id="adminLoginBtn">Login</button>
+    <button id="adminCancelBtn" style="background:#777; margin-left:8px;">Cancel</button>
   </div>
 </div>
 
@@ -1248,7 +1249,7 @@ function populateAdminFamilyHeadDropdown() {
   });
 }
 
-  const ADMIN_PASSWORD = "Kalamunda";
+  const ADMIN_PASSWORD = "GauraNitai@2507";
 
   let devotees = [];
   let devoteesKeys = [];
@@ -1665,6 +1666,11 @@ adminLoginBtn.onclick = () => {
     adminPasswordError.textContent = "Incorrect password.";
   }
 };
+
+document.getElementById("adminCancelBtn").onclick = () => {
+  adminModalBackdrop.style.display = "none";
+};
+
 
 /* ------------------------------------------------------------
    DELETE MODAL
