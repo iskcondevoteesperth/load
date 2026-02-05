@@ -1064,6 +1064,27 @@ document.getElementById("dob").addEventListener("change", function () {
     document.getElementById("dobError").textContent = "";
 });
 
+// DOB validation for Admin Edit
+document.getElementById("edit_dob").addEventListener("change", function () {
+    const dob = new Date(this.value);
+    const today = new Date();
+
+    // Block future dates
+    if (dob > today) {
+        alert("Date of birth cannot be in the future.");
+        this.value = "";
+        return;
+    }
+
+    // Block unrealistic years
+    const year = dob.getFullYear();
+    if (year < 1900) {
+        alert("Please enter a valid year (1900 or later).");
+        this.value = "";
+        return;
+    }
+});
+
 
 
 /* ============================================================
