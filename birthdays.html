@@ -463,10 +463,12 @@ tr:nth-child(even) {
   </div>
 
   <script>
-   	/* ------------------------------
+	<script>
+/* ------------------------------
    CONFIG
 ------------------------------ */
-const API_URL = "https://script.google.com/macros/s/AKfycbz1fdhU4XihVZxuyDgxQ7Liq2IAnUsGq2I-NQ4bjNftDuSpd669UVXkBoq7XkLKg2t_kg/exec";
+
+const API_URL = "https://script.google.com/macros/s/AKfycby3hCeoYQCaQLtP-VKegsnrrbXR-TrNCJKsHgW7Mep6WrJfaKjuIbP7AU3X4jXIwrXVaQ/exec";
 
 let birthdays = [];
 let currentSort = "rank";
@@ -477,43 +479,74 @@ let editOriginal = null; // { name, birthday }
    STORAGE HELPERS (Google Sheets)
 ------------------------------ */
 async function fetchBirthdays() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
-  birthdays = data || [];
-  return birthdays;
+  try {
+    const res = await fetch(API_URL, { method: "GET" });
+    if (!res.ok) {
+      console.error("fetchBirthdays failed:", res.status, await res.text());
+      return [];
+    }
+    const data = await res.json();
+    birthdays = data || [];
+    return birthdays;
+  } catch (err) {
+    console.error("fetchBirthdays error:", err);
+    birthdays = [];
+    return [];
+  }
 }
 
 async function addBirthdayToSheet(record) {
-  await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(record)
-  });
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(record)
+    });
+    if (!res.ok) {
+      console.error("addBirthdayToSheet failed:", res.status, await res.text());
+    }
+  } catch (err) {
+    console.error("addBirthdayToSheet error:", err);
+  }
 }
 
 async function updateBirthdayInSheet(oldRecord, newRecord) {
-  await fetch(API_URL, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      oldName: oldRecord.name,
-      oldBirthday: oldRecord.birthday,
-      name: newRecord.name,
-      service: newRecord.service,
-      birthday: newRecord.birthday
-    })
-  });
+  try {
+    const res = await fetch(API_URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        oldName: oldRecord.name,
+        oldBirthday: oldRecord.birthday,
+        name: newRecord.name,
+        service: newRecord.service,
+        birthday: newRecord.birthday
+      })
+    });
+    if (!res.ok) {
+      console.error("updateBirthdayInSheet failed:", res.status, await res.text());
+    }
+  } catch (err) {
+    console.error("updateBirthdayInSheet error:", err);
+  }
 }
 
 async function deleteBirthdayFromSheet(record) {
-  await fetch(API_URL, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: record.name,
-      birthday: record.birthday
-    })
-  });
+  try {
+    const res = await fetch(API_URL, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: record.name,
+        birthday: record.birthday
+      })
+    });
+    if (!res.ok) {
+      console.error("deleteBirthdayFromSheet failed:", res.status, await res.text());
+    }
+  } catch (err) {
+    console.error("deleteBirthdayFromSheet error:", err);
+  }
 }
 
 /* ------------------------------
@@ -544,6 +577,7 @@ function convertToISO(dateStr) {
   const mm = parts[1];
   const yyyy = parts[2];
 
+  if (!dd || !mm || !yyyy) return null;
   return `${yyyy}-${mm}-${dd}`;
 }
 
@@ -642,7 +676,6 @@ function addFireflies(cell) {
    GLOBAL CELEBRATION ENGINE (C2, emoji 🎈)
 ------------------------------ */
 function launchGlobalCelebration() {
-  // Balloons (12–15)
   const balloonCount = 14;
   for (let i = 0; i < balloonCount; i++) {
     const b = document.createElement("div");
@@ -654,7 +687,6 @@ function launchGlobalCelebration() {
     setTimeout(() => b.remove(), 4500);
   }
 
-  // Stars (10–12)
   const starCount = 11;
   for (let i = 0; i < starCount; i++) {
     const s = document.createElement("div");
@@ -666,7 +698,6 @@ function launchGlobalCelebration() {
     setTimeout(() => s.remove(), 3500);
   }
 
-  // Confetti (12–15)
   const confettiCount = 13;
   const confettiChars = ["🎊", "🎉", "✨"];
   for (let i = 0; i < confettiCount; i++) {
@@ -807,30 +838,36 @@ window.deleteRecord = async function(i) {
 document.getElementById("userForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const name = document.getElementById("u_name").value.trim();
-  const service = document.getElementById("u_service").value.trim();
-  const rawBirthday = document.getElementById("u_birthday").value;
-  const birthday = convertToISO(rawBirthday);
-  if (!birthday) return;
+  try {
+    const name = document.getElementById("u_name").value.trim();
+    const service = document.getElementById("u_service").value.trim();
+    const rawBirthday = document.getElementById("u_birthday").value;
+    const birthday = convertToISO(rawBirthday);
 
-  if (!name || !birthday) return;
+    if (!birthday || !name) {
+      console.warn("Invalid input:", { name, rawBirthday });
+      return;
+    }
 
-  const newRecord = { name, service, birthday };
+    const newRecord = { name, service, birthday };
 
-  if (editOriginal) {
-    await updateBirthdayInSheet(editOriginal, newRecord);
-    editOriginal = null;
-  } else {
-    await addBirthdayToSheet(newRecord);
+    if (editOriginal) {
+      await updateBirthdayInSheet(editOriginal, newRecord);
+      editOriginal = null;
+    } else {
+      await addBirthdayToSheet(newRecord);
+    }
+
+    document.getElementById("thankYou").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("thankYou").style.display = "none";
+    }, 2000);
+
+    document.getElementById("userForm").reset();
+    await renderTable();
+  } catch (err) {
+    console.error("Submit handler error:", err);
   }
-
-  document.getElementById("thankYou").style.display = "block";
-  setTimeout(() => {
-    document.getElementById("thankYou").style.display = "none";
-  }, 2000);
-
-  document.getElementById("userForm").reset();
-  await renderTable();
 });
 
 /* ------------------------------
@@ -904,6 +941,7 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
    INITIAL LOAD
 ------------------------------ */
 renderTable();
+</script>
 
   </script>
 
