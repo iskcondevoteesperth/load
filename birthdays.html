@@ -4,253 +4,249 @@
   <meta charset="UTF-8" />
   <title>HG Rasikananda Prabhuji Bhakti Vriksha – Birthdays</title>
 
-  <!-- PART 2 (CSS) WILL GO HERE -->
   <style>
-	/* Background Image */
-body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: url('https://storage.ning.com/topology/rest/1.0/file/get/3360810443?profile=RESIZE_1200x&width=1000')
-              no-repeat center center fixed;
-  background-size: cover;
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
+    /* Background Image */
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: url('https://storage.ning.com/topology/rest/1.0/file/get/3360810443?profile=RESIZE_1200x&width=1000')
+                  no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(255,255,255,0.65);
-  backdrop-filter: brightness(1.05);
-  z-index: -1;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: brightness(1.05);
+      z-index: -1;
+    }
 
-header {
-  background: rgba(85, 50, 140, 0.92);
-  color: white;
-  padding: 16px 24px;
-  text-align: center;
-  border-bottom: 4px solid #e8d9ff;
-  border-top: 4px solid #e8d9ff;
-}
+    header {
+      background: rgba(85, 50, 140, 0.92);
+      color: white;
+      padding: 16px 24px;
+      text-align: center;
+      border-bottom: 4px solid #e8d9ff;
+      border-top: 4px solid #e8d9ff;
+    }
 
-header h1 { margin: 0; font-size: 26px; font-weight: 600; }
-header h2 { margin: 4px 0 0; font-size: 16px; opacity: 0.9; }
+    header h1 { margin: 0; font-size: 26px; font-weight: 600; }
+    header h2 { margin: 4px 0 0; font-size: 16px; opacity: 0.9; }
 
-.view-switch { text-align: center; margin-top: 10px; }
+    .view-switch { text-align: center; margin-top: 10px; }
 
-.view-btn {
-  padding: 8px 14px;
-  margin: 0 4px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  background: #f0e6ff;
-  color: #4b2c82;
-}
+    .view-btn {
+      padding: 8px 14px;
+      margin: 0 4px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      background: #f0e6ff;
+      color: #4b2c82;
+    }
 
-.view-btn.active { background: #4b2c82; color: white; }
+    .view-btn.active { background: #4b2c82; color: white; }
 
-main {
-  max-width: 950px;
-  margin: 20px auto 30px;
-  background: rgba(255,255,255,0.94);
-  padding: 22px 26px;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-  border: 1px solid #e6dfff;
-}
+    main {
+      max-width: 950px;
+      margin: 20px auto 30px;
+      background: rgba(255,255,255,0.94);
+      padding: 22px 26px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      border: 1px solid #e6dfff;
+    }
 
-.section-title {
-  font-size: 20px;
-  margin-bottom: 14px;
-  color: #4b2c82;
-  border-left: 5px solid #c7a8ff;
-  padding-left: 10px;
-  font-weight: bold;
-}
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 14px;
+      color: #4b2c82;
+      border-left: 5px solid #c7a8ff;
+      padding-left: 10px;
+      font-weight: bold;
+    }
 
-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 16px;
-}
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
 
-.form-group { display: flex; flex-direction: column; min-width: 200px; flex: 1; }
-label { font-size: 13px; margin-bottom: 4px; color: #333; }
+    .form-group { display: flex; flex-direction: column; min-width: 200px; flex: 1; }
+    label { font-size: 13px; margin-bottom: 4px; color: #333; }
 
-input, button {
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #bbb;
-  font-size: 14px;
-}
+    input, button {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+      font-size: 14px;
+    }
 
-#submitBtn { background: #5a35a3; color: white; }
-#submitBtn:hover { background: #472a82; }
+    #submitBtn { background: #5a35a3; color: white; }
+    #submitBtn:hover { background: #472a82; }
 
-#downloadBtn { background: #2e8b57; color: white; margin-bottom: 10px; }
-#downloadBtn:hover { background: #256f46; }
+    #downloadBtn { background: #2e8b57; color: white; margin-bottom: 10px; }
+    #downloadBtn:hover { background: #256f46; }
 
-.admin-controls { margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
-.admin-controls button { background: #f0e6ff; color: #4b2c82; }
-.admin-controls button:hover { background: #e0d0ff; }
+    .admin-controls { margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .admin-controls button { background: #f0e6ff; color: #4b2c82; }
+    .admin-controls button:hover { background: #e0d0ff; }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 14px;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-th, td { padding: 10px 12px; border-bottom: 1px solid #eee; }
-th { background: #efe7ff; color: #4b2c82; font-weight: bold; }
-tr:nth-child(even) { background: #faf7ff; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+    th { background: #efe7ff; color: #4b2c82; font-weight: bold; }
+    tr:nth-child(even) { background: #faf7ff; }
 
-.action-btn {
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  cursor: pointer;
-  border: none;
-  font-weight: 600;
-  margin-right: 4px;
-}
+    .action-btn {
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      border: none;
+      font-weight: 600;
+      margin-right: 4px;
+    }
 
-.edit-btn { background: #3498db; color: white; }
-.delete-btn { background: #e74c3c; color: white; }
+    .edit-btn { background: #3498db; color: white; }
+    .delete-btn { background: #e74c3c; color: white; }
 
-.thank-you { margin-top: 10px; font-size: 14px; color: #2e7d32; font-weight: 600; }
+    .thank-you { margin-top: 10px; font-size: 14px; color: #2e7d32; font-weight: 600; }
 
-.today-banner {
-  margin-top: 10px;
-  padding: 10px 12px;
-  background: #fff8e1;
-  border-radius: 8px;
-  border: 1px solid #ffe0b2;
-  color: #8d6e63;
-  font-size: 14px;
-  display: none;
-}
+    .today-banner {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: #fff8e1;
+      border-radius: 8px;
+      border: 1px solid #ffe0b2;
+      color: #8d6e63;
+      font-size: 14px;
+      display: none;
+    }
 
-#birthdayHighlight {
-  display:none;
-  margin: 15px 0;
-  padding: 18px;
-  background: linear-gradient(135deg, #ffeb3b, #ff9800);
-  border-radius: 12px;
-  text-align: center;
-  font-size: 26px;
-  font-weight: 800;
-  color: #4a148c;
-  text-shadow: 2px 2px 4px white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
+    #birthdayHighlight {
+      display:none;
+      margin: 15px 0;
+      padding: 18px;
+      background: linear-gradient(135deg, #ffeb3b, #ff9800);
+      border-radius: 12px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 800;
+      color: #4a148c;
+      text-shadow: 2px 2px 4px white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
 
-.glow-name {
-  position: relative;
-  animation: glowPulse 2s infinite alternate;
-  border-radius: 6px;
-  padding: 4px 8px;
-}
+    .glow-name {
+      position: relative;
+      animation: glowPulse 2s infinite alternate;
+      border-radius: 6px;
+      padding: 4px 8px;
+    }
 
-@keyframes glowPulse {
-  0% { box-shadow: 0 0 6px gold; }
-  100% { box-shadow: 0 0 16px gold; }
-}
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 6px gold; }
+      100% { box-shadow: 0 0 16px gold; }
+    }
 
-.firefly {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: gold;
-  border-radius: 50%;
-  opacity: 0.8;
-  animation: fly 3s infinite ease-in-out;
-  pointer-events: none;
-}
+    .firefly {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: gold;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fly 3s infinite ease-in-out;
+      pointer-events: none;
+    }
 
-@keyframes fly {
-  0% { transform: translate(0,0); opacity: 0.8; }
-  50% { transform: translate(10px,-10px); opacity: 1; }
-  100% { transform: translate(-10px,10px); opacity: 0.6; }
-}
+    @keyframes fly {
+      0% { transform: translate(0,0); opacity: 0.8; }
+      50% { transform: translate(10px,-10px); opacity: 1; }
+      100% { transform: translate(-10px,10px); opacity: 0.6; }
+    }
 
-.celebration-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
+    .celebration-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
 
-.celebration-popup {
-  background: radial-gradient(circle at top, #fff7e6, #ffffff);
-  border-radius: 16px;
-  padding: 24px 28px;
-  text-align: center;
-  max-width: 420px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-  position: relative;
-  overflow: hidden;
-}
+    .celebration-popup {
+      background: radial-gradient(circle at top, #fff7e6, #ffffff);
+      border-radius: 16px;
+      padding: 24px 28px;
+      text-align: center;
+      max-width: 420px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
 
-.celebration-title { font-size: 20px; font-weight: 700; color: #8e44ad; margin-bottom: 8px; }
-.celebration-text { font-size: 14px; color: #5d4037; margin-bottom: 14px; }
+    .celebration-title { font-size: 20px; font-weight: 700; color: #8e44ad; margin-bottom: 8px; }
+    .celebration-text { font-size: 14px; color: #5d4037; margin-bottom: 14px; }
 
-.celebration-close {
-  margin-top: 10px;
-  padding: 8px 16px;
-  border-radius: 20px;
-  background: #8e44ad;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-}
+    .celebration-close {
+      margin-top: 10px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: #8e44ad;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-.confetti, .star, .balloon {
-  position: fixed;
-  pointer-events: none;
-  opacity: 0.9;
-  z-index: 9998;
-}
+    .confetti, .star, .balloon {
+      position: fixed;
+      pointer-events: none;
+      opacity: 0.9;
+      z-index: 9998;
+    }
 
-.confetti { animation: confettiFall 3s linear forwards; font-size: 20px; }
-.star { animation: starDrift 3s ease-in-out forwards; font-size: 22px; color: gold; }
-.balloon { animation: balloonRise 4s ease-in-out forwards; font-size: 28px; }
+    .confetti { animation: confettiFall 3s linear forwards; font-size: 20px; }
+    .star { animation: starDrift 3s ease-in-out forwards; font-size: 22px; color: gold; }
+    .balloon { animation: balloonRise 4s ease-in-out forwards; font-size: 28px; }
 
-@keyframes confettiFall {
-  0% { transform: translateY(-40px) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
-}
+    @keyframes confettiFall {
+      0% { transform: translateY(-40px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+    }
 
-@keyframes starDrift {
-  0% { transform: translateY(40px); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateY(-60vh); opacity: 0; }
-}
+    @keyframes starDrift {
+      0% { transform: translateY(40px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-60vh); opacity: 0; }
+    }
 
-@keyframes balloonRise {
-  0% { transform: translateY(40px); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateY(-80vh); opacity: 0; }
-}
-  
-
+    @keyframes balloonRise {
+      0% { transform: translateY(40px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-80vh); opacity: 0; }
+    }
   </style>
 </head>
-
 <body>
 
   <!-- Bell Sound -->
@@ -335,10 +331,8 @@ tr:nth-child(even) { background: #faf7ff; }
       <button id="celebrationClose" class="celebration-close">Offer Prayers & Close</button>
     </div>
   </div>
-
-  <!-- PART 3 + PART 4 (JS) WILL GO HERE -->
   <script>
-  /* ------------------------------
+/* ------------------------------
    CONFIG
 ------------------------------ */
 const API_URL =
@@ -355,47 +349,66 @@ let editOriginal = null;
 async function fetchBirthdays() {
   try {
     const res = await fetch(API_URL);
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.error("fetchBirthdays failed:", res.status);
+      return [];
+    }
     const data = await res.json();
-    birthdays = data || [];
+    birthdays = Array.isArray(data) ? data : [];
     return birthdays;
-  } catch {
+  } catch (err) {
+    console.error("fetchBirthdays error:", err);
     birthdays = [];
     return [];
   }
 }
 
 async function addBirthdayToSheet(record) {
-  await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(record)
-  });
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(record)
+    });
+    if (!res.ok) console.error("addBirthdayToSheet failed:", res.status);
+  } catch (err) {
+    console.error("addBirthdayToSheet error:", err);
+  }
 }
 
 async function updateBirthdayInSheet(oldRecord, newRecord) {
-  await fetch(API_URL, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      oldName: oldRecord.name,
-      oldBirthday: oldRecord.birthday,
-      name: newRecord.name,
-      service: newRecord.service,
-      birthday: newRecord.birthday
-    })
-  });
+  try {
+    const res = await fetch(API_URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        oldName: oldRecord.name,
+        oldBirthday: oldRecord.birthday,
+        name: newRecord.name,
+        service: newRecord.service,
+        birthday: newRecord.birthday
+      })
+    });
+    if (!res.ok) console.error("updateBirthdayInSheet failed:", res.status);
+  } catch (err) {
+    console.error("updateBirthdayInSheet error:", err);
+  }
 }
 
 async function deleteBirthdayFromSheet(record) {
-  await fetch(API_URL, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: record.name,
-      birthday: record.birthday
-    })
-  });
+  try {
+    const res = await fetch(API_URL, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: record.name,
+        birthday: record.birthday
+      })
+    });
+    if (!res.ok) console.error("deleteBirthdayFromSheet failed:", res.status);
+  } catch (err) {
+    console.error("deleteBirthdayFromSheet error:", err);
+  }
 }
 
 /* ------------------------------
@@ -403,11 +416,13 @@ async function deleteBirthdayFromSheet(record) {
 ------------------------------ */
 function convertToISO(dateStr) {
   const p = dateStr.split("/").map(x => x.trim());
+  if (p.length !== 3 || !p[0] || !p[1] || !p[2]) return null;
   return `${p[2]}-${p[1]}-${p[0]}`;
 }
 
 function isoToInput(dateStr) {
   const p = dateStr.split("-");
+  if (p.length !== 3) return dateStr;
   return `${p[2]} / ${p[1]} / ${p[0]}`;
 }
 
@@ -543,7 +558,10 @@ document.getElementById("userForm").addEventListener("submit", async (e) => {
   const rawBirthday = document.getElementById("u_birthday").value;
   const birthday = convertToISO(rawBirthday);
 
-  if (!birthday || !name) return;
+  if (!birthday || !name) {
+    console.warn("Invalid input:", { name, rawBirthday });
+    return;
+  }
 
   const newRecord = { name, service, birthday };
 
@@ -581,7 +599,7 @@ document.getElementById("adminViewBtn").addEventListener("click", async () => {
   const pass = prompt("Enter Admin Password:");
   if (pass !== "108") return;
 
-  document.getElementById("userViewSection").style.display = "none";
+  document.getElementById("userViewSection")..style.display = "none";
   document.getElementById("adminViewSection").style.display = "block";
 
   document.getElementById("adminViewBtn").classList.add("active");
@@ -634,8 +652,8 @@ document.getElementById("downloadBtn").addEventListener("click", async () => {
    INITIAL LOAD
 ------------------------------ */
 renderTable();
-
   </script>
 
 </body>
 </html>
+
